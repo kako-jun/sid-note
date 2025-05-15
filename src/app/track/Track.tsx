@@ -23,19 +23,19 @@ const Track: React.FC<TrackProps> = (props) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "start",
           gap: 8,
         }}
       >
-        <div style={{ width: "100%", background: "yellow", textAlien: "right" }}>{track.artist}</div>
-        <p style={{ width: "100%", background: "red" }}>{track.album}</p>
-        <p style={{ width: "100%", background: "yellow" }}>{track.year}</p>
+        <p style={{ width: "100%", textAlign: "left", lineHeight: 1 }}>{track.artist}</p>
+        <p style={{ width: "100%", lineHeight: 1 }}>{track.album}</p>
+        <p style={{ width: "100%", textAlign: "right" }}>{track.year}</p>
       </div>
       <div
         style={{
           marginTop: 16,
-          marginLeft: "20%",
-          marginRight: "20%",
+          marginLeft: "10%",
+          marginRight: "10%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -43,7 +43,7 @@ const Track: React.FC<TrackProps> = (props) => {
           gap: 8,
         }}
       >
-        <p style={{ background: "yellow" }}>
+        <p>
           {track.time_signature} <span style={{ color: "#888888" }}>time</span>
         </p>
         <p>
@@ -57,9 +57,9 @@ const Track: React.FC<TrackProps> = (props) => {
         </div>
         <table
           style={{
-            marginLeft: "20%",
-            marginRight: "20%",
-            width: "60%",
+            marginLeft: "10%",
+            marginRight: "10%",
+            width: "80%",
             tableLayout: "fixed",
           }}
         >
