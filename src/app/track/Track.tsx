@@ -18,17 +18,18 @@ const Track: React.FC<TrackProps> = (props) => {
       {track.cover && <Image src={track.cover} alt="cover" width={100} height={100} />}
       <div
         style={{
-          marginLeft: "20%",
-          marginRight: "20%",
+          marginLeft: "10%",
+          marginRight: "10%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
+          alignItems: "center",
           gap: 8,
         }}
       >
-        <p>{track.artist}</p>
-        <p>{track.album}</p>
-        <p>{track.year}</p>
+        <div style={{ width: "100%", background: "yellow", textAlien: "right" }}>{track.artist}</div>
+        <p style={{ width: "100%", background: "red" }}>{track.album}</p>
+        <p style={{ width: "100%", background: "yellow" }}>{track.year}</p>
       </div>
       <div
         style={{
@@ -38,10 +39,11 @@ const Track: React.FC<TrackProps> = (props) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
+          alignItems: "center",
           gap: 8,
         }}
       >
-        <p>
+        <p style={{ background: "yellow" }}>
           {track.time_signature} <span style={{ color: "#888888" }}>time</span>
         </p>
         <p>
