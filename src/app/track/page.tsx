@@ -6,7 +6,13 @@ import Track from "./Track";
 
 export default function HomePage() {
   return (
-    <div style={{ textAlign: "center", marginTop: 16 }}>
+    <div
+      style={{
+        textAlign: "center",
+        marginTop: 16,
+        fontFamily: "'游明朝', 'Yu Mincho', 'MS Mincho', 'Hiragino Mincho Pro', serif",
+      }}
+    >
       {/* <h1 style={{ marginBottom: 32 }}>Sid Note</h1> */}
       <h1
         style={{

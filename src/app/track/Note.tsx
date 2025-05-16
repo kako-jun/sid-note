@@ -63,9 +63,10 @@ const Note: React.FC<NoteProps> = (props) => {
     <div
       style={{
         padding: 8,
-        background: "#333333",
+        background: "#222222",
         textAlign: "left",
-        clipPath: "polygon(0% 0%, 50% 1%, 100% 0%, 100% 100%, 50% 99%, 0% 100%)", // 上下の中央を引っ込める形状
+        clipPath: "polygon(0% 0%, 50% 2%, 100% 0%, 100% 100%, 50% 98%, 0% 100%)", // 上下の中央を引っ込める形状
+        boxShadow: "inset 0 0 40px 1px #333333",
       }}
     >
       <p>
@@ -73,18 +74,22 @@ const Note: React.FC<NoteProps> = (props) => {
         {noteId}
       </p>
       <div style={{ marginLeft: 8 }}>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <p>{note.pitch}</p>
-          <p>{valueText(note.value)}</p>
-          <p>
-            <span style={{ color: "#888888" }}>コードに属す音名か: </span>
-            {isCodePitch(note.pitch) ? "Yes" : "No 経過音"}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "start",
+            gap: 8,
+          }}
+        >
+          <p style={{ flex: 1, lineHeight: 1, textAlign: "left" }}>{note.pitch}</p>
+          <p style={{ flex: 2, lineHeight: 1, textAlign: "center" }}>{valueText(note.value)}</p>
+          <p style={{ flex: 2, lineHeight: 1, textAlign: "center" }}>
+            {getInterval(code, note.pitch)}:{" "}
+            {isCodePitch(note.pitch) ? <span style={{ color: "#888888" }}>Chord Tone</span> : "Nonchord Tone"}
           </p>
-          <p>
-            <span style={{ color: "#888888" }}>ルートからの音程: </span>
-            {getInterval(code, note.pitch)}
-          </p>
-          <p>
+          <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>
             {note.tags?.map((tag, index) => {
               const color = tag === "easy" ? "rgba(0, 200, 255, 0.2)" : tag === "hard" ? "#882222" : "black";
 
@@ -105,21 +110,34 @@ const Note: React.FC<NoteProps> = (props) => {
             })}
           </p>
         </div>
-        <div style={{ marginTop: 0, display: "flex", flexDirection: "row", justifyContent: "left", gap: 8 }}>
+        <div style={{ marginTop: 4, display: "flex", flexDirection: "row", justifyContent: "left", gap: 8 }}>
           <LeftScore note={note} nextNote={nextNote} />
           <RightScore note={note} nextNote={nextNote} />
         </div>
-        <div style={{ marginTop: 0, display: "flex", flexDirection: "row", justifyContent: "left", gap: 8 }}>
-          <ul style={{ flex: 1, paddingLeft: 24, paddingTop: 4, color: "#888888", listStyleType: "'・'" }}>
-            {note.remarks.map((remark, index) => (
-              <li key={index}>{remark}</li>
-            ))}
-          </ul>
-          <div style={{ width: 100 }}>
-            <Staff note={note} nextNote={nextNote} />
+        <div
+          style={{
+            marginTop: 0,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: 8,
+            flexWrap: "wrap-reverse",
+          }}
+        >
+          <div>
+            <ul style={{ paddingLeft: 24, paddingTop: 8, paddingBottom: 4, color: "#888888", listStyleType: "'・'" }}>
+              {note.remarks.map((remark, index) => (
+                <li key={index}>{remark}</li>
+              ))}
+            </ul>
           </div>
-          <div style={{ width: 200 }}>
-            <Keyboard note={note} nextNote={nextNote} />
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "right", gap: 8 }}>
+            <div style={{ width: 100, marginTop: -4 }}>
+              <Staff note={note} nextNote={nextNote} />
+            </div>
+            <div style={{ width: 200, marginTop: -5 }}>
+              <Keyboard note={note} nextNote={nextNote} />
+            </div>
           </div>
         </div>
       </div>

@@ -413,22 +413,30 @@ export const getCodePositions = (code: string) => {
       {
         fret: fret.fret + offset,
         degree: fret.degree,
-        pitch: ["E", "E＃", "G♭", "G", "G＃"].includes(fret.pitch) ? `${fret.pitch}2` : `${fret.pitch}3`,
+        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
+          ? `${fret.pitch}1`
+          : `${fret.pitch}2`,
       },
       {
         fret: fret.fret + 12 + offset,
         degree: fret.degree,
-        pitch: ["E", "E＃", "G♭", "G", "G＃"].includes(fret.pitch) ? `${fret.pitch}3` : `${fret.pitch}4`,
+        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
+          ? `${fret.pitch}2`
+          : `${fret.pitch}3`,
       },
       {
         fret: fret.fret + 24 + offset,
         degree: fret.degree,
-        pitch: ["E", "E＃", "G♭", "G", "G＃"].includes(fret.pitch) ? `${fret.pitch}4` : `${fret.pitch}5`,
+        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
+          ? `${fret.pitch}3`
+          : `${fret.pitch}4`,
       },
       {
         fret: fret.fret + 36 + offset,
         degree: fret.degree,
-        pitch: ["E", "E＃", "G♭", "G", "G＃"].includes(fret.pitch) ? `${fret.pitch}5` : `${fret.pitch}6`,
+        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
+          ? `${fret.pitch}4`
+          : `${fret.pitch}5`,
       },
     ].filter((f) => f.fret <= 39);
   });
