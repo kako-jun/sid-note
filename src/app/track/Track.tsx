@@ -3,14 +3,46 @@
 import React from "react";
 import Image from "next/image";
 import CircleOfFifths from "./CircleOfFifths";
-import Measure from "./Measure";
+import Section from "./Section";
+import { TrackType } from "./model";
 import { scaleText, getScalePitches, getScaleCodes } from "./util";
-import { track } from "./track1";
+import { loadTrackFromYamlUrl } from "./trackLoader";
 
 type TrackProps = object;
 
 const Track: React.FC<TrackProps> = (props) => {
   const {} = props;
+
+  const [tracks, setTracks] = React.useState<TrackType[]>([]);
+
+  const track = React.useMemo(() => {
+    if (tracks.length > 0) {
+      return tracks[0];
+    }
+
+    return {
+      title: "",
+      artist: "",
+      album: "",
+      year: "",
+      time_signature: "",
+      bpm: 0,
+      scale: "",
+      cover: "",
+      remarks: [],
+      sections: [],
+    };
+  }, [tracks]);
+
+  React.useEffect(() => {
+    const loadTrack = async () => {
+      const track = await loadTrackFromYamlUrl("/track1.yaml");
+      if (track) {
+        setTracks((prev) => [...prev, track]);
+      }
+    };
+    loadTrack();
+  }, []);
 
   return (
     <>
@@ -27,9 +59,9 @@ const Track: React.FC<TrackProps> = (props) => {
           gap: 8,
         }}
       >
-        <p style={{ width: "100%", textAlign: "left", lineHeight: 1 }}>{track.artist}</p>
-        <p style={{ width: "100%", lineHeight: 1 }}>{track.album}</p>
-        <p style={{ width: "100%", textAlign: "right" }}>{track.year}</p>
+        <p style={{ width: "100%", lineHeight: 1, textAlign: "left" }}>{track.artist}</p>
+        <p style={{ width: "100%", lineHeight: 1, textAlign: "center" }}>{track.album}</p>
+        <p style={{ width: "100%", lineHeight: 1, textAlign: "right" }}>{track.year}</p>
       </div>
       <div
         style={{
@@ -39,14 +71,14 @@ const Track: React.FC<TrackProps> = (props) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "start",
           gap: 8,
         }}
       >
-        <p>
+        <p style={{ width: "100%", lineHeight: 1, textAlign: "left" }}>
           {track.time_signature} <span style={{ color: "#888888" }}>time</span>
         </p>
-        <p>
+        <p style={{ width: "100%", lineHeight: 1, textAlign: "right" }}>
           {track.bpm} <span style={{ color: "#888888" }}>BPM</span>
         </p>
       </div>
@@ -65,7 +97,7 @@ const Track: React.FC<TrackProps> = (props) => {
         >
           <thead>
             <tr style={{ color: "#888888" }}>
-              <td></td>
+              <td width={120}></td>
               <td>Ⅰ</td>
               <td>Ⅱ</td>
               <td>Ⅲ</td>
@@ -83,7 +115,7 @@ const Track: React.FC<TrackProps> = (props) => {
               ))}
             </tr>
             <tr>
-              <td style={{ color: "#888888" }}>Code</td>
+              <td style={{ color: "#888888", lineHeight: 1 }}>Diatonic Code</td>
               {getScaleCodes(track.scale).map((code, index) => (
                 <td key={index}>{code}</td>
               ))}
@@ -91,14 +123,20 @@ const Track: React.FC<TrackProps> = (props) => {
           </tbody>
         </table>
       </div>
-      <div style={{ marginTop: 16, color: "#888888" }}>
+      <div
+        style={{
+          marginLeft: "10%",
+          marginRight: "10%",
+          marginTop: 16,
+          color: "#888888",
+        }}
+      >
         {track.remarks.map((remark, index) => {
           return (
             <ul
               key={index}
               style={{
-                marginLeft: "10%",
-                marginRight: "10%",
+                textAlign: "left",
               }}
             >
               <li>{remark}</li>
@@ -106,28 +144,42 @@ const Track: React.FC<TrackProps> = (props) => {
           );
         })}
       </div>
+      <div style={{ marginTop: 24 }}>
+        <ul>
+          {track.sections.map((section, index) => {
+            return (
+              <li key={index}>
+                <a
+                  href={`#${section.name}`}
+                  style={{
+                    fontFamily: "'UnifrakturCook', 'Old English Text MT', 'IM Fell English', cursive",
+                    fontSize: "1.2em",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  {section.name}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <div
         style={{
-          margin: 8,
+          // margin: 8,
           marginTop: 32,
-          marginBottom: 32,
+          marginBottom: 48,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           gap: 8,
         }}
       >
-        {track.measures.map((measure, index) => {
+        {track.sections.map((section, index) => {
           return (
-            <Measure
-              key={index}
-              measure={measure}
-              prevMeasure={track.measures[index - 1] || null}
-              nextMeasure={track.measures[index + 1] || null}
-              measureId={index + 1}
-              measureCount={track.measures.length}
-              scale={track.scale}
-            />
+            <div key={index} id={section.name}>
+              <Section section={section} scale={track.scale} />
+            </div>
           );
         })}
       </div>

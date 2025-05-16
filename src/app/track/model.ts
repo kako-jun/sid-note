@@ -31,6 +31,11 @@ export type MeasureType = {
   notes: NoteType[];
 };
 
+export type SectionType = {
+  name: string;
+  measures: MeasureType[];
+};
+
 export type TrackType = {
   title: string;
   artist: string;
@@ -41,5 +46,5 @@ export type TrackType = {
   time_signature: "2/4" | "3/4" | "4/4";
   bpm: number;
   remarks: string[];
-  measures: MeasureType[];
+  sections: SectionType[];
 };

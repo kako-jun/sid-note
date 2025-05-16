@@ -64,9 +64,11 @@ const Measure: React.FC<MeasureProps> = (props) => {
     <div
       style={{
         padding: 8,
-        background: "#222222",
+        paddingBottom: 16,
+        background: "#111111",
         textAlign: "left",
         clipPath: "polygon(0% 0%, 50% 1%, 100% 0%, 100% 100%, 50% 99%, 0% 100%)", // 上下の中央を引っ込める形状
+        boxShadow: "inset 0 0 40px 1px #333333",
       }}
     >
       <p>
@@ -75,15 +77,23 @@ const Measure: React.FC<MeasureProps> = (props) => {
         <span style={{ color: "#888888" }}> / {measureCount}</span>
       </p>
       <div style={{ marginLeft: 8 }}>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-          <p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "start",
+            gap: 8,
+          }}
+        >
+          <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>
             <span>{measure.on && measure.on !== "" ? `${measure.code} on ${measure.on}` : measure.code}</span>
             <span style={{ color: "#888888" }}>: {functionalHarmonyText(measure.functional_harmony)}</span>
           </p>
-          <p>
-            <span style={{ color: "#888888" }}>スケールに属すコードか:</span> {isScaleCode ? "Yes" : "No"}
+          <p style={{ flex: 1, lineHeight: 1, textAlign: "center" }}>
+            {isScaleCode ? <span style={{ color: "#888888" }}>Diatonic Chord</span> : "Non-Diatonic Chord"}
           </p>
-          <p>
+          <p style={{ flex: 2, lineHeight: 1, textAlign: "right" }}>
             <span style={{ color: "#888888" }}>
               {prevMeasure &&
                 `${functionalHarmonyText(prevMeasure.functional_harmony)} → ${functionalHarmonyText(
@@ -93,7 +103,15 @@ const Measure: React.FC<MeasureProps> = (props) => {
             {prevMeasure && `${cadenceText(prevMeasure.functional_harmony, measure.functional_harmony)}`}
           </p>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <div
+          style={{
+            marginTop: 4,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <LeftScore note={getCodeNote(code)} />
           {/* <CircleOfFifths scale={getCodeNote(measure.on ?? measure.code)} /> */}
         </div>
