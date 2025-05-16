@@ -84,7 +84,7 @@ const Track: React.FC<TrackProps> = (props) => {
       </div>
       <div>
         <p>{scaleText(track.scale)}</p>
-        <div style={{ width: 100, marginTop: 2, marginLeft: "auto", marginRight: "auto" }}>
+        <div style={{ width: 100, marginTop: 4, marginLeft: "auto", marginRight: "auto" }}>
           <CircleOfFifths scale={track.scale} />
         </div>
         <table
@@ -97,7 +97,7 @@ const Track: React.FC<TrackProps> = (props) => {
         >
           <thead>
             <tr style={{ color: "#888888" }}>
-              <td width={120}></td>
+              <td width={110}></td>
               <td>Ⅰ</td>
               <td>Ⅱ</td>
               <td>Ⅲ</td>
@@ -109,7 +109,7 @@ const Track: React.FC<TrackProps> = (props) => {
           </thead>
           <tbody>
             <tr>
-              <td style={{ color: "#888888" }}>Pitch</td>
+              <td style={{ color: "#888888" }}>Note Name</td>
               {getScalePitches(track.scale).map((pitch, index) => (
                 <td key={index}>{pitch}</td>
               ))}
@@ -117,7 +117,9 @@ const Track: React.FC<TrackProps> = (props) => {
             <tr>
               <td style={{ color: "#888888", lineHeight: 1 }}>Diatonic Code</td>
               {getScaleCodes(track.scale).map((code, index) => (
-                <td key={index}>{code}</td>
+                <td key={index} style={{ fontSize: "0.75rem" }}>
+                  {code}
+                </td>
               ))}
             </tr>
           </tbody>
@@ -144,7 +146,15 @@ const Track: React.FC<TrackProps> = (props) => {
           );
         })}
       </div>
-      <div style={{ marginTop: 24 }}>
+      <div
+        style={{
+          margin: "0 auto",
+          marginTop: 24,
+          padding: 4,
+          width: 200,
+          border: "1px solid #333333",
+        }}
+      >
         <ul>
           {track.sections.map((section, index) => {
             return (
