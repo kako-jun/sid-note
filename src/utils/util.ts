@@ -548,6 +548,16 @@ export const scaleText = (scale: string) => {
   return `${scaleMap[scale]} Scale` || scale;
 };
 
+export const getFunctionalHarmony = (scale: string, code: string) => {
+  const codes = getScaleCodes(scale);
+  const index = codes.indexOf(code);
+  if (index >= 0) {
+    return index + 1;
+  }
+
+  return 0;
+};
+
 export const functionalHarmonyText = (degree: number) => {
   switch (degree) {
     case 1:

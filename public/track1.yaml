@@ -14,7 +14,6 @@ sections:
     measures:
       - code: Am
         on:
-        functional_harmony: 1
         remarks:
           - スケールのⅠから始まるのが基本らしい。
         notes:
@@ -44,7 +43,6 @@ sections:
               mute_strings: [1, 2]
       - code: G
         on:
-        functional_harmony: 7
         remarks:
           - 4/4拍子では1小節内に8分音符が8つ入るけど、1小節の途中でコードが変わる。
           - 五線だと1つ下なだけだけど、7度の変化となる。
@@ -72,7 +70,6 @@ sections:
     measures:
       - code: Am
         on:
-        functional_harmony: 1
         remarks:
           -
         notes:
@@ -124,7 +121,6 @@ sections:
               mute_strings: [1, 2]
       - code: G7
         on: F
-        functional_harmony: 7
         remarks:
           -
         notes:

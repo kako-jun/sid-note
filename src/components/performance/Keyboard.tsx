@@ -1,10 +1,14 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "./model";
-import { getLine } from "./util";
+import { NoteType } from "@/models/model";
+import { getLine } from "@/utils/util";
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
+  if (!note.pitch) {
+    return;
+  }
+
   const line = getLine(note.pitch);
   const x = 15 + line * 10;
 

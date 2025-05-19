@@ -1,9 +1,13 @@
 "use client";
 
 import React from "react";
-import { getKeyPosition } from "./util";
+import { getKeyPosition } from "@/utils/util";
 
 const drawScale = (context: CanvasRenderingContext2D, scale: string) => {
+  if (!scale) {
+    return;
+  }
+
   const position = getKeyPosition(scale);
 
   const centerX = 80;
