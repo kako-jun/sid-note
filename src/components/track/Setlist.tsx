@@ -8,9 +8,9 @@ const Setlist: React.FC<SetlistProps> = (props) => {
   const {} = props;
 
   const tracks = [
-    { id: 1, title: "Battle 1", artist: "Nobuo Uematsu" },
-    { id: 2, title: "Song B", artist: "Artist 2" },
-    { id: 3, title: "Song C", artist: "Artist 3" },
+    { id: 1, title: "Battle 1", artist: "Final Fantasy 5" },
+    { id: 2, title: "IGGY POP FAN CLUB", artist: "NUMBER GIRL" },
+    { id: 3, title: "海岸通り", artist: "ASIAN KUNG-FU GENERATION" },
   ];
 
   return (
@@ -21,12 +21,12 @@ const Setlist: React.FC<SetlistProps> = (props) => {
           {tracks.map((track, index) => (
             <li
               key={index}
-              style={{ cursor: "pointer", textDecoration: "none" }}
+              style={{ cursor: "pointer", textDecoration: "none", paddingTop: 8, paddingBottom: 8 }}
               onClick={() => (window.location.href = `/tracks/${track.id}`)}
               onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
               onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
             >
-              <span style={{ fontWeight: "bold" }}>{track.title}</span>
+              <span style={{ fontStyle: "italic" }}>{track.title}</span>
               {" / "}
               <span>{track.artist}</span>
             </li>

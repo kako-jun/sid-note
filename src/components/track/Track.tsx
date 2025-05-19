@@ -7,6 +7,12 @@ import Section from "@/components/score/Section";
 import { TrackType } from "@/models/model";
 import { scaleText, getScalePitches, getScaleCodes } from "@/utils/util";
 import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
+import { Jacquard_24 } from "next/font/google";
+
+const Jacquard_24_400 = Jacquard_24({
+  weight: "400",
+  preload: false,
+});
 
 type TrackProps = {
   trackId: number;
@@ -46,8 +52,18 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
 
   return (
     <>
-      <p style={{ marginBottom: 16, fontSize: "1.4rem", fontStyle: "italic" }}>{track.title}</p>
-      {track.cover && <Image src={track.cover} alt="cover" width={100} height={100} />}
+      <p style={{ fontSize: "1.4rem", fontStyle: "italic" }}>{track.title}</p>
+      <div
+        style={{
+          marginTop: 8,
+          marginBottom: 16,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {track.cover && <Image src={`/${track.cover}`} alt="cover" width={320} height={100} />}
+      </div>
       <div
         style={{
           marginLeft: "10%",
@@ -59,9 +75,9 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           gap: 8,
         }}
       >
-        <p style={{ width: "100%", lineHeight: 1, textAlign: "left" }}>{track.artist}</p>
-        <p style={{ width: "100%", lineHeight: 1, textAlign: "center" }}>{track.album}</p>
-        <p style={{ width: "100%", lineHeight: 1, textAlign: "right" }}>{track.year}</p>
+        <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>{track.artist}</p>
+        <p style={{ flex: 2, lineHeight: 1, textAlign: "center" }}>{track.album}</p>
+        <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>{track.year}</p>
       </div>
       <div
         style={{
@@ -75,10 +91,10 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           gap: 8,
         }}
       >
-        <p style={{ width: "100%", lineHeight: 1, textAlign: "left" }}>
+        <p style={{ flex: 1, lineHeight: 1, textAlign: "left" }}>
           {track.time_signature} <span style={{ color: "#888888" }}>time</span>
         </p>
-        <p style={{ width: "100%", lineHeight: 1, textAlign: "right" }}>
+        <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>
           {track.bpm} <span style={{ color: "#888888" }}>BPM</span>
         </p>
       </div>
@@ -97,7 +113,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
         >
           <thead>
             <tr style={{ color: "#888888" }}>
-              <td width={120}></td>
+              <td width={110}></td>
               <td>Ⅰ</td>
               <td>Ⅱ</td>
               <td>Ⅲ</td>
@@ -151,14 +167,11 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
         <ul>
           {track.sections?.map((section, index) => {
             return (
-              <li key={index}>
+              <li key={index} style={{ paddingTop: 8, paddingBottom: 8 }}>
                 <a
+                  className={Jacquard_24_400.className}
                   href={`#${section.name}`}
-                  style={{
-                    fontFamily: "'UnifrakturCook', 'Old English Text MT', 'IM Fell English', cursive",
-                    fontSize: "1.2em",
-                    letterSpacing: "0.05em",
-                  }}
+                  style={{ fontSize: "1.25rem" }}
                   onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                   onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
                 >
