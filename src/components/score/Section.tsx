@@ -3,6 +3,12 @@
 import React from "react";
 import Measure from "@/components/score/Measure";
 import { SectionType } from "@/models/model";
+import { Jacquard_24 } from "next/font/google";
+
+const Jacquard_24_400 = Jacquard_24({
+  weight: "400",
+  preload: false,
+});
 
 type SectionProps = {
   section: SectionType;
@@ -22,11 +28,10 @@ const Section: React.FC<SectionProps> = (props) => {
       }}
     >
       <p
+        className={Jacquard_24_400.className}
         style={{
           marginLeft: 8,
-          fontFamily: "'UnifrakturCook', 'Old English Text MT', 'IM Fell English', cursive",
-          fontSize: "1.2em",
-          letterSpacing: "0.05em",
+          fontSize: "1.25rem",
           border: "1px solid #444444",
           display: "inline-block",
           padding: "0px 8px",

@@ -71,7 +71,7 @@ const Note: React.FC<NoteProps> = (props) => {
   const scoreWidth = React.useMemo(() => {
     const a = 2.5;
     const b = 1000;
-    return Math.max(1000, Math.min(2000, b + (windowWidth - 500) * a));
+    return Math.max(820, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
   return (
