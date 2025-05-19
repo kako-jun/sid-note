@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "./model";
+import { NoteType } from "@/models/model";
 
 // const setupCanvas = (canvas: HTMLCanvasElement) => {
 //   const context = canvas.getContext("2d");

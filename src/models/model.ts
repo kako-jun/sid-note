@@ -26,7 +26,7 @@ export type NoteType = {
 export type MeasureType = {
   code: string;
   on?: string;
-  functional_harmony: number;
+  // functional_harmony: number;
   remarks: string[];
   notes: NoteType[];
 };

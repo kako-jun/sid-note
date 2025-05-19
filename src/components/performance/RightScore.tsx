@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "./model";
+import { NoteType } from "@/models/model";
 
 const drawArrow = (context: CanvasRenderingContext2D, x: number, y: number, direction: "down" | "up") => {
   context.beginPath();

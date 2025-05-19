@@ -1,5 +1,5 @@
 import yaml from "js-yaml";
-import { TrackType } from "./model";
+import { TrackType } from "@/models/model";
 
 // export function loadTrackFromYaml(path: string): TrackType {
 //   const fs = require("fs");

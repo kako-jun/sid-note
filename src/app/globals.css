@@ -34,3 +34,28 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+hidden-scrollbar {
+  scrollbar-width: thin;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+.hidden-scrollbar:hover::-webkit-scrollbar-thumb,
+.hidden-scrollbar:active::-webkit-scrollbar-thumb,
+.hidden-scrollbar:focus-within::-webkit-scrollbar-thumb {
+  background: #444;
+}
+.hidden-scrollbar:hover::-webkit-scrollbar,
+.hidden-scrollbar:active::-webkit-scrollbar,
+.hidden-scrollbar:focus-within::-webkit-scrollbar {
+  background: #222;
+}
