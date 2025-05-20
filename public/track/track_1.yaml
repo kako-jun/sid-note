@@ -1,0 +1,83 @@
+title: Chromatic Chord
+artist: Practice
+album: ""
+year: 0
+cover: ""
+scale: ""
+time_signature: 4/4
+bpm: 60
+remarks:
+sections:
+  - name: Ascending
+    chord_segments:
+      - chord: F＃7
+        remarks:
+        notes:
+          - pitch: F1
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 1
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: [1, 2, 3]
+          - pitch: F＃1
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 1
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 2
+                type: press
+            right:
+              string: 4
+              stroke: up
+              mute_strings: [1, 2, 3]
+          - pitch: G1
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 1
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 4
+                string: 4
+                fret: 3
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: [1, 2, 3]
+          - pitch: G＃1
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 4
+                string: 4
+                fret: 4
+                type: press
+            right:
+              string: 4
+              stroke: up
+              mute_strings: [1, 2, 3]

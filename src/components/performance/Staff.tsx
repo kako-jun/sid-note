@@ -1,8 +1,55 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "@/models/model";
-import { getLine } from "@/utils/util";
+import { NoteType } from "@/schemas/trackSchema";
+import { getLine } from "@/utils/noteUtil";
+
+const drawLines = (context: CanvasRenderingContext2D) => {
+  context.strokeStyle = "#999999";
+  context.lineWidth = 3;
+  for (let i = 0; i < 3; i++) {
+    const y = 40 + i * 20;
+    context.beginPath();
+    context.moveTo(20, y);
+    context.lineTo(220, y);
+    context.stroke();
+  }
+
+  context.beginPath();
+  context.moveTo(130, 100);
+  context.lineTo(190, 100);
+  context.stroke();
+
+  for (let i = 0; i < 5; i++) {
+    const y = 120 + i * 20;
+    context.beginPath();
+    context.moveTo(20, y);
+    context.lineTo(220, y);
+    context.stroke();
+  }
+
+  context.beginPath();
+  context.moveTo(130, 220);
+  context.lineTo(190, 220);
+  context.stroke();
+
+  for (let i = 0; i < 3; i++) {
+    const y = 240 + i * 20;
+    context.beginPath();
+    context.moveTo(20, y);
+    context.lineTo(220, y);
+    context.stroke();
+  }
+
+  // circle
+  context.beginPath();
+  context.arc(60, 50, 4, 0, Math.PI * 2);
+  context.arc(60, 70, 4, 0, Math.PI * 2);
+  context.arc(60, 130, 4, 0, Math.PI * 2);
+  context.arc(60, 150, 4, 0, Math.PI * 2);
+  context.fillStyle = "#555555";
+  context.fill();
+};
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
   if (!note.pitch) {
@@ -16,14 +63,14 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     line += 0.5;
   }
 
-  const y = 145 - line * 5;
-  const x = 80;
+  const y = 290 - line * 10; // 145→290, 5→10
+  const x = 160; // 80→160
 
   if (next) {
     context.beginPath();
-    context.shadowBlur = 5;
+    context.shadowBlur = 10; // 5→10
     context.shadowColor = "rgba(0, 200, 255, 1)";
-    context.arc(x, y, 5, 0, Math.PI * 2);
+    context.arc(x, y, 10, 0, Math.PI * 2); // 5→10
     context.fillStyle = "rgba(0, 200, 255, 0.2)";
     context.fill();
 
@@ -40,12 +87,12 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     }
 
     context.fillStyle = "rgba(0, 200, 255, 1)";
-    context.font = "12px Arial";
+    context.font = "24px Arial"; // 12px→24px
     const textWidth = context.measureText(text).width;
-    context.fillText(text, x - 12 - textWidth / 2, y);
+    context.fillText(text, x - 24 - textWidth / 2, y); // 12→24
   } else {
     context.beginPath();
-    context.arc(x, y, 5, 0, Math.PI * 2);
+    context.arc(x, y, 10, 0, Math.PI * 2); // 5→10
 
     context.fillStyle = "white";
     context.fill();
@@ -59,9 +106,9 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     }
 
     context.fillStyle = "#999999";
-    context.font = "12px Arial";
+    context.font = "24px Arial"; // 12px→24px
     const textWidth = context.measureText(text).width;
-    context.fillText(text, x - 12 - textWidth / 2, y);
+    context.fillText(text, x - 24 - textWidth / 2, y); // 12→24
   }
 };
 
@@ -89,50 +136,7 @@ const Staff: React.FC<StaffProps> = (props) => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.strokeStyle = "#999999";
-    context.lineWidth = 1;
-    for (let i = 0; i < 3; i++) {
-      const y = 20 + i * 10;
-      context.beginPath();
-      context.moveTo(10, y);
-      context.lineTo(110, y);
-      context.stroke();
-    }
-
-    context.beginPath();
-    context.moveTo(65, 50);
-    context.lineTo(95, 50);
-    context.stroke();
-
-    for (let i = 0; i < 5; i++) {
-      const y = 60 + i * 10;
-      context.beginPath();
-      context.moveTo(10, y);
-      context.lineTo(110, y);
-      context.stroke();
-    }
-
-    context.beginPath();
-    context.moveTo(65, 110);
-    context.lineTo(95, 110);
-    context.stroke();
-
-    for (let i = 0; i < 3; i++) {
-      const y = 120 + i * 10;
-      context.beginPath();
-      context.moveTo(10, y);
-      context.lineTo(110, y);
-      context.stroke();
-    }
-
-    // circle
-    context.beginPath();
-    context.arc(30, 25, 2, 0, Math.PI * 2);
-    context.arc(30, 35, 2, 0, Math.PI * 2);
-    context.arc(30, 65, 2, 0, Math.PI * 2);
-    context.arc(30, 75, 2, 0, Math.PI * 2);
-    context.fillStyle = "#555555";
-    context.fill();
+    drawLines(context);
   }, []);
 
   React.useEffect(() => {
@@ -158,7 +162,7 @@ const Staff: React.FC<StaffProps> = (props) => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={120} height={150} style={{ width: "100%" }} />
+      <canvas ref={canvasRef} width={240} height={300} style={{ width: "100%" }} />
     </div>
   );
 };

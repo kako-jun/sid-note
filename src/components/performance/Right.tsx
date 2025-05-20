@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "@/models/model";
+import { NoteType } from "@/schemas/trackSchema";
 
 const drawArrow = (context: CanvasRenderingContext2D, x: number, y: number, direction: "down" | "up") => {
   context.beginPath();
@@ -23,6 +23,18 @@ const drawArrow = (context: CanvasRenderingContext2D, x: number, y: number, dire
   context.strokeStyle = "#333333";
   context.lineWidth = 2;
   context.stroke();
+};
+
+const drawLines = (context: CanvasRenderingContext2D) => {
+  context.strokeStyle = "#999999";
+  context.lineWidth = 1;
+  for (let i = 0; i < 4; i++) {
+    const y = 20 + i * 20;
+    context.beginPath();
+    context.moveTo(10, y);
+    context.lineTo(210, y);
+    context.stroke();
+  }
 };
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
@@ -68,7 +80,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     // context.fillText(text, x - textWidth / 2, y + 4);
 
     // mute
-    note.right.mute_strings.forEach((muteString) => {
+    note.right.muteStrings.forEach((muteString) => {
       const y = 20 + (muteString - 1) * 20;
       context.beginPath();
       context.arc(140, y, 10, 0, Math.PI * 2);
@@ -79,12 +91,12 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
   }
 };
 
-type RightScoreProps = {
+type RightProps = {
   note: NoteType;
   nextNote?: NoteType | null;
 };
 
-const RightScore: React.FC<RightScoreProps> = (props) => {
+const Right: React.FC<RightProps> = (props) => {
   const { note, nextNote = null } = props;
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
@@ -103,15 +115,7 @@ const RightScore: React.FC<RightScoreProps> = (props) => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.strokeStyle = "#999999";
-    context.lineWidth = 1;
-    for (let i = 0; i < 4; i++) {
-      const y = 20 + i * 20;
-      context.beginPath();
-      context.moveTo(10, y);
-      context.lineTo(210, y);
-      context.stroke();
-    }
+    drawLines(context);
   }, []);
 
   React.useEffect(() => {
@@ -142,4 +146,4 @@ const RightScore: React.FC<RightScoreProps> = (props) => {
   );
 };
 
-export default RightScore;
+export default Right;

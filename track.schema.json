@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TrackType",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string" },
+    "artist": { "type": "string" },
+    "album": { "type": "string" },
+    "year": { "type": "integer" },
+    "cover": { "type": ["string", "null"], "default": null },
+    "scale": { "type": "string" },
+    "time_signature": { "type": "string", "enum": ["2/4", "3/4", "4/4"] },
+    "bpm": { "type": "integer" },
+    "remarks": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "default": null
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "chord_segments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "chord": { "type": "string" },
+                "on": { "type": ["string", "null"], "default": null },
+                "remarks": {
+                  "type": ["array", "null"],
+                  "items": { "type": "string" },
+                  "default": null
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pitch": { "type": "string" },
+                      "value": {
+                        "type": "string",
+                        "enum": [
+                          "whole",
+                          "d_whole",
+                          "half",
+                          "d_half",
+                          "quarter",
+                          "d_quarter",
+                          "8th",
+                          "d_8th",
+                          "16th",
+                          "d_16th"
+                        ]
+                      },
+                      "remarks": {
+                        "type": ["array", "null"],
+                        "items": { "type": "string" },
+                        "default": null
+                      },
+                      "tags": {
+                        "type": ["array", "null"],
+                        "items": { "type": "string", "enum": ["easy", "hard"] },
+                        "default": null
+                      },
+                      "lefts": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "finger": { "type": "integer" },
+                            "string": { "type": "integer" },
+                            "fret": { "type": "integer" },
+                            "type": { "type": "string", "enum": ["press", "mute", "ghost_note", "chord"] },
+                            "pitch": { "type": ["string", "null"], "default": null },
+                            "interval": { "type": ["string", "null"], "default": null }
+                          },
+                          "required": ["finger", "string", "fret", "type"]
+                        }
+                      },
+                      "right": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "string": { "type": "integer" },
+                              "stroke": { "type": "string", "enum": ["down", "up", "thumb"] },
+                              "mute_strings": {
+                                "type": "array",
+                                "items": { "type": "integer" }
+                              }
+                            },
+                            "required": ["string", "stroke", "mute_strings"]
+                          },
+                          { "type": "null" }
+                        ],
+                        "default": null
+                      }
+                    },
+                    "required": ["pitch", "value", "lefts"]
+                  }
+                }
+              },
+              "required": ["chord", "notes"]
+            }
+          }
+        },
+        "required": ["name", "chord_segments"]
+      }
+    }
+  },
+  "required": ["title", "artist", "album", "year", "scale", "time_signature", "bpm", "sections"]
+}

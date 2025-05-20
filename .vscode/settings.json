@@ -1,0 +1,5 @@
+{
+  "yaml.schemas": {
+    "./track.schema.json": "public/track/track_*.yaml"
+  }
+}

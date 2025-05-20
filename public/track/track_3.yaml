@@ -1,0 +1,101 @@
+title: Diatonic Chord
+artist: Practice
+album: ""
+year: 0
+cover: ""
+scale: C
+time_signature: 4/4
+bpm: 60
+remarks:
+sections:
+  - name: Ⅰ C
+    chord_segments:
+      - chord: C
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 2
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: Ⅱ Dm
+    chord_segments:
+      - chord: Dm
+        remarks:
+        notes: []
+  - name: Ⅲ Em
+    chord_segments:
+      - chord: Em
+        remarks:
+        notes: []
+  - name: Ⅳ F
+    chord_segments:
+      - chord: F
+        remarks:
+        notes: []
+  - name: Ⅴ G
+    chord_segments:
+      - chord: G
+        remarks:
+        notes: []
+  - name: Ⅵ Am
+    chord_segments:
+      - chord: Am
+        remarks:
+        notes: []
+  - name: Ⅶ Bdim
+    chord_segments:
+      - chord: Bdim
+        remarks:
+        notes: []
