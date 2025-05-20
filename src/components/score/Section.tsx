@@ -1,25 +1,22 @@
 "use client";
 
 import React from "react";
-import Measure from "@/components/score/Measure";
-import { SectionType } from "@/models/model";
-import { Jacquard_24 } from "next/font/google";
-
-const Jacquard_24_400 = Jacquard_24({
-  weight: "400",
-  preload: false,
-});
+import ChordSegment from "@/components/score/ChordSegment";
+import { SectionType } from "@/schemas/trackSchema";
+import { Jacquard_24_400 } from "@/components/common/Font";
 
 type SectionProps = {
   section: SectionType;
   scale: string;
+  scrollLeft: number;
+  onScroll: (left: number) => void;
 };
 
 const Section: React.FC<SectionProps> = (props) => {
-  const { section, scale } = props;
+  const { section, scale, scrollLeft, onScroll } = props;
 
   return (
-    <div
+    <section
       style={{
         background: "black",
         textAlign: "left",
@@ -32,6 +29,7 @@ const Section: React.FC<SectionProps> = (props) => {
         style={{
           marginLeft: 8,
           fontSize: "1.25rem",
+          fontFamily: '"Jacquard 24", "Old English Text MT", serif',
           border: "1px solid #444444",
           display: "inline-block",
           padding: "0px 8px",
@@ -50,21 +48,23 @@ const Section: React.FC<SectionProps> = (props) => {
           gap: 8,
         }}
       >
-        {section.measures.map((measure, index) => {
+        {section.chordSegments.map((chordSegment, index) => {
           return (
-            <Measure
+            <ChordSegment
               key={index}
-              measure={measure}
-              prevMeasure={section.measures[index - 1] || null}
-              nextMeasure={section.measures[index + 1] || null}
-              measureId={index + 1}
-              measureCount={section.measures.length}
+              chordSegment={chordSegment}
+              chordSegmentId={index + 1}
+              prevSegment={section.chordSegments[index - 1] || null}
+              nextSegment={section.chordSegments[index + 1] || null}
+              chordSegmentCount={section.chordSegments.length}
               scale={scale}
+              scrollLeft={scrollLeft}
+              onScroll={onScroll}
             />
           );
         })}
       </div>
-    </div>
+    </section>
   );
 };
 

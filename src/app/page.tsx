@@ -2,21 +2,18 @@ import Image from "next/image";
 import TitleHeader from "@/components/layout/TitleHeader";
 import Footer from "@/components/layout/Footer";
 import Setlist from "@/components/track/Setlist";
+import CenteredPage from "@/components/layout/CenteredPage";
 
 export default function Home() {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: 16,
-        fontFamily: "'游明朝', 'Yu Mincho', 'MS Mincho', 'Hiragino Mincho Pro', serif",
-      }}
-    >
+    <CenteredPage>
       <TitleHeader />
 
       <p>ベースを練習するためのノートです。</p>
 
-      <Setlist />
+      <div style={{ margin: "32px 0" }}>
+        <Setlist />
+      </div>
 
       <section
         style={{
@@ -35,7 +32,7 @@ export default function Home() {
 
       <Footer />
 
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      {/* <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
           <Image className="dark:invert" src="/next.svg" alt="Next.js logo" width={180} height={38} priority />
           <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
@@ -98,7 +95,7 @@ export default function Home() {
             Go to nextjs.org →
           </a>
         </footer>
-      </div>
-    </div>
+      </div> */}
+    </CenteredPage>
   );
 }

@@ -1,0 +1,620 @@
+title: All Chord
+artist: Practice
+album: ""
+year: 0
+cover: ""
+scale: C
+time_signature: 4/4
+bpm: 60
+remarks:
+sections:
+  - name: C / Cmaj / C△
+    chord_segments:
+      - chord: C
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 2
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: Cm / C-
+    chord_segments:
+      - chord: Cm
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: Csus4 / Csus
+    chord_segments:
+      - chord: Csus4
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: C5
+    chord_segments:
+      - chord: C5
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: Cdim / Co
+    chord_segments:
+      - chord: Cdim
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: C7
+    chord_segments:
+      - chord: C7
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 2
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: CM7 / Cmaj7 / C△7
+    chord_segments:
+      - chord: CM7
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: Cm7 / C-7
+    chord_segments:
+      - chord: Cm7
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: Caug7 / C7＃5
+    chord_segments:
+      - chord: Caug7
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]
+  - name: C8
+    chord_segments:
+      - chord: C8
+        remarks:
+        notes:
+          - pitch: C2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 2
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 3
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: E♭2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 1
+                type: press
+              - finger: 3
+                string: 3
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 3
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 3
+                type: mute
+              - finger: 3
+                string: 3
+                fret: 4
+                type: mute
+              - finger: 4
+                string: 2
+                fret: 5
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: [1]

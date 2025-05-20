@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "@/models/model";
+import { NoteType } from "@/schemas/trackSchema";
 
 // const setupCanvas = (canvas: HTMLCanvasElement) => {
 //   const context = canvas.getContext("2d");
@@ -21,6 +21,63 @@ import { NoteType } from "@/models/model";
 //   // スケールを調整
 //   context.scale(devicePixelRatio, devicePixelRatio);
 // };
+
+const drawLines = (context: CanvasRenderingContext2D) => {
+  context.strokeStyle = "#999999";
+  context.lineWidth = 1;
+  for (let i = 0; i < 4; i++) {
+    const y = 20 + i * 20;
+    context.beginPath();
+    context.moveTo(10, y);
+    context.lineTo(2410, y);
+    context.stroke();
+  }
+
+  const verticalLineCount = 24;
+  const spacing = 2400 / verticalLineCount;
+  context.fillStyle = "#999999";
+  context.font = "12px Arial";
+  for (let i = 0; i <= verticalLineCount; i++) {
+    const x = 10 + i * spacing;
+    context.beginPath();
+    context.moveTo(x, 10);
+    context.lineTo(x, 90);
+    context.stroke();
+
+    const text = `${i}`;
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, x - textWidth / 2, 105);
+  }
+
+  // circle
+  context.beginPath();
+  context.arc(260, 50, 5, 0, Math.PI * 2);
+  context.arc(460, 50, 5, 0, Math.PI * 2);
+  context.arc(660, 50, 5, 0, Math.PI * 2);
+  context.arc(860, 50, 5, 0, Math.PI * 2);
+  context.fillStyle = "#555555";
+  context.fill();
+
+  context.beginPath();
+  context.arc(1160, 30, 5, 0, Math.PI * 2);
+  context.arc(1160, 70, 5, 0, Math.PI * 2);
+  context.fillStyle = "#555555";
+  context.fill();
+
+  context.beginPath();
+  context.arc(1460, 50, 5, 0, Math.PI * 2);
+  context.arc(1660, 50, 5, 0, Math.PI * 2);
+  context.arc(1860, 50, 5, 0, Math.PI * 2);
+  context.arc(2060, 50, 5, 0, Math.PI * 2);
+  context.fillStyle = "#555555";
+  context.fill();
+
+  context.beginPath();
+  context.arc(2360, 30, 5, 0, Math.PI * 2);
+  context.arc(2360, 70, 5, 0, Math.PI * 2);
+  context.fillStyle = "#555555";
+  context.fill();
+};
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
   if (next) {
@@ -48,7 +105,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
       const x = 10 + left.fret * (2400 / 24);
 
       // finger
-      if (left.type !== "code" && left.fret > 0) {
+      if (left.type !== "chord" && left.fret > 0) {
         context.beginPath();
         context.arc(x, y, 20, 0, Math.PI);
         context.fillStyle = "rgba(50, 0, 255, 0.2)";
@@ -61,7 +118,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
 
       switch (left.type) {
         case "press":
-          if (left.degree === "1") {
+          if (left.interval === "1") {
             context.fillStyle = "khaki";
           } else {
             context.fillStyle = "#cccccc";
@@ -73,9 +130,9 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
         case "ghost_note":
           context.fillStyle = "black";
           break;
-        case "code":
+        case "chord":
           context.ellipse(x, y, 32, 10, 0, 0, Math.PI * 2);
-          if (left.degree === "1") {
+          if (left.interval === "1") {
             context.fillStyle = "khaki";
           } else {
             context.fillStyle = "#cccccc";
@@ -96,7 +153,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
         case "ghost_note":
           context.fillStyle = "white";
           break;
-        case "code":
+        case "chord":
           context.fillStyle = "black";
           break;
         default:
@@ -106,19 +163,19 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
       // context.font = "bold 12px Arial";
       context.font = "12px Verdana";
       let text = left.fret > 0 ? `${left.finger}` : "";
-      if (left.type === "code") {
+      if (left.type === "chord") {
         text = `${left.pitch}`;
       }
 
       const textWidth = context.measureText(text).width;
       context.fillText(text, x - textWidth / 2, y + 4);
 
-      {
+      if (left.interval) {
         context.fillStyle = "white";
         context.font = "12px Arial";
-        const text = left.degree ?? "";
+        const text = left.interval;
         const textWidth = context.measureText(text).width;
-        if (left.type === "code") {
+        if (left.type === "chord") {
           context.fillText(text, x + 40 - textWidth / 2, y - 4);
         } else {
           context.fillText(text, x + 20 - textWidth / 2, y - 4);
@@ -128,14 +185,27 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
   }
 };
 
-type LeftScoreProps = {
+type LeftProps = {
   note: NoteType;
   nextNote?: NoteType | null;
+  scrollLeft?: number;
+  onScroll?: (left: number) => void;
 };
 
-const LeftScore: React.FC<LeftScoreProps> = (props) => {
-  const { note, nextNote = null } = props;
+const Left: React.FC<LeftProps> = (props) => {
+  const { note, nextNote = null, scrollLeft, onScroll } = props;
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const parentRef = React.useRef<HTMLDivElement>(null);
+  const isDragging = React.useRef(false);
+  const lastX = React.useRef(0);
+
+  React.useEffect(() => {
+    if (parentRef.current && typeof scrollLeft === "number") {
+      if (parentRef.current.scrollLeft !== scrollLeft) {
+        parentRef.current.scrollLeft = scrollLeft;
+      }
+    }
+  }, [scrollLeft]);
 
   React.useEffect(() => {
     if (!canvasRef.current) {
@@ -150,60 +220,7 @@ const LeftScore: React.FC<LeftScoreProps> = (props) => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.strokeStyle = "#999999";
-    context.lineWidth = 1;
-    for (let i = 0; i < 4; i++) {
-      const y = 20 + i * 20;
-      context.beginPath();
-      context.moveTo(10, y);
-      context.lineTo(2410, y);
-      context.stroke();
-    }
-
-    const verticalLineCount = 24;
-    const spacing = 2400 / verticalLineCount;
-    context.fillStyle = "#999999";
-    context.font = "12px Arial";
-    for (let i = 0; i <= verticalLineCount; i++) {
-      const x = 10 + i * spacing;
-      context.beginPath();
-      context.moveTo(x, 10);
-      context.lineTo(x, 90);
-      context.stroke();
-
-      const text = `${i}`;
-      const textWidth = context.measureText(text).width;
-      context.fillText(text, x - textWidth / 2, 105);
-    }
-
-    // circle
-    context.beginPath();
-    context.arc(260, 50, 5, 0, Math.PI * 2);
-    context.arc(460, 50, 5, 0, Math.PI * 2);
-    context.arc(660, 50, 5, 0, Math.PI * 2);
-    context.arc(860, 50, 5, 0, Math.PI * 2);
-    context.fillStyle = "#555555";
-    context.fill();
-
-    context.beginPath();
-    context.arc(1160, 30, 5, 0, Math.PI * 2);
-    context.arc(1160, 70, 5, 0, Math.PI * 2);
-    context.fillStyle = "#555555";
-    context.fill();
-
-    context.beginPath();
-    context.arc(1460, 50, 5, 0, Math.PI * 2);
-    context.arc(1660, 50, 5, 0, Math.PI * 2);
-    context.arc(1860, 50, 5, 0, Math.PI * 2);
-    context.arc(2060, 50, 5, 0, Math.PI * 2);
-    context.fillStyle = "#555555";
-    context.fill();
-
-    context.beginPath();
-    context.arc(2360, 30, 5, 0, Math.PI * 2);
-    context.arc(2360, 70, 5, 0, Math.PI * 2);
-    context.fillStyle = "#555555";
-    context.fill();
+    drawLines(context);
   }, []);
 
   React.useEffect(() => {
@@ -227,11 +244,49 @@ const LeftScore: React.FC<LeftScoreProps> = (props) => {
     drawNote(context, note);
   }, [note, nextNote]);
 
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDragging.current = true;
+      lastX.current = e.clientX;
+      canvas.style.cursor = "grabbing";
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      const dx = e.clientX - lastX.current;
+      // scrollLeftの現在値にdxの符号を反転して加算
+      // 移動量を増幅（例: 2倍）
+      const amplify = 3;
+      if (onScroll && typeof scrollLeft === "number") {
+        onScroll(Math.max(0, scrollLeft - dx * amplify));
+      }
+      lastX.current = e.clientX;
+    };
+
+    const handleMouseUp = () => {
+      isDragging.current = false;
+      canvas.style.cursor = "default";
+    };
+
+    canvas.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      canvas.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [scrollLeft, onScroll]);
+
   return (
-    <div>
+    <div ref={parentRef} style={{ width: "100%" }}>
       <canvas ref={canvasRef} width={2420} height={115} style={{ width: "100%" }} />
     </div>
   );
 };
 
-export default LeftScore;
+export default Left;

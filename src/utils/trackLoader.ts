@@ -1,5 +1,6 @@
 import yaml from "js-yaml";
-import { TrackType } from "@/models/model";
+import { TrackSchema, TrackType } from "@/schemas/trackSchema";
+import { toCamelCaseKeysDeep } from "@/utils/objectUtil";
 
 // export function loadTrackFromYaml(path: string): TrackType {
 //   const fs = require("fs");
@@ -9,11 +10,23 @@ import { TrackType } from "@/models/model";
 
 export async function loadTrackFromYamlFile(file: File): Promise<TrackType> {
   const text = await file.text();
-  return yaml.load(text) as TrackType;
+  const raw = yaml.load(text);
+  const camel = toCamelCaseKeysDeep(raw);
+  const parsed = TrackSchema.safeParse(camel);
+  if (!parsed.success) {
+    throw new Error("Invalid track yaml: " + JSON.stringify(parsed.error.issues, null, 2));
+  }
+  return parsed.data;
 }
 
 export async function loadTrackFromYamlUrl(url: string): Promise<TrackType> {
   const res = await fetch(url);
   const text = await res.text();
-  return yaml.load(text) as TrackType;
+  const raw = yaml.load(text);
+  const camel = toCamelCaseKeysDeep(raw);
+  const parsed = TrackSchema.safeParse(camel);
+  if (!parsed.success) {
+    throw new Error("Invalid track yaml: " + JSON.stringify(parsed.error.issues, null, 2));
+  }
+  return parsed.data;
 }

@@ -11,8 +11,8 @@ remarks:
   - けど、短調なのね。Aマイナースケールは白鍵が多いので、ピアノでも弾けそう。
 sections:
   - name: Intro
-    measures:
-      - code: Am
+    chord_segments:
+      - chord: Am
         on:
         remarks:
           - スケールのⅠから始まるのが基本らしい。
@@ -32,7 +32,6 @@ sections:
                 string: 3
                 fret: 0
                 type: press
-                degree: 1
               - finger: 4
                 string: 2
                 fret: 4
@@ -41,7 +40,7 @@ sections:
               string: 3
               stroke: down
               mute_strings: [1, 2]
-      - code: G
+      - chord: G
         on:
         remarks:
           - 4/4拍子では1小節内に8分音符が8つ入るけど、1小節の途中でコードが変わる。
@@ -57,7 +56,6 @@ sections:
                 string: 4
                 fret: 3
                 type: press
-                degree: 1
               - finger: 4
                 string: 3
                 fret: 4
@@ -67,16 +65,14 @@ sections:
               stroke: down
               mute_strings: [1, 2, 3]
   - name: A
-    measures:
-      - code: Am
+    chord_segments:
+      - chord: Am
         on:
         remarks:
-          -
         notes:
           - pitch: A2
             value: 8th
             remarks:
-              -
             tags: [easy]
             lefts:
               - finger: 2
@@ -87,7 +83,6 @@ sections:
                 string: 3
                 fret: 0
                 type: press
-                degree: 1
               - finger: 4
                 string: 2
                 fret: 4
@@ -99,7 +94,7 @@ sections:
           - pitch: A3
             value: 8th
             remarks:
-              -
+              - 1オクターブ上への変化だけど、同時に鳴らしてるわけじゃないので、オクターブユニゾンとは呼ばない。
             tags: []
             lefts:
               - finger: 2
@@ -110,7 +105,6 @@ sections:
                 string: 3
                 fret: 0
                 type: press
-                degree: 1
               - finger: 4
                 string: 2
                 fret: 4
@@ -119,22 +113,21 @@ sections:
               string: 3
               stroke: down
               mute_strings: [1, 2]
-      - code: G7
+      - chord: G7
         on: F
         remarks:
-          -
         notes:
           - pitch: G2
             value: 8th
             remarks:
-              -
+              []
+              # -
             tags: [easy]
             lefts:
               - finger: 3
                 string: 4
                 fret: 3
                 type: press
-                degree: 1
               - finger: 4
                 string: 3
                 fret: 4
@@ -146,14 +139,12 @@ sections:
           - pitch: F2
             value: 8th
             remarks:
-              -
             tags: []
             lefts:
               - finger: 3
                 string: 4
                 fret: 3
                 type: press
-                degree: 1
               - finger: 4
                 string: 3
                 fret: 4

@@ -1,7 +1,39 @@
 "use client";
 
 import React from "react";
-import { getKeyPosition } from "@/utils/util";
+import { getKeyPosition } from "@/utils/noteUtil";
+
+const drawLines = (context: CanvasRenderingContext2D) => {
+  // 外円
+  context.beginPath();
+  context.arc(80, 55, 50, 0, Math.PI * 2);
+  context.strokeStyle = "#555555";
+  context.lineWidth = 2;
+  context.stroke();
+
+  // 内円
+  context.beginPath();
+  context.arc(80, 55, 30, 0, Math.PI * 2);
+  context.strokeStyle = "#555555";
+  context.lineWidth = 1;
+  context.stroke();
+
+  // 放射線
+  const centerX = 80;
+  const centerY = 55;
+  const radius = 50;
+  for (let i = 0; i < 12; i++) {
+    const angle = (Math.PI * 2 * (i + 0.5)) / 12;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    context.beginPath();
+    context.moveTo(centerX, centerY);
+    context.lineTo(x, y);
+    context.strokeStyle = "#555555";
+    context.lineWidth = 1;
+    context.stroke();
+  }
+};
 
 const drawScale = (context: CanvasRenderingContext2D, scale: string) => {
   if (!scale) {
@@ -51,34 +83,7 @@ const CircleOfFifths: React.FC<CircleOfFifthsProps> = (props) => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.beginPath();
-    context.arc(80, 55, 50, 0, Math.PI * 2);
-    context.strokeStyle = "#555555";
-    context.lineWidth = 2;
-    context.stroke();
-
-    context.beginPath();
-    context.arc(80, 55, 30, 0, Math.PI * 2);
-    context.strokeStyle = "#555555";
-    context.lineWidth = 1;
-    context.stroke();
-
-    const centerX = 80;
-    const centerY = 55;
-    const radius = 50;
-
-    for (let i = 0; i < 12; i++) {
-      const angle = (Math.PI * 2 * (i + 0.5)) / 12;
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
-
-      context.beginPath();
-      context.moveTo(centerX, centerY);
-      context.lineTo(x, y);
-      context.strokeStyle = "#555555";
-      context.lineWidth = 1;
-      context.stroke();
-    }
+    drawLines(context);
   }, []);
 
   React.useEffect(() => {

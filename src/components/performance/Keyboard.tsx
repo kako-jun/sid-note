@@ -1,8 +1,55 @@
 "use client";
 
 import React from "react";
-import { NoteType } from "@/models/model";
-import { getLine } from "@/utils/util";
+import { NoteType } from "@/schemas/trackSchema";
+import { getLine } from "@/utils/noteUtil";
+
+const drawLines = (context: CanvasRenderingContext2D) => {
+  context.strokeStyle = "#999999";
+  context.lineWidth = 2;
+  for (let i = 0; i < 24; i++) {
+    const x = 20 + i * 20;
+    context.beginPath();
+    context.moveTo(x, 40);
+    context.lineTo(x, 200);
+    context.stroke();
+  }
+
+  context.fillStyle = "#555555";
+  context.fillRect(14, 40, 12, 80);
+
+  for (let i = 0; i < 3; i++) {
+    const x = 54 + i * 20;
+    context.fillRect(x, 40, 12, 80);
+  }
+  for (let i = 0; i < 2; i++) {
+    const x = 134 + i * 20;
+    context.fillRect(x, 40, 12, 80);
+  }
+  for (let i = 0; i < 3; i++) {
+    const x = 194 + i * 20;
+    context.fillRect(x, 40, 12, 80);
+  }
+  for (let i = 0; i < 2; i++) {
+    const x = 274 + i * 20;
+    context.fillRect(x, 40, 12, 80);
+  }
+  for (let i = 0; i < 3; i++) {
+    const x = 334 + i * 20;
+    context.fillRect(x, 40, 12, 80);
+  }
+  for (let i = 0; i < 2; i++) {
+    const x = 414 + i * 20;
+    context.fillRect(x, 40, 12, 80);
+  }
+  context.fillRect(474, 40, 12, 80);
+
+  // circle
+  context.beginPath();
+  context.arc(410, 180, 4, 0, Math.PI * 2);
+  context.fillStyle = "#555555";
+  context.fill();
+};
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
   if (!note.pitch) {
@@ -10,18 +57,18 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
   }
 
   const line = getLine(note.pitch);
-  const x = 15 + line * 10;
+  const x = 30 + line * 20; // 15→30, 10→20
 
-  let y = 80;
+  let y = 160; // 80→160
   if (!Number.isInteger(line)) {
-    y = 40;
+    y = 80; // 40→80
   }
 
   if (next) {
     context.beginPath();
-    context.shadowBlur = 5;
+    context.shadowBlur = 10; // 5→10
     context.shadowColor = "rgba(0, 200, 255, 1)";
-    context.arc(x, y, 5, 0, Math.PI * 2);
+    context.arc(x, y, 10, 0, Math.PI * 2); // 5→10
     context.fillStyle = "rgba(0, 200, 255, 0.2)";
     context.fill();
 
@@ -30,7 +77,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     context.shadowColor = "transparent";
   } else {
     context.beginPath();
-    context.arc(x, y, 5, 0, Math.PI * 2);
+    context.arc(x, y, 10, 0, Math.PI * 2); // 5→10
     context.fillStyle = "white";
     context.fill();
   }
@@ -60,56 +107,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    context.strokeStyle = "#999999";
-    context.lineWidth = 1;
-    for (let i = 0; i < 24; i++) {
-      const x = 10 + i * 10;
-      context.beginPath();
-      context.moveTo(x, 20);
-      context.lineTo(x, 100);
-      context.stroke();
-    }
-
-    context.fillStyle = "#555555";
-    context.fillRect(7, 20, 6, 40);
-
-    for (let i = 0; i < 3; i++) {
-      const x = 27 + i * 10;
-      context.fillRect(x, 20, 6, 40);
-    }
-
-    for (let i = 0; i < 2; i++) {
-      const x = 67 + i * 10;
-      context.fillRect(x, 20, 6, 40);
-    }
-
-    for (let i = 0; i < 3; i++) {
-      const x = 97 + i * 10;
-      context.fillRect(x, 20, 6, 40);
-    }
-
-    for (let i = 0; i < 2; i++) {
-      const x = 137 + i * 10;
-      context.fillRect(x, 20, 6, 40);
-    }
-
-    for (let i = 0; i < 3; i++) {
-      const x = 167 + i * 10;
-      context.fillRect(x, 20, 6, 40);
-    }
-
-    for (let i = 0; i < 2; i++) {
-      const x = 207 + i * 10;
-      context.fillRect(x, 20, 6, 40);
-    }
-
-    context.fillRect(237, 20, 6, 40);
-
-    // circle
-    context.beginPath();
-    context.arc(205, 90, 2, 0, Math.PI * 2);
-    context.fillStyle = "#555555";
-    context.fill();
+    drawLines(context);
   }, []);
 
   React.useEffect(() => {
@@ -135,7 +133,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={250} height={115} style={{ width: "100%" }} />
+      <canvas ref={canvasRef} width={500} height={230} style={{ width: "100%" }} />
     </div>
   );
 };
