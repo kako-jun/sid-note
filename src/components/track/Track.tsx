@@ -98,10 +98,11 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
         {track.cover && (
           <div style={{ position: "relative", display: "inline-block", width: 320, height: 100 }}>
             <Image
-              src={`/${track.cover}`}
+              src={`/track/${track.cover}`}
               alt="cover"
               width={320}
               height={100}
+              priority
               style={{ filter: "grayscale(1)", width: 320, height: 100, objectFit: "cover" }}
             />
             <Image
@@ -109,6 +110,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
               alt="grunge texture"
               width={320}
               height={100}
+              priority
               style={{
                 position: "absolute",
                 top: 0,
@@ -117,7 +119,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
                 height: 100,
                 pointerEvents: "none",
                 mixBlendMode: "multiply",
-                opacity: 0.5,
+                opacity: 0.1,
               }}
             />
           </div>
