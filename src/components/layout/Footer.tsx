@@ -13,6 +13,7 @@ const Footer: React.FC = () => (
       padding: 8,
       background: "black",
       color: "#888888",
+      fontSize: "0.875rem",
     }}
   >
     kako-jun
@@ -36,7 +37,7 @@ const Footer: React.FC = () => (
         />
       </svg>
     </a>
-    , whose bass playing could clear a crowded room.
+    whose bass playing could clear a room.
   </p>
 );
 

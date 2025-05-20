@@ -6,7 +6,7 @@ import { getLine } from "@/utils/noteUtil";
 
 const drawLines = (context: CanvasRenderingContext2D) => {
   context.strokeStyle = "#999999";
-  context.lineWidth = 3;
+  context.lineWidth = 1;
   for (let i = 0; i < 3; i++) {
     const y = 40 + i * 20;
     context.beginPath();

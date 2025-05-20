@@ -85,7 +85,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
 
   return (
     <section>
-      <p style={{ fontSize: "1.4rem", fontStyle: "italic" }}>{track.title}</p>
+      <p style={{ fontSize: "1.25rem", fontStyle: "italic" }}>{track.title}</p>
       <div
         style={{
           marginTop: 8,
@@ -106,7 +106,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
               style={{ filter: "grayscale(1)", width: 320, height: 100, objectFit: "cover" }}
             />
             <Image
-              src="/grunge.webp"
+              src="/grunge_1.webp"
               alt="grunge texture"
               width={320}
               height={100}
@@ -119,7 +119,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
                 height: 100,
                 pointerEvents: "none",
                 mixBlendMode: "multiply",
-                opacity: 0.1,
+                opacity: 0.3,
               }}
             />
           </div>
@@ -134,6 +134,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           justifyContent: "space-between",
           alignItems: "start",
           gap: 8,
+          fontSize: "0.875rem",
         }}
       >
         <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>{track.artist}</p>
