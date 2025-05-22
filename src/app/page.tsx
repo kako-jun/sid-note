@@ -1,8 +1,8 @@
-import Image from "next/image";
-import TitleHeader from "@/components/layout/TitleHeader";
-import Footer from "@/components/layout/Footer";
-import Setlist from "@/components/track/Setlist";
 import CenteredPage from "@/components/layout/CenteredPage";
+import Footer from "@/components/layout/Footer";
+import TitleHeader from "@/components/layout/TitleHeader";
+import Setlist from "@/components/track/Setlist";
+import Image from "next/image";
 
 export default function Home() {
   return (

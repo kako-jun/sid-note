@@ -17,68 +17,152 @@ sections:
             value: quarter
             remarks:
             lefts:
-              - finger: 2
-                string: 4
-                fret: 2
-                type: mute
               - finger: 3
-                string: 3
-                fret: 3
+                string: 4
+                fret: 8
                 type: press
             right:
-              string: 3
+              string: 4
               stroke: down
-              mute_strings: [1, 2]
+              mute_strings: [1, 2, 3]
           - pitch: E2
             value: quarter
             remarks:
             lefts:
               - finger: 2
-                string: 2
-                fret: 2
+                string: 3
+                fret: 7
                 type: press
               - finger: 3
-                string: 3
-                fret: 3
-                type: mute
-              - finger: 3
                 string: 4
-                fret: 3
+                fret: 8
                 type: mute
             right:
-              string: 2
+              string: 3
               stroke: up
-              mute_strings: [1]
+              mute_strings: [1, 2]
           - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 8
+                type: mute
+              - finger: 4
+                string: 3
+                fret: 10
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+  - name: Ⅱ Dm
+    chord_segments:
+      - chord: Dm
+        remarks:
+        notes:
+          - pitch: D2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 10
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: [1, 2, 3]
+          - pitch: F2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 3
+                fret: 8
+                type: press
+              - finger: 3
+                string: 4
+                fret: 10
+                type: mute
+            right:
+              string: 3
+              stroke: up
+              mute_strings: [1, 2]
+          - pitch: A2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 10
+                type: mute
+              - finger: 4
+                string: 3
+                fret: 12
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+  - name: Ⅲ Em
+    chord_segments:
+      - chord: Em
+        remarks:
+        notes:
+          - pitch: E2
             value: quarter
             remarks:
             lefts:
               - finger: 2
                 string: 4
-                fret: 3
+                fret: 5
                 type: mute
               - finger: 3
                 string: 3
-                fret: 4
+                fret: 7
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: [1, 2]
+          - pitch: G2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 2
+                fret: 5
+                type: press
+              - finger: 3
+                string: 4
+                fret: 7
+                type: mute
+            right:
+              string: 2
+              stroke: up
+              mute_strings: [1]
+          - pitch: B2
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 3
+                fret: 5
+                type: mute
+              - finger: 3
+                string: 4
+                fret: 7
                 type: mute
               - finger: 4
                 string: 2
-                fret: 5
+                fret: 9
                 type: press
             right:
               string: 2
               stroke: down
               mute_strings: [1]
-  - name: Ⅱ Dm
-    chord_segments:
-      - chord: Dm
-        remarks:
-        notes: []
-  - name: Ⅲ Em
-    chord_segments:
-      - chord: Em
-        remarks:
-        notes: []
   - name: Ⅳ F
     chord_segments:
       - chord: F

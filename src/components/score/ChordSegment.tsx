@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
-import Note from "@/components/score/Note";
 import Left from "@/components/performance/Left";
+import Note from "@/components/score/Note";
 import { ChordSegmentType, LeftType, NoteType } from "@/schemas/trackSchema";
-import { getScaleDiatonicChords } from "@/utils/scaleUtil";
 import { getChordPositions } from "@/utils/chordUtil";
-import { functionalHarmonyText, cadenceText, getFunctionalHarmony } from "@/utils/harmonyUtil";
+import { cadenceText, functionalHarmonyText, getFunctionalHarmony } from "@/utils/harmonyUtil";
+import { getScaleDiatonicChords } from "@/utils/scaleUtil";
+import React from "react";
 
 type ChordSegmentProps = {
   chordSegment: ChordSegmentType;
@@ -170,7 +170,6 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
             }}
             onScroll={(e) => onScroll((e.target as HTMLDivElement).scrollLeft)}
             ref={(el) => {
-              // if (el && el.scrollLeft !== scrollLeft) el.scrollLeft = scrollLeft * 0.85;
               if (el && el.scrollLeft !== scrollLeft) el.scrollLeft = scrollLeft;
             }}
           >

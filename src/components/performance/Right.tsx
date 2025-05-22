@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { NoteType } from "@/schemas/trackSchema";
+import React from "react";
 
 const drawArrow = (context: CanvasRenderingContext2D, x: number, y: number, direction: "down" | "up") => {
   context.beginPath();

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { loadSetlistFromYamlUrl, SetlistTrack } from "@/utils/setlistLoader";
+import React from "react";
 
 const Setlist: React.FC = () => {
   const [tracks, setTracks] = React.useState<SetlistTrack[]>([]);

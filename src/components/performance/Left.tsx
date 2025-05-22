@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { NoteType } from "@/schemas/trackSchema";
+import React from "react";
 
 // const setupCanvas = (canvas: HTMLCanvasElement) => {
 //   const context = canvas.getContext("2d");

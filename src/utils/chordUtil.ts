@@ -90,7 +90,7 @@ const pitchMap: { [key: string]: string[] } = {
   "B＃": ["C", "C＃/D♭", "D", "D＃/E♭", "E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"],
 };
 
-export const getPitches = (root: string, frets: { interval: string; fret: number }[]) => {
+export const getPitches = (root: string, frets: { interval: string; fret: number }[], offset: number) => {
   const rootIndex =
     pitchMap[root]?.findIndex((pitchText) => {
       const pitches = pitchText.split("/");
@@ -99,7 +99,7 @@ export const getPitches = (root: string, frets: { interval: string; fret: number
 
   return frets.map(({ interval, fret }) => {
     const pitchIndex = (rootIndex + fret) % 12;
-    return { interval, fret, pitch: pitchMap[root][pitchIndex] };
+    return { interval, fret: fret + offset, pitch: pitchMap[root][pitchIndex] };
   });
 };
 
@@ -109,7 +109,7 @@ export const convertFretsToPositions = (frets: { fret: number; interval: string;
     if (fret >= 15 && fret <= 39) {
       possiblePositions.push({
         string: 1,
-        fret: (fret - 15) % 24,
+        fret: (fret - 15) % 25,
         pitch,
         interval,
       });
@@ -117,7 +117,7 @@ export const convertFretsToPositions = (frets: { fret: number; interval: string;
     if (fret >= 10 && fret <= 34) {
       possiblePositions.push({
         string: 2,
-        fret: (fret - 10) % 24,
+        fret: (fret - 10) % 25,
         pitch,
         interval,
       });
@@ -125,7 +125,7 @@ export const convertFretsToPositions = (frets: { fret: number; interval: string;
     if (fret >= 5 && fret <= 29) {
       possiblePositions.push({
         string: 3,
-        fret: (fret - 5) % 24,
+        fret: (fret - 5) % 25,
         pitch,
         interval,
       });
@@ -186,38 +186,30 @@ export const getChordPositions = (chord: string) => {
   }
 
   const offset = getFretOffset(root);
-  const fretsWithPitch = getPitches(root, frets);
+  const fretsWithPitch = getPitches(root, frets, offset - 12);
   const octaveFrets = fretsWithPitch.flatMap((fret) => {
     return [
       {
-        fret: fret.fret + offset,
+        fret: fret.fret,
         interval: fret.interval,
-        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
-          ? `${fret.pitch}1`
-          : `${fret.pitch}2`,
+        pitch: `${fret.pitch}1`,
       },
       {
-        fret: fret.fret + 12 + offset,
+        fret: fret.fret + 12,
         interval: fret.interval,
-        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
-          ? `${fret.pitch}2`
-          : `${fret.pitch}3`,
+        pitch: `${fret.pitch}2`,
       },
       {
-        fret: fret.fret + 24 + offset,
+        fret: fret.fret + 24,
         interval: fret.interval,
-        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
-          ? `${fret.pitch}3`
-          : `${fret.pitch}4`,
+        pitch: `${fret.pitch}3`,
       },
       {
-        fret: fret.fret + 36 + offset,
+        fret: fret.fret + 36,
         interval: fret.interval,
-        pitch: ["E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"].includes(fret.pitch)
-          ? `${fret.pitch}4`
-          : `${fret.pitch}5`,
+        pitch: `${fret.pitch}4`,
       },
-    ].filter((f) => f.fret <= 39);
+    ].filter((f) => f.fret >= 0 && f.fret <= 39);
   });
   const chordPositions = convertFretsToPositions(octaveFrets);
   return chordPositions;

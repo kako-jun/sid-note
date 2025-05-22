@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { getKeyPosition } from "@/utils/noteUtil";
+import React from "react";
 
 const drawLines = (context: CanvasRenderingContext2D) => {
   // 外円
