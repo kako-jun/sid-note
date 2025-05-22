@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import CircleOfFifths from "@/components/track/CircleOfFifths";
-import Section from "@/components/score/Section";
-import { TrackType, LeftType } from "@/schemas/trackSchema";
-import { scaleText, getScaleNoteNames, getScaleDiatonicChords } from "@/utils/scaleUtil";
-import { getInterval } from "@/utils/chordUtil";
-import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
 import { Jacquard_24_400 } from "@/components/common/Font";
+import Section from "@/components/score/Section";
+import CircleOfFifths from "@/components/track/CircleOfFifths";
+import { LeftType, TrackType } from "@/schemas/trackSchema";
+import { getInterval } from "@/utils/chordUtil";
+import { getScaleDiatonicChords, getScaleNoteNames, scaleText } from "@/utils/scaleUtil";
+import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
+import Image from "next/image";
+import React from "react";
 
 type TrackProps = {
   trackId: number;

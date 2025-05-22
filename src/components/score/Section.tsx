@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import { Jacquard_24_400 } from "@/components/common/Font";
 import ChordSegment from "@/components/score/ChordSegment";
 import { SectionType } from "@/schemas/trackSchema";
-import { Jacquard_24_400 } from "@/components/common/Font";
+import React from "react";
 
 type SectionProps = {
   section: SectionType;

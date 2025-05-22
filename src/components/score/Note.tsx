@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
+import Keyboard from "@/components/performance/Keyboard";
 import Left from "@/components/performance/Left";
 import Right from "@/components/performance/Right";
 import Staff from "@/components/performance/Staff";
-import Keyboard from "@/components/performance/Keyboard";
 import { NoteType } from "@/schemas/trackSchema";
-import { getChordPositions } from "@/utils/chordUtil";
-import { getInterval } from "@/utils/chordUtil";
+import { getChordPositions, getInterval } from "@/utils/chordUtil";
 import { valueText } from "@/utils/noteUtil";
+import React from "react";
 
 type NoteProps = {
   note: NoteType;
