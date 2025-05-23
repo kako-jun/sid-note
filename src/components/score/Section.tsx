@@ -1,6 +1,5 @@
 "use client";
 
-import { Jacquard_24_400 } from "@/components/common/Font";
 import ChordSegment from "@/components/score/ChordSegment";
 import { SectionType } from "@/schemas/trackSchema";
 import React from "react";
@@ -25,14 +24,14 @@ const Section: React.FC<SectionProps> = (props) => {
       }}
     >
       <p
-        className={Jacquard_24_400.className}
+        // className={Jacquard_24_400.className}
         style={{
           marginLeft: 8,
-          fontSize: "1.25rem",
-          fontFamily: '"Jacquard 24", "Old English Text MT", serif',
+          // fontSize: "1.25rem",
+          // fontFamily: '"Jacquard 24", "Old English Text MT", serif',
           border: "1px solid #444444",
           display: "inline-block",
-          padding: "0px 8px",
+          padding: "4px 8px",
         }}
       >
         {section.name}

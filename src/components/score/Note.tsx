@@ -6,8 +6,11 @@ import Right from "@/components/performance/Right";
 import Staff from "@/components/performance/Staff";
 import { NoteType } from "@/schemas/trackSchema";
 import { getChordPositions, getInterval } from "@/utils/chordUtil";
+import { isChromaticNote } from "@/utils/chromaticUtil";
+import { getChordToneLabel } from "@/utils/harmonyUtil";
 import { valueText } from "@/utils/noteUtil";
 import React from "react";
+import NoteSymbol from "./NoteSymbol";
 
 type NoteProps = {
   note: NoteType;
@@ -15,12 +18,14 @@ type NoteProps = {
   nextNote: NoteType | null;
   noteCount: number;
   chord: string;
+  scale: string;
   scrollLeft: number;
   onScroll: (left: number) => void;
 };
 
 const Note: React.FC<NoteProps> = (props) => {
   const { note, noteId, nextNote, noteCount, chord, scrollLeft, onScroll } = props;
+  const { scale } = props;
 
   const isChordPitch = React.useCallback(
     (pitch: string) => {
@@ -104,10 +109,55 @@ const Note: React.FC<NoteProps> = (props) => {
           }}
         >
           <p style={{ flex: 1, lineHeight: 1, textAlign: "left" }}>{note.pitch}</p>
-          <p style={{ flex: 2, lineHeight: 1, textAlign: "center" }}>{valueText(note.value)}</p>
+          <p
+            style={{
+              flex: 2,
+              lineHeight: 1,
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 4,
+              color: "#fff",
+            }}
+          >
+            <span style={{ display: "inline-flex", alignItems: "center" }}>
+              <NoteSymbol value={note.value} size={16} color="currentColor" />
+            </span>
+            <span>{valueText(note.value)}</span>
+          </p>
+          <p>
+            <span style={{ display: "inline-flex", alignItems: "center" }}>
+              <NoteSymbol value="whole" size={16} color="currentColor" />
+              <NoteSymbol value="dotted_whole" size={16} color="currentColor" />
+              <NoteSymbol value="half" size={16} color="currentColor" />
+              <NoteSymbol value="dotted_half" size={16} color="currentColor" />
+              <NoteSymbol value="quarter" size={16} color="currentColor" />
+              <NoteSymbol value="dotted_quarter" size={16} color="currentColor" />
+              <NoteSymbol value="8th" size={16} color="currentColor" />
+              <NoteSymbol value="dotted_8th" size={16} color="currentColor" />
+              <NoteSymbol value="16th" size={16} color="currentColor" />
+              <NoteSymbol value="dotted_16th" size={16} color="currentColor" />
+              <NoteSymbol value="triplet_quarter" size={16} color="currentColor" />
+              <NoteSymbol value="triplet_8th" size={16} color="currentColor" />
+              <NoteSymbol value="triplet_16th" size={16} color="currentColor" />
+            </span>
+          </p>
           <p style={{ flex: 2, lineHeight: 1, textAlign: "right" }}>
             {getInterval(chord, note.pitch)}:{" "}
-            {isChordPitch(note.pitch) ? <span style={{ color: "#888888" }}>Chord Tone</span> : "Nonchord Tone"}
+            {isChordPitch(note.pitch)
+              ? (() => {
+                  const label = getChordToneLabel(scale, chord, note.pitch);
+                  return label ? (
+                    <span style={{ color: "#888888" }}>Chord Tone ({label})</span>
+                  ) : (
+                    <span style={{ color: "#888888" }}>Chord Tone</span>
+                  );
+                })()
+              : (() => {
+                  const chromaticNote = nextNote && isChromaticNote(note, nextNote);
+                  return chromaticNote ? <span>Nonchord Tone (Chromatic Note)</span> : <span>Nonchord Tone</span>;
+                })()}
           </p>
         </div>
         <div

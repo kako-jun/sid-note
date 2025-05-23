@@ -1,0 +1,20 @@
+title: Fingering
+artist: Practice
+album: ""
+year: 0
+cover: ""
+scale: C
+time_signature: 4/4
+bpm: 60
+remarks:
+sections:
+  - name: Index Finger Mute
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Ring Finger Root
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []

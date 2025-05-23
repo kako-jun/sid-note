@@ -1,11 +1,11 @@
 "use client";
 
-import { Jacquard_24_400 } from "@/components/common/Font";
 import Section from "@/components/score/Section";
 import CircleOfFifths from "@/components/track/CircleOfFifths";
 import { LeftType, TrackType } from "@/schemas/trackSchema";
 import { getInterval } from "@/utils/chordUtil";
-import { getScaleDiatonicChords, getScaleNoteNames, scaleText } from "@/utils/scaleUtil";
+import { functionalHarmonyIcon } from "@/utils/harmonyUtil";
+import { getScaleDiatonicChords, getScaleDiatonicChordsWith7th, getScaleNoteNames, scaleText } from "@/utils/scaleUtil";
 import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
 import Image from "next/image";
 import React from "react";
@@ -137,8 +137,8 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           fontSize: "0.875rem",
         }}
       >
-        <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>{track.artist}</p>
-        <p style={{ flex: 2, lineHeight: 1, textAlign: "center" }}>{track.album}</p>
+        <p style={{ flex: 1, lineHeight: 1, textAlign: "left" }}>{track.artist}</p>
+        <p style={{ flex: 1, lineHeight: 1, textAlign: "center" }}>{track.album}</p>
         <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>{track.year || ""}</p>
       </div>
       <div
@@ -177,13 +177,11 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
             <thead>
               <tr style={{ color: "#888888" }}>
                 <td width={100}></td>
-                <td>Ⅰ</td>
-                <td>Ⅱ</td>
-                <td>Ⅲ</td>
-                <td>Ⅳ</td>
-                <td>Ⅴ</td>
-                <td>Ⅵ</td>
-                <td>Ⅶ</td>
+                {[1, 2, 3, 4, 5, 6, 7].map((degree) => (
+                  <td key={degree} title={functionalHarmonyIcon(degree).desc} style={{ cursor: "help" }}>
+                    {["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ"][degree - 1]}
+                  </td>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -194,8 +192,25 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
                 ))}
               </tr>
               <tr>
-                <td style={{ color: "#888888", fontSize: "0.75rem", lineHeight: 1 }}>Diatonic Chord</td>
+                <td
+                  rowSpan={3}
+                  style={{
+                    color: "#888888",
+                    fontSize: "0.75rem",
+                    lineHeight: 1,
+                  }}
+                >
+                  Diatonic Chord
+                </td>
                 {getScaleDiatonicChords(track.scale).map((chord, index) => (
+                  <td key={index} style={{ color: "#888888", lineHeight: 1, fontSize: "0.75rem" }}>
+                    {chord}
+                  </td>
+                ))}
+              </tr>
+              <tr style={{ height: 4 }}></tr>
+              <tr>
+                {getScaleDiatonicChordsWith7th(track.scale).map((chord, index) => (
                   <td key={index} style={{ color: "#888888", lineHeight: 1, fontSize: "0.75rem" }}>
                     {chord}
                   </td>
@@ -299,12 +314,14 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
             return (
               <li key={index} style={{ paddingTop: 8, paddingBottom: 8 }}>
                 <a
-                  className={Jacquard_24_400.className}
+                  // className={Jacquard_24_400.className}
                   href={`#${section.name}`}
-                  style={{
-                    fontSize: "1.25rem",
-                    fontFamily: '"Jacquard 24", "Old English Text MT", serif',
-                  }}
+                  style={
+                    {
+                      // fontSize: "1.25rem",
+                      // fontFamily: '"Jacquard 24", "Old English Text MT", serif',
+                    }
+                  }
                   onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
                   onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
                 >

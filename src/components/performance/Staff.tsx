@@ -6,8 +6,10 @@ import React from "react";
 
 const drawLines = (context: CanvasRenderingContext2D) => {
   context.strokeStyle = "#999999";
-  // context.lineWidth = 3;
-  context.lineWidth = 1;
+
+  const isWindows = navigator.userAgent.includes("Windows");
+  context.lineWidth = isWindows ? 3 : 1;
+
   for (let i = 0; i < 3; i++) {
     const y = 40 + i * 20;
     context.beginPath();

@@ -200,4 +200,6 @@ export const valueText = (value: string) => {
     case "triplet_16th":
       return "16th Triplet";
   }
+
+  return "";
 };

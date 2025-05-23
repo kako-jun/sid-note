@@ -1,3 +1,4 @@
+import { getInterval } from "@/utils/chordUtil";
 import { getScaleDiatonicChords } from "./scaleUtil";
 
 // 機能和声・カデンツ関連ユーティリティ
@@ -10,8 +11,8 @@ export const getFunctionalHarmony = (scale: string, chord: string) => {
   return 0;
 };
 
-export const functionalHarmonyText = (interval: number) => {
-  switch (interval) {
+export const functionalHarmonyText = (degree: number) => {
+  switch (degree) {
     case 1:
       return `Ⅰ Tonic`;
     case 2:
@@ -29,6 +30,52 @@ export const functionalHarmonyText = (interval: number) => {
     default:
       return "";
   }
+};
+
+export const functionalHarmonyIcon = (degree: number) => {
+  switch (degree) {
+    case 1:
+      return { icon: "😊", desc: "Tonic (主音): 安心・落ち着き" };
+    case 2:
+      return { icon: "🤔", desc: "Supertonic (上主音): 期待・問い" };
+    case 3:
+      return { icon: "😌", desc: "Mediant (中音): 穏やか・中間" };
+    case 4:
+      return { icon: "🌱", desc: "Subdominant (下属音): 広がり・始まり" };
+    case 5:
+      return { icon: "⚡", desc: "Dominant (属音): 緊張・推進" };
+    case 6:
+      return { icon: "🥲", desc: "Submediant (下中音): 儚さ・哀愁" };
+    case 7:
+      return { icon: "😳", desc: "Leading Tone (導音): 不安・未解決" };
+    default:
+      return { icon: "", desc: "" };
+  }
+};
+
+export const getChordToneLabel = (scale: string, chord: string, targetPitch: string) => {
+  const interval = getInterval(chord, targetPitch);
+  if (interval === "1") {
+    const chordFunction = getFunctionalHarmony(scale, chord);
+    switch (chordFunction) {
+      case 1:
+        return "Tonic Note";
+      case 2:
+        return "Supertonic Note";
+      case 3:
+        return "Mediant Note";
+      case 4:
+        return "Subdominant Note";
+      case 5:
+        return "Dominant Note";
+      case 6:
+        return "Submediant Note";
+      case 7:
+        return "Leading Tone Note";
+    }
+  }
+
+  return "";
 };
 
 export const cadenceText = (prevFunctionalHarmony: number, functionalHarmony: number) => {

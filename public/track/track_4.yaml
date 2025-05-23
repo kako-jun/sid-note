@@ -374,9 +374,9 @@ sections:
               string: 2
               stroke: down
               mute_strings: [1]
-  - name: CM7 / Cmaj7 / C△7
+  - name: Cmaj7 / CM7 / C△7
     chord_segments:
-      - chord: CM7
+      - chord: Cmaj7
         remarks:
         notes:
           - pitch: C2

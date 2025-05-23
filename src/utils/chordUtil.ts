@@ -9,7 +9,7 @@ export const getFrets = (
   m3: boolean,
   sus4: boolean,
   dim5: boolean,
-  M7: boolean,
+  maj7: boolean,
   m7: boolean,
   aug7: boolean = false
 ) => {
@@ -31,7 +31,7 @@ export const getFrets = (
   }
   if (aug7) {
     frets.push({ interval: "♭7", fret: 10 });
-  } else if (M7) {
+  } else if (maj7) {
     frets.push({ interval: "7", fret: 11 });
   } else if (m7) {
     frets.push({ interval: "♭7", fret: 10 });
@@ -66,7 +66,7 @@ export const getFretOffset = (root: string) => {
   return fretOffsets[root] || 0;
 };
 
-const pitchMap: { [key: string]: string[] } = {
+export const pitchMap: { [key: string]: string[] } = {
   "C♭": ["B", "C", "C＃/D♭", "D", "D＃/E♭", "E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭"],
   C: ["C", "C＃/D♭", "D", "D＃/E♭", "E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"],
   "C＃": ["C＃/D♭", "D", "D＃/E♭", "E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B", "C"],
@@ -144,7 +144,12 @@ export const convertFretsToPositions = (frets: { fret: number; interval: string;
 };
 
 export const getChordPositions = (chord: string) => {
+  // 特別なコード判定
+  const isAllKeys = chord === "ALL_KEYS";
+  const isWhiteKeys = chord === "WHITE_KEYS";
+
   const root = getRootNote(chord);
+
   // パワーコード（5thコード）判定を追加
   const isPowerChord = /5(?![0-9])/i.test(chord);
   // オクターブユニゾン（8度）判定を追加
@@ -158,14 +163,38 @@ export const getChordPositions = (chord: string) => {
   const sus4 = !isPowerChord && !isOctaveUnison && chord.includes("sus4");
   // dim5判定に正規表現を使用
   const dim5 = !isPowerChord && !isOctaveUnison && /(dim|-5)/i.test(chord) && !aug7 && !aug5;
-  // M7判定を拡張（M7, maj7, △7 など）
-  const M7 = !isPowerChord && !isOctaveUnison && /(M7|maj7|△7)/i.test(chord);
-  const m7 = !isPowerChord && !isOctaveUnison && chord.includes("7") && !M7 && !aug7;
+  // maj7判定を拡張（maj7, M7, △7 など）
+  const maj7 = !isPowerChord && !isOctaveUnison && /(maj7|M7|△7)/i.test(chord);
+  const m7 = !isPowerChord && !isOctaveUnison && chord.includes("7") && !maj7 && !aug7;
 
-  // パワーコードの場合は1度と5度のみ
-  // オクターブユニゾンの場合は1度と8度のみ
+  // 特別なコード分岐
   let frets;
-  if (isPowerChord) {
+  if (isAllKeys) {
+    frets = [
+      { interval: "1", fret: 0 },
+      { interval: "♭2", fret: 1 },
+      { interval: "2", fret: 2 },
+      { interval: "♭3", fret: 3 },
+      { interval: "3", fret: 4 },
+      { interval: "4", fret: 5 },
+      { interval: "♭5", fret: 6 },
+      { interval: "5", fret: 7 },
+      { interval: "＃5", fret: 8 },
+      { interval: "6", fret: 9 },
+      { interval: "♭7", fret: 10 },
+      { interval: "7", fret: 11 },
+    ];
+  } else if (isWhiteKeys) {
+    frets = [
+      { interval: "1", fret: 0 },
+      { interval: "2", fret: 2 },
+      { interval: "3", fret: 4 },
+      { interval: "4", fret: 5 },
+      { interval: "5", fret: 7 },
+      { interval: "6", fret: 9 },
+      { interval: "7", fret: 11 },
+    ];
+  } else if (isPowerChord) {
     frets = [
       { interval: "1", fret: 0 },
       { interval: "5", fret: 7 },
@@ -182,11 +211,13 @@ export const getChordPositions = (chord: string) => {
       { interval: "＃5", fret: 8 },
     ];
   } else {
-    frets = getFrets(m3, sus4, dim5, M7, m7, aug7);
+    frets = getFrets(m3, sus4, dim5, maj7, m7, aug7);
   }
 
-  const offset = getFretOffset(root);
-  const fretsWithPitch = getPitches(root, frets, offset - 12);
+  // ルートは特別コード時はC固定
+  const useRoot = isAllKeys || isWhiteKeys ? "C" : root;
+  const offset = getFretOffset(useRoot);
+  const fretsWithPitch = getPitches(useRoot, frets, offset - 12);
   const octaveFrets = fretsWithPitch.flatMap((fret) => {
     return [
       {
