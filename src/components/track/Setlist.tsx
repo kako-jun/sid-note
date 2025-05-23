@@ -86,17 +86,22 @@ const Setlist: React.FC = () => {
         />
         <ul style={{ listStyle: "none", padding: 0 }}>
           {tracks.map((track, index) => (
-            <li
-              key={index}
-              style={{ cursor: "pointer", textDecoration: "none", paddingTop: 8, paddingBottom: 8 }}
-              onClick={() => (window.location.href = `/tracks/${track.id}`)}
-              onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-              onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-            >
-              <span style={{ fontStyle: "italic" }}>{track.title}</span>
-              {" / "}
-              <span>{track.artist}</span>
-            </li>
+            <>
+              {index > 0 && Math.floor(Number(track.id) / 10) !== Math.floor(Number(tracks[index - 1].id) / 10) && (
+                <li>・</li>
+              )}
+              <li
+                key={index}
+                style={{ cursor: "pointer", textDecoration: "none", paddingTop: 8, paddingBottom: 8 }}
+                onClick={() => (window.location.href = `/tracks/${track.id}`)}
+                onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+                onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+              >
+                <span style={{ fontStyle: "italic" }}>{track.title}</span>
+                {" / "}
+                <span>{track.artist}</span>
+              </li>
+            </>
           ))}
         </ul>
       </div>

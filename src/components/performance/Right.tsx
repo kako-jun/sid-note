@@ -9,10 +9,9 @@ const drawArrow = (context: CanvasRenderingContext2D, x: number, y: number, dire
     context.moveTo(x - 4, y + 5);
     context.lineTo(x - 4, y - 5);
     context.lineTo(x + 4, y - 5);
+    context.lineTo(x + 4, y + 5);
     context.moveTo(x - 4, y - 4);
     context.lineTo(x + 4, y - 4);
-    context.moveTo(x + 4, y - 5);
-    context.lineTo(x + 4, y + 5);
   } else {
     context.moveTo(x, y + 7);
     context.lineTo(x - 4, y - 5);
@@ -62,7 +61,16 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
       context.shadowColor = "transparent";
     }
   } else {
+    // string
+    context.strokeStyle = "#999999";
+    context.lineWidth = 3;
     const y = 20 + (note.right.string - 1) * 20;
+    context.beginPath();
+    context.moveTo(10, y);
+    context.lineTo(2410, y);
+    context.stroke();
+
+    // const y = 20 + (note.right.string - 1) * 20;
     const x = 80;
 
     context.beginPath();

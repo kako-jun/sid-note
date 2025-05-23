@@ -10,7 +10,7 @@ export function getChordNameAliases(chord: string): string[] {
   // 代表的なコードタイプの別表記マップ
   const typeAliasMap: { [key: string]: string[] } = {
     "": ["", "maj", "△"],
-    M7: ["M7", "maj7", "△7"],
+    maj7: ["maj7", "M7", "△7"],
     m7: ["m7", "-7"],
     "7": ["7"],
     m: ["m", "-"],
@@ -20,11 +20,11 @@ export function getChordNameAliases(chord: string): string[] {
     add9: ["add9"],
     "6": ["6"],
     "9": ["9"],
-    mM7: ["mM7", "m(maj7)", "-M7"],
+    m_maj7: ["m(maj7)", "mM7", "-M7"],
     m6: ["m6", "-6"],
     m9: ["m9", "-9"],
     M9: ["M9", "maj9", "△9"],
-    mM9: ["mM9", "m(maj9)", "-M9"],
+    m_maj9: ["m(maj9)", "mM9", "-M9"],
     sus2: ["sus2"],
     "5": ["5"],
     "8": ["8"],

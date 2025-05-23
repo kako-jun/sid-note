@@ -96,6 +96,54 @@ export const getScaleDiatonicChords = (scale: string) => {
   return scaleDiatonicChordMap[scale] || [];
 };
 
+export const getScaleDiatonicChordsWith7th = (scale: string) => {
+  const scaleDiatonicChord7thMap: { [key: string]: string[] } = {
+    C: ["Cmaj7", "Dm7", "Em7", "Fmaj7", "G7", "Am7", "Bm7♭5"],
+    Cm: ["Cm(maj7)", "Dm7♭5", "E♭maj7", "Fm7", "Gm7", "A♭maj7", "B♭7"],
+    "C＃": ["C＃maj7", "D＃m7", "Fm7", "F＃maj7", "G＃7", "A＃m7", "C7"],
+    "C＃m": ["C＃m(maj7)", "D＃m7♭5", "Emaj7", "F＃m7", "G＃m7", "Amaj7", "B7"],
+    "C♭": ["C♭maj7", "D♭m7", "E♭m7", "F♭maj7", "G♭7", "A♭m7", "B♭m7♭5"],
+    "C♭m": ["C♭m(maj7)", "D♭m7♭5", "E♭♭maj7", "F♭m7", "G♭m7", "A♭♭maj7", "B♭♭7"],
+    D: ["Dmaj7", "Em7", "F＃m7", "Gmaj7", "A7", "Bm7", "C＃m7♭5"],
+    Dm: ["Dm(maj7)", "Em7♭5", "Fmaj7", "Gm7", "Am7", "B♭maj7", "C7"],
+    "D＃": ["D＃maj7", "Fm7", "Gm7", "G＃maj7", "A＃7", "Cm7", "D7"],
+    "D＃m": ["D＃m(maj7)", "Fm7♭5", "F＃maj7", "G＃m7", "A＃m7", "Bmaj7", "C＃7"],
+    "D♭": ["D♭maj7", "E♭m7", "Fm7", "G♭maj7", "A♭7", "B♭m7", "C7"],
+    "D♭m": ["D♭m(maj7)", "E♭m7♭5", "F♭maj7", "G♭m7", "A♭m7", "B♭♭maj7", "C♭7"],
+    E: ["Emaj7", "F＃m7", "G＃m7", "Amaj7", "B7", "C＃m7", "D＃m7♭5"],
+    Em: ["Em(maj7)", "F＃m7♭5", "Gmaj7", "Am7", "Bm7", "Cmaj7", "D7"],
+    "E＃": ["E＃maj7", "F＃＃m7", "G＃＃m7", "A＃maj7", "B＃7", "C＃＃m7", "D＃＃m7♭5"],
+    "E＃m": ["E＃m(maj7)", "F＃＃m7♭5", "G＃maj7", "A＃m7", "B＃m7", "C＃maj7", "D＃7"],
+    "E♭": ["E♭maj7", "Fm7", "Gm7", "A♭maj7", "B♭7", "Cm7", "Dm7♭5"],
+    "E♭m": ["E♭m(maj7)", "Fm7♭5", "G♭maj7", "A♭m7", "B♭m7", "C♭maj7", "D♭7"],
+    F: ["Fmaj7", "Gm7", "Am7", "B♭maj7", "C7", "Dm7", "Em7♭5"],
+    Fm: ["Fm(maj7)", "Gm7♭5", "A♭maj7", "B♭m7", "Cm7", "D♭maj7", "E♭7"],
+    "F＃": ["F＃maj7", "G＃m7", "A＃m7", "Bmaj7", "C＃7", "D＃m7", "E＃m7♭5"],
+    "F＃m": ["F＃m(maj7)", "G＃m7♭5", "Amaj7", "Bm7", "C＃m7", "Dmaj7", "E7"],
+    "F♭": ["F♭maj7", "G♭m7", "A♭m7", "B♭♭maj7", "C♭7", "D♭m7", "E♭m7♭5"],
+    "F♭m": ["F♭m(maj7)", "G♭m7♭5", "A♭♭maj7", "B♭♭m7", "C♭m7", "D♭♭maj7", "E♭♭7"],
+    G: ["Gmaj7", "Am7", "Bm7", "Cmaj7", "D7", "Em7", "F＃m7♭5"],
+    Gm: ["Gm(maj7)", "Am7♭5", "B♭maj7", "Cm7", "Dm7", "E♭maj7", "F7"],
+    "G＃": ["G＃maj7", "A＃m7", "Cm7", "C＃maj7", "D＃7", "Fm7", "Gm7♭5"],
+    "G＃m": ["G＃m(maj7)", "A＃m7♭5", "Bmaj7", "C＃m7", "D＃m7", "Emaj7", "F＃7"],
+    "G♭": ["G♭maj7", "A♭m7", "B♭m7", "C♭maj7", "D♭7", "E♭m7", "Fm7♭5"],
+    "G♭m": ["G♭m(maj7)", "A♭m7♭5", "B♭♭maj7", "C♭m7", "D♭m7", "E♭♭maj7", "F♭7"],
+    A: ["Amaj7", "Bm7", "C＃m7", "Dmaj7", "E7", "F＃m7", "G＃m7♭5"],
+    Am: ["Am(maj7)", "Bm7♭5", "Cmaj7", "Dm7", "Em7", "Fmaj7", "G7"],
+    "A＃": ["A＃maj7", "Cm7", "Dm7", "D＃maj7", "F7", "Gm7", "Am7♭5"],
+    "A＃m": ["A＃m(maj7)", "Cm7♭5", "C＃maj7", "D＃m7", "Fm7", "F＃maj7", "G＃7"],
+    "A♭": ["A♭maj7", "B♭m7", "Cm7", "D♭maj7", "E♭7", "Fm7", "Gm7♭5"],
+    "A♭m": ["A♭m(maj7)", "B♭m7♭5", "C♭maj7", "D♭m7", "E♭m7", "F♭maj7", "G♭7"],
+    B: ["Bmaj7", "C＃m7", "D＃m7", "Emaj7", "F＃7", "G＃m7", "A＃m7♭5"],
+    Bm: ["Bm(maj7)", "C＃m7♭5", "Dmaj7", "Em7", "F＃m7", "Gmaj7", "A7"],
+    "B＃": ["B＃maj7", "C＃＃m7", "D＃＃m7", "E＃maj7", "F＃＃7", "G＃＃m7", "A＃＃m7♭5"],
+    "B＃m": ["B＃m(maj7)", "C＃＃m7♭5", "D＃maj7", "E＃m7", "F＃＃m7", "G＃maj7", "A＃7"],
+    "B♭": ["B♭maj7", "Cm7", "Dm7", "E♭maj7", "F7", "Gm7", "Am7♭5"],
+    "B♭m": ["B♭m(maj7)", "Cm7♭5", "D♭maj7", "E♭m7", "Fm7", "G♭maj7", "A♭7"],
+  };
+  return scaleDiatonicChord7thMap[scale] || [];
+};
+
 export const scaleText = (scale: string) => {
   const scaleMap: { [key: string]: string } = {
     C: "C Major",

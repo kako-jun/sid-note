@@ -1,0 +1,20 @@
+title: Fingerboard
+artist: Practice
+album: ""
+year: 0
+cover: ""
+scale: C
+time_signature: 4/4
+bpm: 60
+remarks:
+sections:
+  - name: All Keys
+    chord_segments:
+      - chord: ALL_KEYS
+        remarks:
+        notes: []
+  - name: White Keys
+    chord_segments:
+      - chord: WHITE_KEYS
+        remarks:
+        notes: []

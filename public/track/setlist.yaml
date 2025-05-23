@@ -11,18 +11,48 @@ tracks:
   - id: 4
     title: All Chord
     artist: Practice
+  - id: 5
+    title: Fingerboard
+    artist: Practice
+  - id: 6
+    title: Fingering
+    artist: Practice
   - id: 11
     title: Battle 1
     artist: Final Fantasy 5
+  - id: 12
+    title: Maybe I'm a Lion
+    artist: Final Fantasy 8
   - id: 21
     title: IGGY POP FAN CLUB
     artist: NUMBER GIRL
-  - id: 21
+  - id: 22
     title: 鉄風 鋭くなって
     artist: NUMBER GIRL
+  - id: 23
+    title: The Girl In The Kimono Dress
+    artist: Kimonos
   - id: 31
     title: 海岸通り
+    artist: ASIAN KUNG-FU GENERATION
+  - id: 32
+    title: N.G.S
+    artist: ASIAN KUNG-FU GENERATION
+  - id: 33
+    title: "Re:Re:"
+    artist: ASIAN KUNG-FU GENERATION
+  - id: 34
+    title: 転がる岩、君に朝が降る
     artist: ASIAN KUNG-FU GENERATION
   - id: 41
     title: 踊り子
     artist: Vaundy
+  - id: 51
+    title: Island In the Sun
+    artist: Weezer
+  - id: 61
+    title: Stand By Me
+    artist: Ben E. King
+  - id: 71
+    title: ルキンフォー
+    artist: Spitz

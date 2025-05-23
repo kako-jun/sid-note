@@ -23,6 +23,7 @@ import React from "react";
 // };
 
 const drawLines = (context: CanvasRenderingContext2D) => {
+  // string
   context.strokeStyle = "#999999";
   context.lineWidth = 1;
   for (let i = 0; i < 4; i++) {
@@ -33,6 +34,7 @@ const drawLines = (context: CanvasRenderingContext2D) => {
     context.stroke();
   }
 
+  // fret
   const verticalLineCount = 24;
   const spacing = 2400 / verticalLineCount;
   context.fillStyle = "#999999";
@@ -111,6 +113,30 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
         context.fillStyle = "rgba(50, 0, 255, 0.2)";
         context.fill();
         context.fillRect(x - 20, 0, 40, 20 + 20 * (left.string - 1));
+
+        // 指アイコン描画
+        const fingerIcons: Record<string, string> = {
+          "1": "👆", // 人差し指
+          "2": "✌️", // 中指
+          "3": "💍", // 薬指→お姉さん
+          "4": "🟣", // 小指
+        };
+        const icon = fingerIcons[String(left.finger)] || `${left.finger}`;
+        context.font = "20px serif";
+        context.textAlign = "center";
+        context.textBaseline = "top";
+        context.fillText(icon, x, 2); // y軸小さい位置に表示
+      }
+
+      // string
+      if (left.type === "press") {
+        context.strokeStyle = "#999999";
+        context.lineWidth = 3;
+        const y = 20 + (left.string - 1) * 20;
+        context.beginPath();
+        context.moveTo(10, y);
+        context.lineTo(2410, y);
+        context.stroke();
       }
 
       context.beginPath();

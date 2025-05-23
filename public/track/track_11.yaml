@@ -153,3 +153,39 @@ sections:
               string: 4
               stroke: down
               mute_strings: [1, 2, 3]
+          - pitch: F＃2
+            value: 8th
+            remarks:
+            tags: []
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 3
+                type: press
+              - finger: 4
+                string: 3
+                fret: 4
+                type: mute
+            right:
+              string: 4
+              stroke: down
+              mute_strings: [1, 2, 3]
+          - pitch: G2
+            value: 8th
+            remarks:
+              []
+              # -
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 3
+                type: press
+              - finger: 4
+                string: 3
+                fret: 4
+                type: mute
+            right:
+              string: 4
+              stroke: down
+              mute_strings: [1, 2, 3]

@@ -4,7 +4,7 @@ import Left from "@/components/performance/Left";
 import Note from "@/components/score/Note";
 import { ChordSegmentType, LeftType, NoteType } from "@/schemas/trackSchema";
 import { getChordPositions } from "@/utils/chordUtil";
-import { cadenceText, functionalHarmonyText, getFunctionalHarmony } from "@/utils/harmonyUtil";
+import { cadenceText, functionalHarmonyIcon, functionalHarmonyText, getFunctionalHarmony } from "@/utils/harmonyUtil";
 import { getScaleDiatonicChords } from "@/utils/scaleUtil";
 import React from "react";
 
@@ -124,8 +124,10 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
               `${functionalHarmonyText(prevFunctionalHarmony)} → ${functionalHarmonyText(functionalHarmony)}`}
           </span>
           {prevSegment &&
-            cadenceText(prevFunctionalHarmony, functionalHarmony) &&
-            `: ${cadenceText(prevFunctionalHarmony, functionalHarmony)}`}
+            (() => {
+              const cadence = cadenceText(prevFunctionalHarmony, functionalHarmony);
+              return cadence ? ` (${cadence})` : "";
+            })()}
         </p>
       </div>
       <div style={{ marginLeft: 8 }}>
@@ -145,7 +147,20 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
                 ? `${chordSegment.chord} on ${chordSegment.on}`
                 : chordSegment.chord}
             </span>
-            <span style={{ color: "#888888" }}>: {functionalHarmonyText(functionalHarmony)}</span>
+            <span style={{ color: "#888888" }}>
+              : {functionalHarmonyText(functionalHarmony)}{" "}
+              <span
+                title={functionalHarmonyIcon(functionalHarmony).desc}
+                style={{
+                  filter: "grayscale(1) brightness(0.7)",
+                  WebkitFilter: "grayscale(1) brightness(0.7)",
+                  display: "inline-block",
+                  cursor: "help",
+                }}
+              >
+                {functionalHarmonyIcon(functionalHarmony).icon}
+              </span>
+            </span>
           </p>
           <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>
             {isScaleChord ? <span style={{ color: "#888888" }}>Diatonic Chord</span> : "Non-Diatonic Chord"}
@@ -193,6 +208,7 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
                 nextNote={nextNote(index)}
                 noteCount={chordSegment.notes.length}
                 chord={chord}
+                scale={scale}
                 scrollLeft={scrollLeft}
                 onScroll={onScroll}
               />
