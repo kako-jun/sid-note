@@ -1,0 +1,17 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="79px" height="79px" viewBox="-0.5 -0.5 79 79" content="&lt;mxfile&gt;&lt;diagram id=&quot;NbYsLP1aahT-Vv3tsGlU&quot; name=&quot;ページ1&quot;&gt;5VXBUoMwEP0ajjqUlNoeLVa9OONMD54zsIWMgWVCWqhfb5AEEmhtndGTHJjksdnse/tCPBLlzZOgZfaCCXAv8JPGIw9eEIThUr1b4KgBsuqAVLCkg2YDsGUfoEFfo3uWQOUESkQuWemCMRYFxNLBqBBYu2E75O6uJU1hAmxjyqfoG0tk1qHL4G7An4Glmdl5ttD8cmqCNZMqownWFkQ2HokEouxGeRMBb7UzunTrHs987QsTUMirFhBd84HyvWanK5NHQ7fOmIRtSeN2XquOemSdyZyr2UwNaVV2Iu9YAyrvesc4j5CjUFiBhVq1rqTA914sv0dGYdPyNaMDCAmNBWk6T4A5SHFUIearkVZ7ixjT1EOn7nQ7MqtJBqPaG2mfeZBPDbSC59RcXlYTiuS+9eDA2tLS1Yl8JwkkjkmngliEQ39K2GACOJXs4Fr7lAp6h1dkqpJB78VI70XopqhwL2LQq2wrXkpkGmkSSSpSkJNEX03paV/Zp9UVfeJc/U/a/lzwv0CpBMRCTW+If7KJ9onwAuJ/Pb/k9/lYf//WHGrLAcEJB8zC2/lvuN5U8J9cvxypHo7M+teuV2LSoxVWtgHVDwqeOxeDGnQZrzxSajpcUl34cNOTzSc=&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs/>
+    <g>
+        <g>
+            <rect x="0" y="0" width="79" height="79" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <path d="M 40 55 L 40 10" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+        <g>
+            <ellipse cx="30" cy="58.12" rx="10" ry="7.745" fill="#000000" stroke="#000000" stroke-width="3" transform="rotate(-30,30,58.12)" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237)); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+        <g>
+            <path d="M 60 40 L 60 35 Q 60 30 52.93 22.93 L 40 10" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+    </g>
+</svg>

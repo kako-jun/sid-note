@@ -111,11 +111,11 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
         context.fill();
         context.fillRect(x - 20, 0, 40, 20 + 20 * (left.string - 1));
 
-        const img = new window.Image();
-        img.src = `/finger/${left.finger}.drawio.svg`;
-        img.onload = () => {
-          context.drawImage(img, x - 12, 2, 24, 24);
-        };
+        // const img = new window.Image();
+        // img.src = `/finger/${left.finger}.drawio.svg`;
+        // img.onload = () => {
+        //   context.drawImage(img, x - 12, 2, 24, 24);
+        // };
       }
 
       context.beginPath();
@@ -396,7 +396,14 @@ const Left: React.FC<LeftProps> = (props) => {
 
   return (
     <div ref={parentRef} style={{ width: "100%" }}>
-      <canvas ref={canvasRef} width={2420} height={115} style={{ width: "100%" }} onClick={handleCanvasClick} />
+      <canvas
+        ref={canvasRef}
+        width={2420}
+        height={115}
+        style={{ width: "100%" }}
+        onClick={handleCanvasClick}
+        // onTouchEnd={handleCanvasClick}
+      />
     </div>
   );
 };

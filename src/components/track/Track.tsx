@@ -189,8 +189,15 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
               <tr>
                 <td style={{ color: "#888888", fontSize: "0.75rem" }}>Note Name</td>
                 {getScaleNoteNames(track.scale).map((noteName, index) => (
-                  <td key={index} onClick={() => playNoteSound(`${noteName}3`, 1.5)} style={{ cursor: "pointer" }}>
-                    {noteName}
+                  <td key={index}>
+                    <button
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => playNoteSound(`${noteName}3`, 1.5)}
+                    >
+                      {noteName}
+                    </button>
                   </td>
                 ))}
               </tr>
@@ -212,11 +219,16 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
                       color: "#888888",
                       lineHeight: 1,
                       fontSize: "0.75rem",
-                      cursor: "pointer",
                     }}
-                    onClick={() => playChord(chord)}
                   >
-                    {chord}
+                    <button
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => playChord(chord)}
+                    >
+                      {chord}
+                    </button>
                   </td>
                 ))}
               </tr>
@@ -229,11 +241,16 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
                       color: "#888888",
                       lineHeight: 1,
                       fontSize: "0.75rem",
-                      cursor: "pointer",
                     }}
-                    onClick={() => playChord(chord)}
                   >
-                    {chord}
+                    <button
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => playChord(chord)}
+                    >
+                      {chord}
+                    </button>
                   </td>
                 ))}
               </tr>

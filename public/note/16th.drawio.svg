@@ -1,0 +1,20 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="79px" height="79px" viewBox="-0.5 -0.5 79 79" content="&lt;mxfile&gt;&lt;diagram id=&quot;NbYsLP1aahT-Vv3tsGlU&quot; name=&quot;ページ1&quot;&gt;7VZNU4MwEP01HHUoKbUebf26OONMD54zsIWMgWVCWqi/3iAJJFBt1epFOTDJY7PZfe8F8Mgyq+8ELdIHjIF7gR/XHrn2giAM5+reADsNkMsWSASLW2jSAyv2Ahr0NbphMZROoETkkhUuGGGeQyQdjAqBlRu2Ru7uWtAERsAqonyMPrFYpi06Dy56/B5YkpqdJzPdX0ZNsO6kTGmMlQWRG48sBaJsR1m9BN5wZ3hp192+87QrTEAuj1pAdM1byje6O12Z3Jl2q5RJWBU0auaVUtQji1RmXM0makjLoiV5zWpQeRdrxvkSOQqF5ZirVYtSCnzuyPI7ZBA2Ll93tAUhobYg3c4dYAZS7FSIeWqo1d4ixjRVr9SFliO1RDIY1d5Iusw9fWqgGXyPzflhNiGPrxoP9l1bXLo8kY8ogdgx6ZgQq+HQHzdsMAGcSrZ1rb2PBb3DIzJVSc/3bMD3LHRTlLgREehVthUPJTJCmkSSigTkKNGbKF3bR+p0eYROnKv3SaPPAf8LlIpAzNX0jPh7RbRPhBcQ/+06kd+nQ/79c3OoLQcEexwwCc+np3C9qeAvuX4+YD0cmPWnXa/IpDsrrGgCyk8UPHU+DGrQZvzykZqG/yaYncoE5JdMEH7LBGra/6m04f3vHrl5BQ==&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs/>
+    <g>
+        <g>
+            <rect x="0" y="0" width="79" height="79" fill="none" stroke="none" pointer-events="all"/>
+        </g>
+        <g>
+            <path d="M 40 55 L 40 10" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+        <g>
+            <ellipse cx="30" cy="58.12" rx="10" ry="7.745" fill="#000000" stroke="#000000" stroke-width="3" transform="rotate(-30,30,58.12)" pointer-events="all" style="fill: light-dark(rgb(0, 0, 0), rgb(237, 237, 237)); stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+        <g>
+            <path d="M 60 40 L 60 35 Q 60 30 52.93 22.93 L 40 10" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+        <g>
+            <path d="M 60 50 L 60 45 Q 60 40 52.93 32.93 L 40 20" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));"/>
+        </g>
+    </g>
+</svg>

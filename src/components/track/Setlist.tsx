@@ -1,7 +1,7 @@
 "use client";
 
 import { loadSetlistFromYamlUrl, SetlistTrack } from "@/utils/setlistLoader";
-import React from "react";
+import React, { Fragment } from "react";
 
 const Setlist: React.FC = () => {
   const [tracks, setTracks] = React.useState<SetlistTrack[]>([]);
@@ -86,12 +86,11 @@ const Setlist: React.FC = () => {
         />
         <ul style={{ listStyle: "none", padding: 0 }}>
           {tracks.map((track, index) => (
-            <>
+            <Fragment key={index}>
               {index > 0 && Math.floor(Number(track.id) / 10) !== Math.floor(Number(tracks[index - 1].id) / 10) && (
                 <li>・</li>
               )}
               <li
-                key={index}
                 style={{ cursor: "pointer", textDecoration: "none", paddingTop: 8, paddingBottom: 8 }}
                 onClick={() => (window.location.href = `/tracks/${track.id}`)}
                 onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
@@ -101,7 +100,7 @@ const Setlist: React.FC = () => {
                 {" / "}
                 <span>{track.artist}</span>
               </li>
-            </>
+            </Fragment>
           ))}
         </ul>
       </div>
