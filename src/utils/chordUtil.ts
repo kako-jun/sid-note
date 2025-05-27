@@ -147,28 +147,12 @@ export const getChordPositions = (chord: string) => {
   // 特別なコード判定
   const isAllKeys = chord === "ALL_KEYS";
   const isWhiteKeys = chord === "WHITE_KEYS";
+  const isPowerChord = /^[A-G](♭|＃)?5$/.test(chord);
+  const isOctaveUnison = /8(?![0-9])/.test(chord);
 
-  const root = getRootNote(chord);
-
-  // パワーコード（5thコード）判定を追加
-  const isPowerChord = /5(?![0-9])/i.test(chord);
-  // オクターブユニゾン（8度）判定を追加
-  const isOctaveUnison = /8(?![0-9])/i.test(chord);
-  // 7度のaugや+や#と混同しない5度増（aug5, +5, #5）判定
-  const aug5 =
-    !isPowerChord && !isOctaveUnison && /(aug(?![0-9])|\+5|＃5)/i.test(chord) && !/(aug|\+|＃).*7/i.test(chord);
-  // 7度のaugや+や#（aug7, +7, #7）判定
-  const aug7 = /(aug|\+|＃).*7/i.test(chord);
-  const m3 = !isPowerChord && !isOctaveUnison && chord.includes("m") && !/(dim|-5)/i.test(chord) && !aug7 && !aug5;
-  const sus4 = !isPowerChord && !isOctaveUnison && chord.includes("sus4");
-  // dim5判定に正規表現を使用
-  const dim5 = !isPowerChord && !isOctaveUnison && /(dim|-5)/i.test(chord) && !aug7 && !aug5;
-  // maj7判定を拡張（maj7, M7, △7 など）
-  const maj7 = !isPowerChord && !isOctaveUnison && /(maj7|M7|△7)/i.test(chord);
-  const m7 = !isPowerChord && !isOctaveUnison && chord.includes("7") && !maj7 && !aug7;
-
-  // 特別なコード分岐
   let frets;
+  let useRoot;
+
   if (isAllKeys) {
     frets = [
       { interval: "1", fret: 0 },
@@ -184,6 +168,7 @@ export const getChordPositions = (chord: string) => {
       { interval: "♭7", fret: 10 },
       { interval: "7", fret: 11 },
     ];
+    useRoot = "C";
   } else if (isWhiteKeys) {
     frets = [
       { interval: "1", fret: 0 },
@@ -194,54 +179,102 @@ export const getChordPositions = (chord: string) => {
       { interval: "6", fret: 9 },
       { interval: "7", fret: 11 },
     ];
+    useRoot = "C";
   } else if (isPowerChord) {
     frets = [
       { interval: "1", fret: 0 },
       { interval: "5", fret: 7 },
     ];
+    useRoot = getRootNote(chord);
   } else if (isOctaveUnison) {
     frets = [
       { interval: "1", fret: 0 },
       { interval: "8", fret: 12 },
     ];
-  } else if (aug5) {
-    // 5度増コードは1度と#5のみ
-    frets = [
-      { interval: "1", fret: 0 },
-      { interval: "＃5", fret: 8 },
-    ];
+    useRoot = getRootNote(chord);
   } else {
-    frets = getFrets(m3, sus4, dim5, maj7, m7, aug7);
+    // 通常コードの判定
+    // デフォルト構成音（メジャートライアド）
+    let baseFrets = [
+      { interval: "1", fret: 0 },
+      { interval: "3", fret: 4 },
+      { interval: "5", fret: 7 },
+    ];
+
+    // 差分適用
+    // 3rd
+    if (/sus4/.test(chord)) {
+      baseFrets = baseFrets.map((f) => (f.interval === "3" ? { ...f, interval: "4", fret: 5 } : f));
+    } else if (
+      /^(?:[A-G](?:♭|＃)?)(m|min)/.test(chord) &&
+      !/(aug|\+|＃).*7/.test(chord) &&
+      !/(aug(?![0-9])|\+5|＃5)/.test(chord)
+    ) {
+      baseFrets = baseFrets.map((f) => (f.interval === "3" ? { ...f, interval: "♭3", fret: 3 } : f));
+    }
+    // 5th
+    if (/(aug(?![0-9])|\+5|＃5)/.test(chord) && !/(aug|\+|＃).*7/.test(chord)) {
+      baseFrets = baseFrets.map((f) => (f.interval === "5" ? { ...f, interval: "＃5", fret: 8 } : f));
+    } else if (
+      /(♭5|-5|b5)/.test(chord) ||
+      (/dim/.test(chord) && !/(aug|\+|＃).*7/.test(chord) && !/(aug(?![0-9])|\+5|＃5)/.test(chord))
+    ) {
+      baseFrets = baseFrets.map((f) => (f.interval === "5" ? { ...f, interval: "♭5", fret: 6 } : f));
+    }
+    // 7th
+    const has7th = /7/.test(chord);
+    const maj7 = /(maj7|M7|△7)/.test(chord);
+    const aug7 = /(aug|\+|＃).*7/.test(chord);
+    const m7 = has7th && !maj7 && !aug7;
+    if (aug7) {
+      baseFrets.push({ interval: "＃5", fret: 8 });
+      baseFrets.push({ interval: "♭7", fret: 10 });
+    } else if (maj7) {
+      baseFrets.push({ interval: "7", fret: 11 });
+    } else if (m7) {
+      baseFrets.push({ interval: "♭7", fret: 10 });
+    }
+    frets = baseFrets;
+    useRoot = getRootNote(chord);
   }
 
-  // ルートは特別コード時はC固定
-  const useRoot = isAllKeys || isWhiteKeys ? "C" : root;
   const offset = getFretOffset(useRoot);
   const fretsWithPitch = getPitches(useRoot, frets, offset - 12);
-  const octaveFrets = fretsWithPitch.flatMap((fret) => {
-    return [
-      {
-        fret: fret.fret,
-        interval: fret.interval,
-        pitch: `${fret.pitch}1`,
-      },
-      {
-        fret: fret.fret + 12,
-        interval: fret.interval,
-        pitch: `${fret.pitch}2`,
-      },
-      {
-        fret: fret.fret + 24,
-        interval: fret.interval,
-        pitch: `${fret.pitch}3`,
-      },
-      {
-        fret: fret.fret + 36,
-        interval: fret.interval,
-        pitch: `${fret.pitch}4`,
-      },
-    ].filter((f) => f.fret >= 0 && f.fret <= 39);
-  });
+
+  // オクターブ番号をCで切り替える
+  let currentOctave = 1;
+  let lastPitchName = "";
+  const octaveFrets = fretsWithPitch
+    .map((fret) => {
+      const pitchName = fret.pitch.replace(/\d+$/, "");
+      if (pitchName.startsWith("C") && lastPitchName && !lastPitchName.startsWith("C")) {
+        currentOctave++;
+      }
+      lastPitchName = pitchName;
+      return [
+        {
+          fret: fret.fret,
+          interval: fret.interval,
+          pitch: `${pitchName}${currentOctave}`,
+        },
+        {
+          fret: fret.fret + 12,
+          interval: fret.interval,
+          pitch: `${pitchName}${currentOctave + 1}`,
+        },
+        {
+          fret: fret.fret + 24,
+          interval: fret.interval,
+          pitch: `${pitchName}${currentOctave + 2}`,
+        },
+        {
+          fret: fret.fret + 36,
+          interval: fret.interval,
+          pitch: `${pitchName}${currentOctave + 3}`,
+        },
+      ].filter((f) => f.fret >= 0 && f.fret <= 39);
+    })
+    .flat();
   const chordPositions = convertFretsToPositions(octaveFrets);
   return chordPositions;
 };

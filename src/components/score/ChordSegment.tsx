@@ -5,6 +5,8 @@ import Note from "@/components/score/Note";
 import { ChordSegmentType, LeftType, NoteType } from "@/schemas/trackSchema";
 import { getChordPositions } from "@/utils/chordUtil";
 import { cadenceText, functionalHarmonyIcon, functionalHarmonyText, getFunctionalHarmony } from "@/utils/harmonyUtil";
+import { playChord } from "@/utils/noteSoundPlayer";
+import { comparePitch } from "@/utils/noteUtil";
 import { getScaleDiatonicChords } from "@/utils/scaleUtil";
 import React from "react";
 
@@ -29,12 +31,22 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
       return { ...position, finger: 0, type: "chord" };
     });
 
+    // chordSegment.instrumentsからpitchに合うinstrumentを探して付与
+    const instruments: { pitch: string; instrument: string }[] = chordSegment.instruments || [];
+    const leftsWithInstrument = lefts.map((left) => {
+      const found = instruments.find((inst) => comparePitch(inst.pitch, left.pitch ?? ""));
+      return {
+        ...left,
+        instrument: found ? found.instrument : "",
+      };
+    });
+
     const chordNote: NoteType = {
       pitch: "",
       value: "whole",
       remarks: [],
       tags: [],
-      lefts,
+      lefts: leftsWithInstrument,
     };
 
     return chordNote;
@@ -142,25 +154,30 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
           }}
         >
           <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>
-            <span>
-              {chordSegment.on && chordSegment.on !== ""
-                ? `${chordSegment.chord} on ${chordSegment.on}`
-                : chordSegment.chord}
+            <span
+              onClick={() => {
+                playChord(chord);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              {chord}
             </span>
-            <span style={{ color: "#888888" }}>
-              : {functionalHarmonyText(functionalHarmony)}{" "}
-              <span
-                title={functionalHarmonyIcon(functionalHarmony).desc}
-                style={{
-                  filter: "grayscale(1) brightness(0.7)",
-                  WebkitFilter: "grayscale(1) brightness(0.7)",
-                  display: "inline-block",
-                  cursor: "help",
-                }}
-              >
-                {functionalHarmonyIcon(functionalHarmony).icon}
+            {functionalHarmony > 0 && (
+              <span style={{ color: "#888888" }}>
+                : {functionalHarmonyText(functionalHarmony)}{" "}
+                <span
+                  title={functionalHarmonyIcon(functionalHarmony).desc}
+                  style={{
+                    filter: "grayscale(1) brightness(0.7)",
+                    WebkitFilter: "grayscale(1) brightness(0.7)",
+                    display: "inline-block",
+                    cursor: "help",
+                  }}
+                >
+                  {functionalHarmonyIcon(functionalHarmony).icon}
+                </span>
               </span>
-            </span>
+            )}
           </p>
           <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>
             {isScaleChord ? <span style={{ color: "#888888" }}>Diatonic Chord</span> : "Non-Diatonic Chord"}

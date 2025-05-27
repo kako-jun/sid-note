@@ -7,6 +7,7 @@ export const LeftSchema = z.object({
   type: z.enum(["press", "mute", "ghost_note", "chord"]),
   pitch: z.string().nullable().optional(),
   interval: z.string().nullable().optional(),
+  instrument: z.string().nullable().optional(),
 });
 export type LeftType = z.infer<typeof LeftSchema>;
 
@@ -49,6 +50,15 @@ export const ChordSegmentSchema = z.object({
   on: z.string().nullable().optional(),
   remarks: z.array(z.string()).nullable().optional(),
   notes: z.array(NoteSchema),
+  instruments: z
+    .array(
+      z.object({
+        pitch: z.string(),
+        instrument: z.string(),
+      })
+    )
+    .nullable()
+    .optional(),
 });
 export type ChordSegmentType = z.infer<typeof ChordSegmentSchema>;
 

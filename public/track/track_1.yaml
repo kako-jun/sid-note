@@ -81,3 +81,23 @@ sections:
               string: 4
               stroke: up
               mute_strings: [1, 2, 3]
+      - chord: F＃7
+        instruments:
+          - pitch: E3
+            instrument: Gt1.
+          - pitch: A＃/B♭4
+            instrument: Ba.
+        remarks:
+        notes:
+          - pitch: G4
+            value: quarter
+            remarks:
+            lefts:
+              - finger: 2
+                string: 4
+                fret: 1
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: [1, 2, 3]

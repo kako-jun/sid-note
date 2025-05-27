@@ -36,6 +36,17 @@ const drawLines = (context: CanvasRenderingContext2D) => {
   }
 };
 
+const drawLine = (context: CanvasRenderingContext2D, note: NoteType) => {
+  // string
+  context.strokeStyle = "#999999";
+  context.lineWidth = 3;
+  const y = 20 + (note.right!.string - 1) * 20;
+  context.beginPath();
+  context.moveTo(10, y);
+  context.lineTo(210, y);
+  context.stroke();
+};
+
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
   if (!note.right) {
     return;
@@ -61,16 +72,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
       context.shadowColor = "transparent";
     }
   } else {
-    // string
-    context.strokeStyle = "#999999";
-    context.lineWidth = 3;
     const y = 20 + (note.right.string - 1) * 20;
-    context.beginPath();
-    context.moveTo(10, y);
-    context.lineTo(2410, y);
-    context.stroke();
-
-    // const y = 20 + (note.right.string - 1) * 20;
     const x = 80;
 
     context.beginPath();
@@ -138,6 +140,8 @@ const Right: React.FC<RightProps> = (props) => {
       console.error("2D context not available");
       return;
     }
+
+    drawLine(context, note);
 
     // next
     if (nextNote) {

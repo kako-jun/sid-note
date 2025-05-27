@@ -1,26 +1,8 @@
 "use client";
 
 import { NoteType } from "@/schemas/trackSchema";
+import { playNoteSound } from "@/utils/noteSoundPlayer";
 import React from "react";
-
-// const setupCanvas = (canvas: HTMLCanvasElement) => {
-//   const context = canvas.getContext("2d");
-//   if (!context) return;
-
-//   // デバイスのピクセル密度を取得
-//   const devicePixelRatio = window.devicePixelRatio || 1;
-
-//   // CanvasのCSSサイズを取得
-//   const width = canvas.clientWidth;
-//   const height = canvas.clientHeight;
-
-//   // Canvasの解像度をデバイスピクセル密度に合わせて設定
-//   canvas.width = width * devicePixelRatio;
-//   canvas.height = height * devicePixelRatio;
-
-//   // スケールを調整
-//   context.scale(devicePixelRatio, devicePixelRatio);
-// };
 
 const drawLines = (context: CanvasRenderingContext2D) => {
   // string
@@ -81,6 +63,21 @@ const drawLines = (context: CanvasRenderingContext2D) => {
   context.fill();
 };
 
+const drawLine = (context: CanvasRenderingContext2D, note: NoteType) => {
+  // string
+  note.lefts.forEach((left) => {
+    if (left.type === "press") {
+      context.strokeStyle = "#999999";
+      context.lineWidth = 3;
+      const y = 20 + (left.string - 1) * 20;
+      context.beginPath();
+      context.moveTo(10, y);
+      context.lineTo(2410, y);
+      context.stroke();
+    }
+  });
+};
+
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
   if (next) {
     const found = note.lefts.find((left) => {
@@ -114,29 +111,11 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
         context.fill();
         context.fillRect(x - 20, 0, 40, 20 + 20 * (left.string - 1));
 
-        // 指アイコン描画
-        const fingerIcons: Record<string, string> = {
-          "1": "👆", // 人差し指
-          "2": "✌️", // 中指
-          "3": "💍", // 薬指→お姉さん
-          "4": "🟣", // 小指
+        const img = new window.Image();
+        img.src = `/finger/${left.finger}.drawio.svg`;
+        img.onload = () => {
+          context.drawImage(img, x - 12, 2, 24, 24);
         };
-        const icon = fingerIcons[String(left.finger)] || `${left.finger}`;
-        context.font = "20px serif";
-        context.textAlign = "center";
-        context.textBaseline = "top";
-        context.fillText(icon, x, 2); // y軸小さい位置に表示
-      }
-
-      // string
-      if (left.type === "press") {
-        context.strokeStyle = "#999999";
-        context.lineWidth = 3;
-        const y = 20 + (left.string - 1) * 20;
-        context.beginPath();
-        context.moveTo(10, y);
-        context.lineTo(2410, y);
-        context.stroke();
       }
 
       context.beginPath();
@@ -207,8 +186,22 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
           context.fillText(text, x + 20 - textWidth / 2, y - 4);
         }
       }
+
+      // instrument
+      if (left.type === "chord" && left.instrument) {
+        context.fillStyle = "pink";
+        context.font = "12px Verdana";
+        const text = left.instrument;
+        const textWidth = context.measureText(text).width;
+        context.fillText(text, x - 46 - textWidth / 2, y - 4);
+      }
     });
   }
+};
+
+const useNoteHitAreas = () => {
+  const ref = React.useRef<{ x: number; y: number; r: number; pitch: string }[]>([]);
+  return ref;
 };
 
 type LeftProps = {
@@ -224,28 +217,55 @@ const Left: React.FC<LeftProps> = (props) => {
   const parentRef = React.useRef<HTMLDivElement>(null);
   const isDragging = React.useRef(false);
   const lastX = React.useRef(0);
+  // 丸のヒットエリア
+  const noteHitAreas = useNoteHitAreas();
 
-  React.useEffect(() => {
-    if (parentRef.current && typeof scrollLeft === "number") {
-      if (parentRef.current.scrollLeft !== scrollLeft) {
-        parentRef.current.scrollLeft = scrollLeft;
+  // 丸のヒットエリアをリセット
+  const resetNoteHitAreas = React.useCallback(() => {
+    noteHitAreas.current = [];
+  }, [noteHitAreas]);
+
+  // 丸のヒットエリアを追加
+  const addNoteHitArea = React.useCallback(
+    (x: number, y: number, r: number, pitch: string) => {
+      noteHitAreas.current.push({ x, y, r, pitch });
+    },
+    [noteHitAreas]
+  );
+
+  // drawNoteをラップしてヒットエリアも記録
+  const drawNoteWithHitArea = React.useCallback(
+    (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
+      if (next) {
+        // nextNoteのヒットエリアは不要
+      } else {
+        note.lefts.forEach((left) => {
+          // pressまたはchordのみヒットエリアを追加
+          if (left.type === "press") {
+            const y = 20 + (left.string - 1) * 20;
+            const x = 10 + left.fret * (2400 / 24);
+            addNoteHitArea(x, y, 10, left.pitch ?? "");
+          } else if (left.type === "chord") {
+            const y = 20 + (left.string - 1) * 20;
+            const x = 10 + left.fret * (2400 / 24);
+            addNoteHitArea(x, y, 32, left.pitch ?? "");
+          }
+        });
       }
-    }
-  }, [scrollLeft]);
+      drawNote(context, note, next);
+    },
+    [addNoteHitArea]
+  );
 
   React.useEffect(() => {
     if (!canvasRef.current) {
       return;
     }
-
     const canvas = canvasRef.current;
     // setupCanvas(canvas);
-
     const context = canvas.getContext("2d");
     if (!context) return;
-
     context.clearRect(0, 0, canvas.width, canvas.height);
-
     drawLines(context);
   }, []);
 
@@ -253,22 +273,53 @@ const Left: React.FC<LeftProps> = (props) => {
     if (!canvasRef.current) {
       return;
     }
-
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-
     if (!context) {
       console.error("2D context not available");
       return;
     }
+    resetNoteHitAreas();
 
-    // next
+    drawLine(context, note);
+
     if (nextNote) {
-      drawNote(context, nextNote, true);
+      drawNoteWithHitArea(context, nextNote, true);
     }
 
-    drawNote(context, note);
-  }, [note, nextNote]);
+    drawNoteWithHitArea(context, note);
+  }, [note, nextNote, drawNoteWithHitArea, resetNoteHitAreas]);
+
+  // canvasクリック時の処理
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    // devicePixelRatio考慮
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    // ヒットエリア判定
+    for (const area of noteHitAreas.current) {
+      // 楕円は横半径32, 丸は半径10
+      if (area.r === 32) {
+        // 楕円（横32, 縦10）
+        const dx = (x - area.x) / 32;
+        const dy = (y - area.y) / 10;
+        if (dx * dx + dy * dy <= 1) {
+          if (area.pitch) playNoteSound(area.pitch, 1);
+          return;
+        }
+      } else {
+        // 丸
+        const dx = x - area.x;
+        const dy = y - area.y;
+        if (dx * dx + dy * dy <= area.r * area.r) {
+          if (area.pitch) playNoteSound(area.pitch, 1);
+          return;
+        }
+      }
+    }
+  };
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -308,9 +359,44 @@ const Left: React.FC<LeftProps> = (props) => {
     };
   }, [scrollLeft, onScroll]);
 
+  // canvas上でヒットエリアにマウスが乗ったらカーソルをpointerに
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+      let hit = false;
+      for (const area of noteHitAreas.current) {
+        if (area.r === 32) {
+          const dx = (x - area.x) / 32;
+          const dy = (y - area.y) / 10;
+          if (dx * dx + dy * dy <= 1) {
+            hit = true;
+            break;
+          }
+        } else {
+          const dx = x - area.x;
+          const dy = y - area.y;
+          if (dx * dx + dy * dy <= area.r * area.r) {
+            hit = true;
+            break;
+          }
+        }
+      }
+      canvas.style.cursor = hit ? "pointer" : "default";
+    };
+    canvas.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      canvas.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [noteHitAreas]);
+
   return (
     <div ref={parentRef} style={{ width: "100%" }}>
-      <canvas ref={canvasRef} width={2420} height={115} style={{ width: "100%" }} />
+      <canvas ref={canvasRef} width={2420} height={115} style={{ width: "100%" }} onClick={handleCanvasClick} />
     </div>
   );
 };

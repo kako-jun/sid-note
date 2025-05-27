@@ -52,6 +52,27 @@ const drawLines = (context: CanvasRenderingContext2D) => {
   context.arc(410, 180, 4, 0, Math.PI * 2);
   context.fillStyle = "#555555";
   context.fill();
+
+  // C
+  context.fillStyle = "#555555";
+  context.font = "20px Arial";
+  {
+    const text = "C2";
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, 130 - textWidth / 2, 225);
+  }
+
+  {
+    const text = "C3";
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, 270 - textWidth / 2, 225);
+  }
+
+  {
+    const text = "C4";
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, 410 - textWidth / 2, 225);
+  }
 };
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
