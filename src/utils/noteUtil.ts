@@ -171,6 +171,29 @@ export const getKeyPosition = (scale: string) => {
   };
 };
 
+export const comparePitch = (pitch1: string, pitch2: string): boolean => {
+  // ピッチを音名部分とオクターブ部分に分割
+  const parse = (p: string) => {
+    const match = p.match(/^([A-G][♭＃]?)(?:\/(.+?))?(\d)$/);
+    if (!match) return null;
+    const main = match[1];
+    const alt = match[2] || null;
+    const octave = match[3];
+    // スラッシュ区切りなら両方返す
+    if (alt) {
+      return { names: [main, alt], octave };
+    } else {
+      return { names: [main], octave };
+    }
+  };
+  const p1 = parse(pitch1);
+  const p2 = parse(pitch2);
+  if (!p1 || !p2) return false;
+  if (p1.octave !== p2.octave) return false;
+  // どちらかの音名が一致すればOK
+  return p1.names.some((n1) => p2.names.includes(n1));
+};
+
 export const valueText = (value: string) => {
   switch (value) {
     case "whole":

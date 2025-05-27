@@ -52,6 +52,27 @@ const drawLines = (context: CanvasRenderingContext2D) => {
   context.arc(60, 150, 4, 0, Math.PI * 2);
   context.fillStyle = "#555555";
   context.fill();
+
+  // C
+  context.fillStyle = "#555555";
+  context.font = "32px Arial";
+  {
+    const text = "C2";
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, 250 - textWidth / 2, 250);
+  }
+
+  {
+    const text = "C3";
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, 250 - textWidth / 2, 180);
+  }
+
+  {
+    const text = "C4";
+    const textWidth = context.measureText(text).width;
+    context.fillText(text, 250 - textWidth / 2, 110);
+  }
 };
 
 const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boolean = false) => {
@@ -90,9 +111,9 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     }
 
     context.fillStyle = "rgba(0, 200, 255, 1)";
-    context.font = "24px Arial"; // 12px→24px
+    context.font = "36px Arial";
     const textWidth = context.measureText(text).width;
-    context.fillText(text, x - 24 - textWidth / 2, y); // 12→24
+    context.fillText(text, x - 36 - textWidth / 2, y);
   } else {
     context.beginPath();
     context.arc(x, y, 10, 0, Math.PI * 2); // 5→10
@@ -109,9 +130,9 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
     }
 
     context.fillStyle = "#999999";
-    context.font = "24px Arial"; // 12px→24px
+    context.font = "36px Arial";
     const textWidth = context.measureText(text).width;
-    context.fillText(text, x - 24 - textWidth / 2, y); // 12→24
+    context.fillText(text, x - 36 - textWidth / 2, y);
   }
 };
 
@@ -165,7 +186,7 @@ const Staff: React.FC<StaffProps> = (props) => {
 
   return (
     <div>
-      <canvas ref={canvasRef} width={240} height={300} style={{ width: "100%" }} />
+      <canvas ref={canvasRef} width={270} height={300} style={{ width: "100%" }} />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import CircleOfFifths from "@/components/track/CircleOfFifths";
 import { LeftType, TrackType } from "@/schemas/trackSchema";
 import { getInterval } from "@/utils/chordUtil";
 import { functionalHarmonyIcon } from "@/utils/harmonyUtil";
+import { playChord, playNoteSound } from "@/utils/noteSoundPlayer";
 import { getScaleDiatonicChords, getScaleDiatonicChordsWith7th, getScaleNoteNames, scaleText } from "@/utils/scaleUtil";
 import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
 import Image from "next/image";
@@ -50,7 +51,7 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           return lefts.map((left) => {
             if (left.type === "press") {
               const interval = getInterval(chord, pitch);
-              return { ...left, interval };
+              return { ...left, pitch, interval };
             }
             return left;
           });
@@ -188,7 +189,9 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
               <tr>
                 <td style={{ color: "#888888", fontSize: "0.75rem" }}>Note Name</td>
                 {getScaleNoteNames(track.scale).map((noteName, index) => (
-                  <td key={index}>{noteName}</td>
+                  <td key={index} onClick={() => playNoteSound(`${noteName}3`, 1.5)} style={{ cursor: "pointer" }}>
+                    {noteName}
+                  </td>
                 ))}
               </tr>
               <tr>
@@ -203,7 +206,16 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
                   Diatonic Chord
                 </td>
                 {getScaleDiatonicChords(track.scale).map((chord, index) => (
-                  <td key={index} style={{ color: "#888888", lineHeight: 1, fontSize: "0.75rem" }}>
+                  <td
+                    key={index}
+                    style={{
+                      color: "#888888",
+                      lineHeight: 1,
+                      fontSize: "0.75rem",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => playChord(chord)}
+                  >
                     {chord}
                   </td>
                 ))}
@@ -211,7 +223,16 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
               <tr style={{ height: 4 }}></tr>
               <tr>
                 {getScaleDiatonicChordsWith7th(track.scale).map((chord, index) => (
-                  <td key={index} style={{ color: "#888888", lineHeight: 1, fontSize: "0.75rem" }}>
+                  <td
+                    key={index}
+                    style={{
+                      color: "#888888",
+                      lineHeight: 1,
+                      fontSize: "0.75rem",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => playChord(chord)}
+                  >
                     {chord}
                   </td>
                 ))}

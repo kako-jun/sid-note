@@ -8,6 +8,7 @@ import { NoteType } from "@/schemas/trackSchema";
 import { getChordPositions, getInterval } from "@/utils/chordUtil";
 import { isChromaticNote } from "@/utils/chromaticUtil";
 import { getChordToneLabel } from "@/utils/harmonyUtil";
+import { playNoteSound } from "@/utils/noteSoundPlayer";
 import { valueText } from "@/utils/noteUtil";
 import React from "react";
 import NoteSymbol from "./NoteSymbol";
@@ -108,7 +109,12 @@ const Note: React.FC<NoteProps> = (props) => {
             fontSize: "0.75rem",
           }}
         >
-          <p style={{ flex: 1, lineHeight: 1, textAlign: "left" }}>{note.pitch}</p>
+          <p
+            style={{ flex: 1, lineHeight: 1, textAlign: "left", cursor: "pointer" }}
+            onClick={() => playNoteSound(note.pitch, 1.5)}
+          >
+            {note.pitch}
+          </p>
           <p
             style={{
               flex: 2,
@@ -226,7 +232,7 @@ const Note: React.FC<NoteProps> = (props) => {
             }}
           >
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "right", gap: 0 }}>
-              <div style={{ width: 72, marginTop: -12 }}>
+              <div style={{ width: 81, marginTop: -12 }}>
                 <Staff note={note} nextNote={nextNote} />
               </div>
               <div style={{ width: 225, marginTop: -18, marginLeft: 8 }}>
