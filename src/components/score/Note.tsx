@@ -10,8 +10,8 @@ import { isChromaticNote } from "@/utils/chromaticUtil";
 import { getChordToneLabel } from "@/utils/harmonyUtil";
 import { playNoteSound } from "@/utils/noteSoundPlayer";
 import { valueText } from "@/utils/noteUtil";
+import Image from "next/image";
 import React from "react";
-import NoteSymbol from "./NoteSymbol";
 
 type NoteProps = {
   note: NoteType;
@@ -109,11 +109,15 @@ const Note: React.FC<NoteProps> = (props) => {
             fontSize: "0.75rem",
           }}
         >
-          <p
-            style={{ flex: 1, lineHeight: 1, textAlign: "left", cursor: "pointer" }}
-            onClick={() => playNoteSound(note.pitch, 1.5)}
-          >
-            {note.pitch}
+          <p style={{ flex: 1, lineHeight: 1, textAlign: "left" }}>
+            <button
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => playNoteSound(note.pitch, 1.5)}
+            >
+              {note.pitch}
+            </button>
           </p>
           <p
             style={{
@@ -128,26 +132,17 @@ const Note: React.FC<NoteProps> = (props) => {
             }}
           >
             <span style={{ display: "inline-flex", alignItems: "center" }}>
-              <NoteSymbol value={note.value} size={16} color="currentColor" />
+              <Image
+                src={`/note/${note.value}.drawio.svg`}
+                alt={note.value}
+                width={16}
+                height={16}
+                style={{
+                  filter: "invert(100%)",
+                }}
+              />
             </span>
             <span>{valueText(note.value)}</span>
-          </p>
-          <p>
-            <span style={{ display: "inline-flex", alignItems: "center" }}>
-              <NoteSymbol value="whole" size={16} color="currentColor" />
-              <NoteSymbol value="dotted_whole" size={16} color="currentColor" />
-              <NoteSymbol value="half" size={16} color="currentColor" />
-              <NoteSymbol value="dotted_half" size={16} color="currentColor" />
-              <NoteSymbol value="quarter" size={16} color="currentColor" />
-              <NoteSymbol value="dotted_quarter" size={16} color="currentColor" />
-              <NoteSymbol value="8th" size={16} color="currentColor" />
-              <NoteSymbol value="dotted_8th" size={16} color="currentColor" />
-              <NoteSymbol value="16th" size={16} color="currentColor" />
-              <NoteSymbol value="dotted_16th" size={16} color="currentColor" />
-              <NoteSymbol value="triplet_quarter" size={16} color="currentColor" />
-              <NoteSymbol value="triplet_8th" size={16} color="currentColor" />
-              <NoteSymbol value="triplet_16th" size={16} color="currentColor" />
-            </span>
           </p>
           <p style={{ flex: 2, lineHeight: 1, textAlign: "right" }}>
             {getInterval(chord, note.pitch)}:{" "}

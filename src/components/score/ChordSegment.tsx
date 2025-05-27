@@ -8,6 +8,7 @@ import { cadenceText, functionalHarmonyIcon, functionalHarmonyText, getFunctiona
 import { playChord } from "@/utils/noteSoundPlayer";
 import { comparePitch } from "@/utils/noteUtil";
 import { getScaleDiatonicChords } from "@/utils/scaleUtil";
+import Image from "next/image";
 import React from "react";
 
 type ChordSegmentProps = {
@@ -154,28 +155,84 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
           }}
         >
           <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>
-            <span
-              onClick={() => {
-                playChord(chord);
+            <button
+              style={{
+                cursor: "pointer",
               }}
-              style={{ cursor: "pointer" }}
+              onClick={() => playChord(chord)}
             >
               {chord}
-            </span>
+            </button>
             {functionalHarmony > 0 && (
-              <span style={{ color: "#888888" }}>
-                : {functionalHarmonyText(functionalHarmony)}{" "}
-                <span
-                  title={functionalHarmonyIcon(functionalHarmony).desc}
+              <span
+                title={functionalHarmonyIcon(functionalHarmony).desc}
+                style={{ display: "inline-flex", alignItems: "end", gap: 4, color: "#888888" }}
+              >
+                <span>: {functionalHarmonyText(functionalHarmony)}</span>
+                <Image
+                  src={`/functional_harmony/${functionalHarmony}.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
                   style={{
-                    filter: "grayscale(1) brightness(0.7)",
-                    WebkitFilter: "grayscale(1) brightness(0.7)",
-                    display: "inline-block",
-                    cursor: "help",
+                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(140deg)",
+                    // filter: "invert(50%)",
                   }}
-                >
-                  {functionalHarmonyIcon(functionalHarmony).icon}
-                </span>
+                />
+                <Image
+                  src={`/functional_harmony/2.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(350deg)",
+                  }}
+                />
+                <Image
+                  src={`/functional_harmony/3.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(230deg) blur(1px)",
+                  }}
+                />
+                <Image
+                  src={`/functional_harmony/4.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(180deg)",
+                  }}
+                />
+                <Image
+                  src={`/functional_harmony/5.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(290deg)",
+                  }}
+                />
+                <Image
+                  src={`/functional_harmony/6.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: "invert(40%) sepia(100%) saturate(400%) hue-rotate(180deg)",
+                  }}
+                />
+                <Image
+                  src={`/functional_harmony/7.drawio.svg`}
+                  alt={`${functionalHarmony}`}
+                  width={16}
+                  height={16}
+                  style={{
+                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(330deg)",
+                  }}
+                />
               </span>
             )}
           </p>

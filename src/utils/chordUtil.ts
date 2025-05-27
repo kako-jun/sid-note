@@ -212,6 +212,7 @@ export const getChordPositions = (chord: string) => {
     ) {
       baseFrets = baseFrets.map((f) => (f.interval === "3" ? { ...f, interval: "♭3", fret: 3 } : f));
     }
+
     // 5th
     if (/(aug(?![0-9])|\+5|＃5)/.test(chord) && !/(aug|\+|＃).*7/.test(chord)) {
       baseFrets = baseFrets.map((f) => (f.interval === "5" ? { ...f, interval: "＃5", fret: 8 } : f));
@@ -221,6 +222,7 @@ export const getChordPositions = (chord: string) => {
     ) {
       baseFrets = baseFrets.map((f) => (f.interval === "5" ? { ...f, interval: "♭5", fret: 6 } : f));
     }
+
     // 7th
     const has7th = /7/.test(chord);
     const maj7 = /(maj7|M7|△7)/.test(chord);
@@ -234,6 +236,7 @@ export const getChordPositions = (chord: string) => {
     } else if (m7) {
       baseFrets.push({ interval: "♭7", fret: 10 });
     }
+
     frets = baseFrets;
     useRoot = getRootNote(chord);
   }
@@ -242,15 +245,14 @@ export const getChordPositions = (chord: string) => {
   const fretsWithPitch = getPitches(useRoot, frets, offset - 12);
 
   // オクターブ番号をCで切り替える
-  let currentOctave = 1;
-  let lastPitchName = "";
+  let currentOctave = 0;
   const octaveFrets = fretsWithPitch
     .map((fret) => {
       const pitchName = fret.pitch.replace(/\d+$/, "");
-      if (pitchName.startsWith("C") && lastPitchName && !lastPitchName.startsWith("C")) {
-        currentOctave++;
+      if (pitchName.startsWith("C") || pitchName.startsWith("D")) {
+        currentOctave = 1;
       }
-      lastPitchName = pitchName;
+
       return [
         {
           fret: fret.fret,
