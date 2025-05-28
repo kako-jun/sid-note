@@ -2,6 +2,7 @@
 
 import ChordSegment from "@/components/score/ChordSegment";
 import { SectionType } from "@/schemas/trackSchema";
+import { scaleText } from "@/utils/scaleUtil";
 import React from "react";
 
 type SectionProps = {
@@ -13,6 +14,10 @@ type SectionProps = {
 
 const Section: React.FC<SectionProps> = (props) => {
   const { section, scale, scrollLeft, onScroll } = props;
+
+  const scaleWithModulation = React.useMemo(() => {
+    return section.key ? section.key : scale;
+  }, [scale, section.key]);
 
   return (
     <section
@@ -36,6 +41,7 @@ const Section: React.FC<SectionProps> = (props) => {
       >
         {section.name}
       </p>
+      <p style={{ marginLeft: 16, marginTop: 8 }}>{section.key && <span>Modulation: {scaleText(section.key)}</span>}</p>
       <div
         style={{
           margin: 8,
@@ -56,7 +62,7 @@ const Section: React.FC<SectionProps> = (props) => {
               prevSegment={section.chordSegments[index - 1] || null}
               nextSegment={section.chordSegments[index + 1] || null}
               chordSegmentCount={section.chordSegments.length}
-              scale={scale}
+              scale={scaleWithModulation}
               scrollLeft={scrollLeft}
               onScroll={onScroll}
             />

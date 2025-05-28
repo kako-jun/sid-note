@@ -142,7 +142,7 @@ export const getLine = (pitch: string) => {
     case "G4":
       return 23;
     default:
-      return 0;
+      return null;
   }
 };
 

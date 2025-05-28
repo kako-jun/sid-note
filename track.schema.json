@@ -6,11 +6,11 @@
     "title": { "type": "string" },
     "artist": { "type": "string" },
     "album": { "type": "string" },
-    "year": { "type": "number" },
+    "year": { "type": "integer" },
     "cover": { "type": ["string", "null"] },
-    "scale": { "type": "string" },
+    "key": { "type": "string" },
     "time_signature": { "type": "string", "enum": ["2/4", "3/4", "4/4"] },
-    "bpm": { "type": "number" },
+    "bpm": { "type": "integer" },
     "remarks": { "type": ["array", "null"], "items": { "type": "string" } },
     "sections": {
       "type": "array",
@@ -18,6 +18,7 @@
         "type": "object",
         "properties": {
           "name": { "type": "string" },
+          "key": { "type": ["string", "null"] },
           "chord_segments": {
             "type": "array",
             "items": {
@@ -26,6 +27,7 @@
                 "chord": { "type": "string" },
                 "on": { "type": ["string", "null"] },
                 "remarks": { "type": ["array", "null"], "items": { "type": "string" } },
+                "key": { "type": ["string", "null"] },
                 "notes": {
                   "type": "array",
                   "items": {
@@ -51,21 +53,19 @@
                         ]
                       },
                       "remarks": { "type": ["array", "null"], "items": { "type": "string" } },
-                      "tags": {
-                        "type": ["array", "null"],
-                        "items": { "type": "string", "enum": ["easy", "hard"] }
-                      },
+                      "tags": { "type": ["array", "null"], "items": { "type": "string", "enum": ["easy", "hard"] } },
                       "lefts": {
                         "type": "array",
                         "items": {
                           "type": "object",
                           "properties": {
-                            "finger": { "type": "number" },
-                            "string": { "type": "number" },
-                            "fret": { "type": "number" },
+                            "finger": { "type": "integer" },
+                            "string": { "type": "integer" },
+                            "fret": { "type": "integer" },
                             "type": { "type": "string", "enum": ["press", "mute", "ghost_note", "chord"] },
                             "pitch": { "type": ["string", "null"] },
-                            "interval": { "type": ["string", "null"] }
+                            "interval": { "type": ["string", "null"] },
+                            "instrument": { "type": ["string", "null"] }
                           },
                           "required": ["finger", "string", "fret", "type"]
                         }
@@ -73,14 +73,25 @@
                       "right": {
                         "type": ["object", "null"],
                         "properties": {
-                          "string": { "type": "number" },
+                          "string": { "type": "integer" },
                           "stroke": { "type": "string", "enum": ["down", "up", "thumb"] },
-                          "mute_strings": { "type": "array", "items": { "type": "number" } }
+                          "mute_strings": { "type": "array", "items": { "type": "integer" } }
                         },
                         "required": ["string", "stroke", "mute_strings"]
                       }
                     },
                     "required": ["pitch", "value", "lefts"]
+                  }
+                },
+                "instruments": {
+                  "type": ["array", "null"],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pitch": { "type": "string" },
+                      "instrument": { "type": "string" }
+                    },
+                    "required": ["pitch", "instrument"]
                   }
                 }
               },
@@ -92,5 +103,5 @@
       }
     }
   },
-  "required": ["title", "artist", "album", "year", "scale", "time_signature", "bpm", "sections"]
+  "required": ["title", "artist", "album", "year", "key", "time_signature", "bpm", "sections"]
 }

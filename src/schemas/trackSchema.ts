@@ -49,6 +49,7 @@ export const ChordSegmentSchema = z.object({
   chord: z.string(),
   on: z.string().nullable().optional(),
   remarks: z.array(z.string()).nullable().optional(),
+  key: z.string().nullable().optional(),
   notes: z.array(NoteSchema),
   instruments: z
     .array(
@@ -64,6 +65,7 @@ export type ChordSegmentType = z.infer<typeof ChordSegmentSchema>;
 
 export const SectionSchema = z.object({
   name: z.string(),
+  key: z.string().nullable().optional(),
   chordSegments: z.array(ChordSegmentSchema),
 });
 export type SectionType = z.infer<typeof SectionSchema>;
@@ -74,7 +76,7 @@ export const TrackSchema = z.object({
   album: z.string(),
   year: z.number(),
   cover: z.string().nullable().optional(),
-  scale: z.string(),
+  key: z.string(),
   timeSignature: z.enum(["2/4", "3/4", "4/4"]),
   bpm: z.number(),
   remarks: z.array(z.string()).nullable().optional(),

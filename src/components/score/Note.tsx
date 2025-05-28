@@ -1,5 +1,6 @@
 "use client";
 
+import { RemarkList } from "@/components/common/RemarkList";
 import Keyboard from "@/components/performance/Keyboard";
 import Left from "@/components/performance/Left";
 import Right from "@/components/performance/Right";
@@ -9,7 +10,7 @@ import { getChordPositions, getInterval } from "@/utils/chordUtil";
 import { isChromaticNote } from "@/utils/chromaticUtil";
 import { getChordToneLabel } from "@/utils/harmonyUtil";
 import { playNoteSound } from "@/utils/noteSoundPlayer";
-import { valueText } from "@/utils/noteUtil";
+import { comparePitch, valueText } from "@/utils/noteUtil";
 import Image from "next/image";
 import React from "react";
 
@@ -31,21 +32,24 @@ const Note: React.FC<NoteProps> = (props) => {
   const isChordPitch = React.useCallback(
     (pitch: string) => {
       const positions = getChordPositions(chord);
-      return positions.some((pos) => pos.pitch === pitch);
+      return positions.some((pos) => comparePitch(pos.pitch, pitch));
     },
     [chord]
   );
 
-  const [windowWidth, setWindowWidth] = React.useState(typeof window !== "undefined" ? window.innerWidth : 0);
+  const [windowWidth, setWindowWidth] = React.useState(0);
 
   React.useEffect(() => {
+    if (typeof window === "undefined") return;
     const handleResize = () => setWindowWidth(window.innerWidth);
+    setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // useMemoでscoreWidthを計算
   const scoreWidth = React.useMemo(() => {
+    if (windowWidth === 0) return 1000;
     const a = 2.5;
     const b = 1000;
     return Math.max(820, Math.min(2000, b + (windowWidth - 500) * a));
@@ -203,20 +207,7 @@ const Note: React.FC<NoteProps> = (props) => {
           }}
         >
           <div>
-            <ul
-              style={{
-                paddingLeft: 24,
-                paddingTop: 8,
-                paddingBottom: 4,
-                fontSize: "0.75rem",
-                color: "#888888",
-                listStyleType: "'・'",
-              }}
-            >
-              {note.remarks?.map((remark, index) => (
-                <li key={index}>{remark}</li>
-              ))}
-            </ul>
+            <RemarkList remarks={note.remarks ?? []} showBullet={false} />
           </div>
           <div
             style={{

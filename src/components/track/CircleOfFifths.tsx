@@ -3,31 +3,35 @@
 import { getKeyPosition } from "@/utils/noteUtil";
 import React from "react";
 
+const CANVAS_WIDTH = 110;
+const CANVAS_HEIGHT = 110;
+
+const CENTER_X = CANVAS_WIDTH / 2;
+const CENTER_Y = CANVAS_HEIGHT / 2;
+
 const drawLines = (context: CanvasRenderingContext2D) => {
   // 外円
   context.beginPath();
-  context.arc(80, 55, 50, 0, Math.PI * 2);
+  context.arc(CENTER_X, CENTER_Y, 50, 0, Math.PI * 2);
   context.strokeStyle = "#555555";
   context.lineWidth = 2;
   context.stroke();
 
   // 内円
   context.beginPath();
-  context.arc(80, 55, 30, 0, Math.PI * 2);
+  context.arc(CENTER_X, CENTER_Y, 30, 0, Math.PI * 2);
   context.strokeStyle = "#555555";
   context.lineWidth = 1;
   context.stroke();
 
   // 放射線
-  const centerX = 80;
-  const centerY = 55;
   const radius = 50;
   for (let i = 0; i < 12; i++) {
     const angle = (Math.PI * 2 * (i + 0.5)) / 12;
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
+    const x = CENTER_X + radius * Math.cos(angle);
+    const y = CENTER_Y + radius * Math.sin(angle);
     context.beginPath();
-    context.moveTo(centerX, centerY);
+    context.moveTo(CENTER_X, CENTER_Y);
     context.lineTo(x, y);
     context.strokeStyle = "#555555";
     context.lineWidth = 1;
@@ -42,8 +46,6 @@ const drawScale = (context: CanvasRenderingContext2D, scale: string) => {
 
   const position = getKeyPosition(scale);
 
-  const centerX = 80;
-  const centerY = 55;
   let radius = 40;
   if (position.circle === "inner") {
     radius = 20;
@@ -51,8 +53,8 @@ const drawScale = (context: CanvasRenderingContext2D, scale: string) => {
 
   const angle = (Math.PI * 2 * (position.index - 3)) / 12;
 
-  const x = centerX + radius * Math.cos(angle);
-  const y = centerY + radius * Math.sin(angle);
+  const x = CENTER_X + radius * Math.cos(angle);
+  const y = CENTER_Y + radius * Math.sin(angle);
 
   context.beginPath();
   context.arc(x, y, 5, 0, Math.PI * 2);
@@ -64,49 +66,58 @@ type CircleOfFifthsProps = {
   scale: string;
 };
 
-const CircleOfFifths: React.FC<CircleOfFifthsProps> = (props) => {
-  const { scale } = props;
-  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+const CircleOfFifths: React.FC<CircleOfFifthsProps> = ({ scale }) => {
+  const bgCanvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const fgCanvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
+  // 背景は初回のみ描画
   React.useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-
-    if (!context) {
-      console.error("2D context not available");
-      return;
-    }
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
+    if (!bgCanvasRef.current) return;
+    const context = bgCanvasRef.current.getContext("2d");
+    if (!context) return;
+    context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     drawLines(context);
   }, []);
 
+  // 前面はscale変更時にクリア＆再描画
   React.useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-
-    if (!context) {
-      console.error("2D context not available");
-      return;
-    }
-
+    if (!fgCanvasRef.current) return;
+    const context = fgCanvasRef.current.getContext("2d");
+    if (!context) return;
+    context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     drawScale(context, scale);
   }, [scale]);
 
   return (
-    <div>
-      <canvas ref={canvasRef} width={150} height={115} style={{ width: "100%" }} />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ position: "relative", width: CANVAS_WIDTH, height: CANVAS_HEIGHT, background: "red" }}>
+        <canvas
+          ref={bgCanvasRef}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          style={{ position: "absolute", left: 0, top: 0, zIndex: 1 }}
+        />
+        <canvas
+          ref={fgCanvasRef}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          style={{ position: "absolute", left: 0, top: 0, zIndex: 2, pointerEvents: "none" }}
+        />
+      </div>
     </div>
   );
 };
+
+// 画像化用: 背景＋前面を1枚のcanvasに合成してDataURLを返す
+export function getCircleOfFifthsImage(scale: string): string {
+  const canvas = document.createElement("canvas");
+  canvas.width = CANVAS_WIDTH;
+  canvas.height = CANVAS_HEIGHT;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "";
+  drawLines(ctx);
+  drawScale(ctx, scale);
+  return canvas.toDataURL("image/png");
+}
 
 export default CircleOfFifths;
