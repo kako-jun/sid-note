@@ -97,6 +97,16 @@ export function getNoteFrequency(note: string): number | null {
   return noteFrequencies[note] || null;
 }
 
+// AudioContextをグローバルで1つだけ生成し使い回す
+let audioContext: AudioContext | null = null;
+function getAudioContext(): AudioContext {
+  if (!audioContext) {
+    audioContext = new AudioContext();
+  }
+
+  return audioContext;
+}
+
 /**
  * Web Audio APIで音を鳴らす
  */
@@ -113,41 +123,41 @@ export function playNoteSound(note: string, duration: number = 1): void {
     return;
   }
 
-  const audioContext = new AudioContext();
+  const ctx = getAudioContext();
 
   // --- SFCベース風：ビリビリ音と丸みのある音をミックス ---
   // 1. ビリビリ成分（sawtooth）
-  const oscSaw = audioContext.createOscillator();
+  const oscSaw = ctx.createOscillator();
   oscSaw.type = "sawtooth";
-  oscSaw.frequency.setValueAtTime(frequency, audioContext.currentTime);
-  const gainSaw = audioContext.createGain();
-  gainSaw.gain.setValueAtTime(0, audioContext.currentTime);
-  gainSaw.gain.linearRampToValueAtTime(0.04, audioContext.currentTime + 0.02);
-  gainSaw.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+  oscSaw.frequency.setValueAtTime(frequency, ctx.currentTime);
+  const gainSaw = ctx.createGain();
+  gainSaw.gain.setValueAtTime(0, ctx.currentTime);
+  gainSaw.gain.linearRampToValueAtTime(0.04, ctx.currentTime + 0.02);
+  gainSaw.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
   oscSaw.connect(gainSaw);
 
   // 2. 丸み成分（triangle+ローパス）
-  const oscTri = audioContext.createOscillator();
+  const oscTri = ctx.createOscillator();
   oscTri.type = "triangle";
-  oscTri.frequency.setValueAtTime(frequency, audioContext.currentTime);
-  const filter = audioContext.createBiquadFilter();
+  oscTri.frequency.setValueAtTime(frequency, ctx.currentTime);
+  const filter = ctx.createBiquadFilter();
   filter.type = "lowpass";
-  filter.frequency.setValueAtTime(800, audioContext.currentTime);
-  const gainTri = audioContext.createGain();
-  gainTri.gain.setValueAtTime(0, audioContext.currentTime);
-  gainTri.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 0.02);
-  gainTri.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+  filter.frequency.setValueAtTime(800, ctx.currentTime);
+  const gainTri = ctx.createGain();
+  gainTri.gain.setValueAtTime(0, ctx.currentTime);
+  gainTri.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+  gainTri.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
   oscTri.connect(filter);
   filter.connect(gainTri);
 
   // ミックスして出力
-  gainSaw.connect(audioContext.destination);
-  gainTri.connect(audioContext.destination);
+  gainSaw.connect(ctx.destination);
+  gainTri.connect(ctx.destination);
 
   oscSaw.start();
   oscTri.start();
-  oscSaw.stop(audioContext.currentTime + duration);
-  oscTri.stop(audioContext.currentTime + duration);
+  oscSaw.stop(ctx.currentTime + duration);
+  oscTri.stop(ctx.currentTime + duration);
 }
 
 export const playChord = (chord: string) => {

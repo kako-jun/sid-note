@@ -1,0 +1,462 @@
+title: Stand By Me
+artist: Ben E. King
+album: ""
+year: 1961
+cover: ""
+key: A
+time_signature: 4/4
+bpm: 119
+remarks:
+  - この曲ではフィフティーズ（1950年代）進行が使われ、スタンド・バイ・ミー進行とも呼ばれるようになったらしい。
+  - イントロ、ヴァース（メロ）、コーラス（サビ）ともにG - Em - C - Dで行ける、すげー曲らしい。
+  - イヤーワーム化するけど不快でないリプレイバリュー（再聴性）の高さのおかげで、練習にぴったり。
+  - .
+  - Aメジャースケールなので、G - Em - C - Dはぜんぜんダイアトニックコードでない。なぜ……？
+  - 調べると、ホントはA - F＃m - D - Eなんだけど、移調したものがギター用として有名らしい。
+  - バレーコードが減ってオープンコードが増えるから、だとか。ベースは平行移動で済むから楽……。
+  - .
+  - この曲が先で、映画が後らしい。って考えると、スタンド・バイ・ミーなドラえもんは、メタのメタ？
+  - 映画は個人的に100点満点中、144点くらい。テディのメガネと、可哀想な郵便受けがイイ！
+sections:
+  - name: A2開始 Version
+    chord_segments:
+      - chord: A
+        remarks:
+          - コード進行がⅠ-Ⅵ-Ⅳ-Ⅴ（AメジャースケールではA - F＃m - D - E）だからといって、それら4つの小節数が同じとは限らない。
+          - Aが2小節、F＃mが2小節、Dが1小節、Eが1小節。
+          - .
+          - まとまりとしては、Ⅰ-Ⅵ-Ⅳ-Ⅴ-Ⅰになってるので、イントロの最初以外は、まとまりの最後のⅠと次のⅠがくっついた結果、Aを4小節ぶん繰り返すことになる。
+        notes:
+          - pitch: A2
+            value: 8th
+            remarks:
+              - 原曲でのAの高さは、ギターがA3。なので、ベースがA2になってる楽譜が見つかる。
+              - ソロでのアコースティック弾き語りに適した曲らしく、これらはギターでもベースでも弾ける音。
+              - .
+              - ベースだけで弾くなら、A2で弾けばイイはず。
+              - ベースでA3を弾けないわけじゃないけど、単音を弾いても軽ッ！って印象で、ギターっぽくならない。
+              - .
+              - ギターがいる場合、ギターがA3を弾いてくれるなら理想形。
+              - ギターがなぜかA2を弾きたがった場合、音がベースとかぶる。
+              - かぶり即斬ではないけど、ベースのいる意味とは……うごごご！となり、霊圧（存在感）が消えてしまう。
+              - .
+              - こーゆー場合、ギター側でA2を抜くのはメンドイので、ベース側でA1を弾くのが鉄板らしい。
+              - あと、ギターがA3を弾いてる時、ベースはA2、A1どっちを弾いてもイイけど、CopilotがいうにはA1がオススメらしい。
+              - A1を練習しとく価値は高そう。 [A1開始 開放弦多め Version](#A1開始%20開放弦多め%20Version) を参照。
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 7
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+          - pitch: E2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 7
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: A♭2
+            value: 8th
+            remarks:
+              - コードに属さない音。次の音に対して半音ズレで近づいてく階段状の音を、クロマチックノートを呼ぶらしい。
+              - たぶんこの音は、めっちゃお手本なクロマチックノートなんだと思う。
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 6
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+          - pitch: A2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 7
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: F＃m
+        remarks:
+        notes:
+          - pitch: F＃2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+          - pitch: E2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 7
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: F＃2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: D
+        remarks:
+        notes:
+          - pitch: D2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 5
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: F＃2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: E
+        remarks:
+        notes:
+          - pitch: E2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 7
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: G＃2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 6
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: A
+        remarks:
+        notes:
+          - pitch: A2
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 7
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+  - name: A1開始 開放弦多め Version
+    chord_segments:
+      - chord: A
+        remarks:
+        notes:
+          - pitch: A1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 0
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: E1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 0
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: []
+          - pitch: A♭1
+            value: 8th
+            remarks:
+              - A1から、たった-1フレットでA♭1はあるのに、A1を開放弦で弾いてるとそれができない。
+              - A♭1から低い音たちは、4弦にしか存在しない。この次に弾くE1も4弦。
+              - あれ……？ それなら、A1も4弦で弾けとけば良かったんじゃない？
+              - .
+              - ベースはルートを平行移動するだけで移調やオクターブ移動ができるけど、指板の左側（0フレット）に壁があって、はみだすと+1弦、+5フレットで弾く必要があり、単純に平行移動できない。
+              - さらに、すでに4弦を弾いてる場合、左側を使い切っても、+1弦ができない。
+              - 具体的には最も低い4フレットぶんであるE1～A♭1が4弦にしかなく、小さな手ではスライド奏法でしか弾けない。
+              - .
+              - この曲をバンドで弾くとき、A2で弾くか、A1で弾くか、G2で弾くかによって、運指が変わるとキツイ。
+              - A1バージョンをスライドでしか弾けない以上、ほかのバージョンもスライドで練習しとくのが無難なのかなー？
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 4
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: []
+          - pitch: A1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 7
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: F＃m
+        remarks:
+        notes:
+          - pitch: F＃1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+          - pitch: E1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 7
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: F＃1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: D
+        remarks:
+        notes: []
+      - chord: E
+        remarks:
+        notes: []
+      - chord: A
+        remarks:
+        notes: []
+  - name: A1開始 スライド多め Version
+    chord_segments:
+      - chord: A
+        remarks:
+        notes:
+          - pitch: A1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 0
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: E1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 0
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: []
+          - pitch: A♭1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 4
+                fret: 4
+                type: press
+            right:
+              string: 4
+              stroke: down
+              mute_strings: []
+          - pitch: A1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 7
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: F＃m
+        remarks:
+        notes:
+          - pitch: F＃1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+          - pitch: E1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 3
+                fret: 7
+                type: press
+            right:
+              string: 3
+              stroke: down
+              mute_strings: []
+          - pitch: F＃1
+            value: 8th
+            remarks:
+            tags: [easy]
+            lefts:
+              - finger: 3
+                string: 2
+                fret: 4
+                type: press
+            right:
+              string: 2
+              stroke: down
+              mute_strings: []
+      - chord: D
+        remarks:
+        notes: []
+      - chord: E
+        remarks:
+        notes: []
+      - chord: A
+        remarks:
+        notes: []
+  - name: G Major Scale
+    key: G
+    chord_segments:
+      - chord: G
+        remarks:
+          - Gメジャースケールで弾くってことは、ギターの難度を下げるために原曲から転調したシチュエーションの確率が高い。
+          - ギターがいるってことなので、ベースはギターとの音かぶりを避ける必要がある。
+          - .
+          - ギターがG2を弾くなら、ベースはG1を、ギターがG3を弾くなら、ベースはG2を弾く。
+          - ギターとゆー楽器は3弦を使うのがベターなので、G3を弾くはず。
+          - 結局、ベースはG2開始を練習しとけばイイ。
+        notes: []
+      - chord: Em
+        remarks:
+        notes: []
+      - chord: C
+        remarks:
+        notes: []
+      - chord: D
+        remarks:
+        notes: []
+      - chord: G
+        remarks:
+        notes: []

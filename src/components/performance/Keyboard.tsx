@@ -81,6 +81,11 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
   }
 
   const line = getLine(note.pitch);
+  if (line === null) {
+    // 不正なpitchの場合は描画しない
+    return;
+  }
+
   const x = 30 + line * 20; // 15→30, 10→20
 
   let y = 160; // 80→160

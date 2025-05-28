@@ -1,109 +1,31 @@
-"use client";
+import CornerBox from "@/components/common/CornerBox";
+import { SetlistType } from "@/schemas/setlistSchema";
+import React from "react";
+import SetlistItem from "./SetlistItem";
 
-import { loadSetlistFromYamlUrl, SetlistTrack } from "@/utils/setlistLoader";
-import React, { Fragment } from "react";
+export type SetlistProps = {
+  setlist: SetlistType;
+};
 
-const Setlist: React.FC = () => {
-  const [tracks, setTracks] = React.useState<SetlistTrack[]>([]);
-
-  React.useEffect(() => {
-    loadSetlistFromYamlUrl("/track/setlist.yaml").then(setTracks).catch(console.error);
-  }, []);
-
-  if (tracks.length === 0) {
+const Setlist: React.FC<SetlistProps> = ({ setlist }) => {
+  if (setlist.tracks.length === 0) {
     return <>Loading ...</>;
   }
 
   return (
     <section>
       <h2>Setlist</h2>
-      <div
-        style={{
-          marginTop: 16,
-          border: "1px solid #444444",
-          display: "inline-block",
-          padding: "4px 40px",
-          position: "relative",
-          background: "none",
-        }}
-      >
-        {/* 四隅のcorner.webpを背景として表示 */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(0deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(90deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(270deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(180deg)",
-          }}
-        />
+      <CornerBox style={{ marginTop: 16, padding: "4px 40px" }}>
         <ul style={{ listStyle: "none", padding: 0 }}>
-          {tracks.map((track, index) => (
-            <Fragment key={index}>
-              {index > 0 && Math.floor(Number(track.id) / 10) !== Math.floor(Number(tracks[index - 1].id) / 10) && (
-                <li>・</li>
-              )}
-              <li
-                style={{ cursor: "pointer", textDecoration: "none", paddingTop: 8, paddingBottom: 8 }}
-                onClick={() => (window.location.href = `/tracks/${track.id}`)}
-                onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-                onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-              >
-                <span style={{ fontStyle: "italic" }}>{track.title}</span>
-                {" / "}
-                <span>{track.artist}</span>
-              </li>
-            </Fragment>
+          {setlist.tracks.map((track, index) => (
+            <SetlistItem
+              key={track.id}
+              track={track}
+              prevTrackId={index > 0 ? setlist.tracks[index - 1].id : undefined}
+            />
           ))}
         </ul>
-      </div>
+      </CornerBox>
     </section>
   );
 };

@@ -81,6 +81,11 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
   }
 
   let line = getLine(note.pitch);
+  if (line === null) {
+    // 不正なpitchの場合は描画しない
+    return;
+  }
+
   if (note.pitch.includes("＃")) {
     line -= 0.5;
   } else if (note.pitch.includes("♭")) {

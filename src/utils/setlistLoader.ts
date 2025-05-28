@@ -1,18 +1,17 @@
+import { SetlistSchema, SetlistType } from "@/schemas/setlistSchema";
+import { toCamelCaseKeysDeep } from "@/utils/objectUtil";
+import fs from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 
-export type SetlistTrack = {
-  id: number;
-  title: string;
-  artist: string;
-};
-
-export async function loadSetlistFromYamlUrl(url: string): Promise<SetlistTrack[]> {
-  const res = await fetch(url);
-  const text = await res.text();
+export async function loadSetlistFromYamlUrl(url: string): Promise<SetlistType> {
+  const filePath = path.join(process.cwd(), "public", url.replace(/^\/?/, ""));
+  const text = await fs.readFile(filePath, "utf8");
   const raw = yaml.load(text);
-  if (raw && typeof raw === "object" && "tracks" in raw) {
-    return raw.tracks as SetlistTrack[];
-  } else {
-    throw new Error("Invalid setlist yaml format");
+  const camel = toCamelCaseKeysDeep(raw);
+  const parsed = SetlistSchema.safeParse(camel);
+  if (!parsed.success) {
+    throw new Error("Invalid setlist yaml: " + JSON.stringify(parsed.error.issues, null, 2));
   }
+  return parsed.data;
 }

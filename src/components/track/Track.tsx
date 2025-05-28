@@ -1,86 +1,21 @@
-"use client";
-
-import Section from "@/components/score/Section";
+import CornerBox from "@/components/common/CornerBox";
+import { RemarkList } from "@/components/common/RemarkList";
 import CircleOfFifths from "@/components/track/CircleOfFifths";
-import { LeftType, TrackType } from "@/schemas/trackSchema";
-import { getInterval } from "@/utils/chordUtil";
-import { functionalHarmonyIcon } from "@/utils/harmonyUtil";
-import { playChord, playNoteSound } from "@/utils/noteSoundPlayer";
-import { getScaleDiatonicChords, getScaleDiatonicChordsWith7th, getScaleNoteNames, scaleText } from "@/utils/scaleUtil";
-import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
+import TrackPopupTable from "@/components/track/TrackPopupTable";
+import TrackSectionItem from "@/components/track/TrackSectionItem";
+import TrackSections from "@/components/track/TrackSections";
+import { TrackType } from "@/schemas/trackSchema";
+import { scaleText } from "@/utils/scaleUtil";
 import Image from "next/image";
 import React from "react";
 
-type TrackProps = {
-  trackId: number;
+// TrackPropsをtrack: TrackTypeに変更
+export type TrackProps = {
+  track: TrackType;
 };
 
-const Track: React.FC<TrackProps> = ({ trackId }) => {
-  const [tracks, setTracks] = React.useState<TrackType[]>([]);
-  // 横スクロール位置のstate
-  const [scrollLeft, setScrollLeft] = React.useState(0);
-  // スクロールイベントハンドラ
-  const handleScroll = (left: number) => {
-    setScrollLeft(left);
-  };
-
-  const track = React.useMemo(() => {
-    if (tracks.length > 0) {
-      return tracks[0];
-    }
-
-    const defaultTrack: TrackType = {
-      title: "",
-      artist: "",
-      album: "",
-      year: 0,
-      timeSignature: "4/4",
-      bpm: 0,
-      scale: "",
-      sections: [],
-    };
-
-    return defaultTrack;
-  }, [tracks]);
-
-  React.useEffect(() => {
-    const loadTrack = async () => {
-      const track = await loadTrackFromYamlUrl(`/track/track_${trackId}.yaml`);
-      if (track) {
-        const leftsWithInterval = (lefts: LeftType[], chord: string, pitch: string): LeftType[] => {
-          return lefts.map((left) => {
-            if (left.type === "press") {
-              const interval = getInterval(chord, pitch);
-              return { ...left, pitch, interval };
-            }
-            return left;
-          });
-        };
-
-        // 各Sectionの各ChordSegmentの各NoteのleftsをleftsWithIntervalで上書き
-        const updatedSections =
-          track.sections?.map((section) => ({
-            ...section,
-            chordSegments:
-              section.chordSegments?.map((chordSegment) => ({
-                ...chordSegment,
-                notes:
-                  chordSegment.notes?.map((note) => {
-                    const chord = chordSegment.on && chordSegment.on !== "" ? chordSegment.on : chordSegment.chord;
-                    return {
-                      ...note,
-                      lefts: leftsWithInterval(note.lefts, chord, note.pitch),
-                    };
-                  }) || [],
-              })) || [],
-          })) || [];
-        setTracks((prev) => [...prev, { ...track, sections: updatedSections }]);
-      }
-    };
-    loadTrack();
-  }, [trackId]);
-
-  if (track.title === "") {
+const Track: React.FC<TrackProps> = ({ track }) => {
+  if (!track || track.title === "") {
     return <section>Loading ...</section>;
   }
 
@@ -161,101 +96,14 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           {track.bpm} <span style={{ color: "#888888" }}>BPM</span>
         </p>
       </div>
-      {track.scale && (
+      {track.key && (
         <div>
           <div style={{ width: 100, marginLeft: "auto", marginRight: "auto" }}>
-            <CircleOfFifths scale={track.scale} />
+            <CircleOfFifths scale={track.key} />
           </div>
-          <p style={{ marginTop: 2, marginBottom: 2 }}>{scaleText(track.scale)}</p>
-          <table
-            style={{
-              marginLeft: "10%",
-              marginRight: "10%",
-              width: "80%",
-              tableLayout: "fixed",
-            }}
-          >
-            <thead>
-              <tr style={{ color: "#888888" }}>
-                <td width={100}></td>
-                {[1, 2, 3, 4, 5, 6, 7].map((degree) => (
-                  <td key={degree} title={functionalHarmonyIcon(degree).desc} style={{ cursor: "help" }}>
-                    {["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "Ⅵ", "Ⅶ"][degree - 1]}
-                  </td>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ color: "#888888", fontSize: "0.75rem" }}>Note Name</td>
-                {getScaleNoteNames(track.scale).map((noteName, index) => (
-                  <td key={index}>
-                    <button
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => playNoteSound(`${noteName}3`, 1.5)}
-                    >
-                      {noteName}
-                    </button>
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td
-                  rowSpan={3}
-                  style={{
-                    color: "#888888",
-                    fontSize: "0.75rem",
-                    lineHeight: 1,
-                  }}
-                >
-                  Diatonic Chord
-                </td>
-                {getScaleDiatonicChords(track.scale).map((chord, index) => (
-                  <td
-                    key={index}
-                    style={{
-                      color: "#888888",
-                      lineHeight: 1,
-                      fontSize: "0.75rem",
-                    }}
-                  >
-                    <button
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => playChord(chord)}
-                    >
-                      {chord}
-                    </button>
-                  </td>
-                ))}
-              </tr>
-              <tr style={{ height: 4 }}></tr>
-              <tr>
-                {getScaleDiatonicChordsWith7th(track.scale).map((chord, index) => (
-                  <td
-                    key={index}
-                    style={{
-                      color: "#888888",
-                      lineHeight: 1,
-                      fontSize: "0.75rem",
-                    }}
-                  >
-                    <button
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => playChord(chord)}
-                    >
-                      {chord}
-                    </button>
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+          <p style={{ marginTop: 2, marginBottom: 2 }}>{scaleText(track.key)}</p>
+          {/* PopupOnClickを含むテーブル部分をクライアントコンポーネントに分離 */}
+          <TrackPopupTable scaleKey={track.key} />
         </div>
       )}
       <div
@@ -267,128 +115,30 @@ const Track: React.FC<TrackProps> = ({ trackId }) => {
           color: "#888888",
         }}
       >
-        {track.remarks?.map((remark, index) => {
-          return (
-            <ul
-              key={index}
-              style={{
-                textAlign: "left",
-              }}
-            >
-              <li>{remark}</li>
-            </ul>
-          );
-        })}
+        <RemarkList remarks={track.remarks ?? []} showBullet={false} style={{ textAlign: "left" }} />
       </div>
-      <div
-        style={{
-          marginTop: 24,
-          border: "1px solid #444444",
-          display: "inline-block",
-          padding: "4px 40px",
-          position: "relative",
-          background: "none",
-        }}
-      >
-        {/* 四隅のcorner.webpを背景として表示 */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(0deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(90deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(270deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            right: 0,
-            width: 24,
-            height: 24,
-            backgroundImage: "url(/corner.webp)",
-            backgroundSize: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-            transform: "rotate(180deg)",
-          }}
-        />
+      <CornerBox style={{ marginTop: 24, padding: "4px 40px" }}>
         <ul>
-          {track.sections?.map((section, index) => {
-            return (
-              <li key={index} style={{ paddingTop: 8, paddingBottom: 8 }}>
-                <a
-                  // className={Jacquard_24_400.className}
-                  href={`#${section.name}`}
-                  style={
-                    {
-                      // fontSize: "1.25rem",
-                      // fontFamily: '"Jacquard 24", "Old English Text MT", serif',
-                    }
-                  }
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-                >
-                  {section.name}
-                </a>
-              </li>
-            );
-          })}
+          {track.sections?.map((section, index) => (
+            <TrackSectionItem key={index} section={section} />
+          ))}
         </ul>
-      </div>
-      <div
-        style={{
-          // margin: 8,
-          marginTop: 32,
-          marginBottom: 48,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          gap: 8,
-        }}
-      >
-        {track.sections?.map((section, index) => {
-          return (
-            <div key={index} id={section.name}>
-              <Section section={section} scale={track.scale} scrollLeft={scrollLeft} onScroll={handleScroll} />
-            </div>
-          );
-        })}
-      </div>
+      </CornerBox>
+      {/* Sectionリスト部分をクライアントコンポーネントに分離 */}
+      <TrackSections sections={track.sections} scale={track.key} />
+      {/* Diatonic Chord テーブルのスマホ用スタイル */}
+      <style>{`
+        @media (max-width: 640px) {
+          .diatonic-chord-mobile-odd {
+            padding-top: 16px !important;
+            padding-bottom: 0 !important;
+          }
+          .diatonic-chord-mobile-even {
+            padding-bottom: 16px !important;
+            padding-top: 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

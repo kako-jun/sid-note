@@ -1,13 +1,16 @@
 "use client";
 
+import PopupOnClick from "@/components/common/PopupOnClick";
+import { RemarkList } from "@/components/common/RemarkList";
 import Left from "@/components/performance/Left";
 import Note from "@/components/score/Note";
 import { ChordSegmentType, LeftType, NoteType } from "@/schemas/trackSchema";
 import { getChordPositions } from "@/utils/chordUtil";
+import { getFunctionalHarmonyFilter } from "@/utils/functionalHarmonyFilter";
 import { cadenceText, functionalHarmonyIcon, functionalHarmonyText, getFunctionalHarmony } from "@/utils/harmonyUtil";
 import { playChord } from "@/utils/noteSoundPlayer";
 import { comparePitch } from "@/utils/noteUtil";
-import { getScaleDiatonicChords } from "@/utils/scaleUtil";
+import { getScaleDiatonicChords, scaleText } from "@/utils/scaleUtil";
 import Image from "next/image";
 import React from "react";
 
@@ -57,10 +60,14 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
     return chordSegment.on && chordSegment.on !== "" ? chordSegment.on : chordSegment.chord;
   }, [chordSegment]);
 
+  const scaleWithModulation = React.useMemo(() => {
+    return chordSegment.key ? chordSegment.key : scale;
+  }, [scale, chordSegment.key]);
+
   const isScaleChord = React.useMemo(() => {
-    const chords = getScaleDiatonicChords(scale);
+    const chords = getScaleDiatonicChords(scaleWithModulation);
     return chords.includes(chord);
-  }, [scale, chord]);
+  }, [scaleWithModulation, chord]);
 
   const nextNote = React.useCallback(
     (index: number) => {
@@ -77,24 +84,26 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
     [chordSegment, nextSegment]
   );
 
-  const [windowWidth, setWindowWidth] = React.useState(typeof window !== "undefined" ? window.innerWidth : 0);
+  const [windowWidth, setWindowWidth] = React.useState(0);
 
   React.useEffect(() => {
+    if (typeof window === "undefined") return;
     const handleResize = () => setWindowWidth(window.innerWidth);
+    setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // useMemoでscoreWidthを計算
   const scoreWidth = React.useMemo(() => {
+    if (windowWidth === 0) return 1000;
     const a = 2.5;
     const b = 1000;
     return Math.max(1000, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
   const functionalHarmony = React.useMemo(() => {
-    return getFunctionalHarmony(scale, chord);
-  }, [scale, chord]);
+    return getFunctionalHarmony(scaleWithModulation, chord);
+  }, [scaleWithModulation, chord]);
 
   const prevFunctionalHarmony = React.useMemo(() => {
     if (!prevSegment) {
@@ -102,8 +111,8 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
     }
 
     const prevChord = prevSegment.on && prevSegment.on !== "" ? prevSegment.on : prevSegment.chord;
-    return getFunctionalHarmony(scale, prevChord);
-  }, [scale, prevSegment]);
+    return getFunctionalHarmony(scaleWithModulation, prevChord);
+  }, [scaleWithModulation, prevSegment]);
 
   return (
     <section
@@ -131,10 +140,17 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
           {chordSegmentId}
           <span style={{ color: "#888888" }}> of {chordSegmentCount}</span>
         </p>
+        {chordSegment.key && (
+          <p style={{ lineHeight: 1, textAlign: "center", fontSize: "0.75rem" }}>
+            Modulation: {scaleText(chordSegment.key)}
+          </p>
+        )}
         <p style={{ lineHeight: 1, textAlign: "right", fontSize: "0.75rem" }}>
           <span style={{ color: "#888888" }}>
             {prevSegment &&
-              `${functionalHarmonyText(prevFunctionalHarmony)} → ${functionalHarmonyText(functionalHarmony)}`}
+              `${functionalHarmonyText(prevFunctionalHarmony) || "Non-Diatonic"} → ${
+                functionalHarmonyText(functionalHarmony) || "Non-Diatonic"
+              }`}
           </span>
           {prevSegment &&
             (() => {
@@ -155,85 +171,54 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
           }}
         >
           <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>
-            <button
-              style={{
-                cursor: "pointer",
+            {/* コード名ボタンをPopupOnClickでラップし、構成音をポップアップ表示 */}
+            <PopupOnClick
+              trigger={
+                <button style={{ cursor: "pointer" }} onClick={() => playChord(chord)}>
+                  {chordSegment.chord}
+                  {chordSegment.on && ` on ${chordSegment.on}`}
+                </button>
+              }
+              popup={(() => {
+                const chordPitches = Array.from(
+                  new Set(getChordPositions(chord).map((pos) => pos.pitch.replace(/\d+$/, "")))
+                );
+                return <span>{chordPitches.join(", ")}</span>;
+              })()}
+              popupStyle={{
+                left: 0,
+                transform: "none",
               }}
-              onClick={() => playChord(chord)}
-            >
-              {chord}
-            </button>
+            />
             {functionalHarmony > 0 && (
-              <span
-                title={functionalHarmonyIcon(functionalHarmony).desc}
-                style={{ display: "inline-flex", alignItems: "end", gap: 4, color: "#888888" }}
-              >
-                <span>: {functionalHarmonyText(functionalHarmony)}</span>
-                <Image
-                  src={`/functional_harmony/${functionalHarmony}.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(140deg)",
-                    // filter: "invert(50%)",
-                  }}
-                />
-                <Image
-                  src={`/functional_harmony/2.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(350deg)",
-                  }}
-                />
-                <Image
-                  src={`/functional_harmony/3.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(230deg) blur(1px)",
-                  }}
-                />
-                <Image
-                  src={`/functional_harmony/4.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(180deg)",
-                  }}
-                />
-                <Image
-                  src={`/functional_harmony/5.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(290deg)",
-                  }}
-                />
-                <Image
-                  src={`/functional_harmony/6.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(40%) sepia(100%) saturate(400%) hue-rotate(180deg)",
-                  }}
-                />
-                <Image
-                  src={`/functional_harmony/7.drawio.svg`}
-                  alt={`${functionalHarmony}`}
-                  width={16}
-                  height={16}
-                  style={{
-                    filter: "invert(50%) sepia(100%) saturate(200%) hue-rotate(330deg)",
-                  }}
-                />
-              </span>
+              <PopupOnClick
+                trigger={
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "end",
+                      gap: 4,
+                      color: "#888888",
+                      cursor: "pointer",
+                      position: "relative",
+                    }}
+                  >
+                    <span>: {functionalHarmonyText(functionalHarmony)}</span>
+                    <Image
+                      src={`/functional_harmony/${functionalHarmony}.drawio.svg`}
+                      alt={`${functionalHarmony}`}
+                      width={16}
+                      height={16}
+                      style={{ filter: getFunctionalHarmonyFilter(functionalHarmony) }}
+                    />
+                  </span>
+                }
+                popup={<span>{functionalHarmonyIcon(functionalHarmony).desc}</span>}
+                popupStyle={{
+                  left: 0,
+                  transform: "none",
+                }}
+              />
             )}
           </p>
           <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>
@@ -267,11 +252,7 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
             </div>
           </div>
         </div>
-        <ul style={{ paddingLeft: 24, paddingTop: 4, fontSize: "0.75rem", color: "#888888", listStyleType: "'・'" }}>
-          {chordSegment.remarks?.map((remark, index) => (
-            <li key={index}>{remark}</li>
-          ))}
-        </ul>
+        <RemarkList remarks={chordSegment.remarks ?? []} showBullet={false} />
         <div style={{ marginTop: 8, display: "flex", flexDirection: "column", justifyContent: "center", gap: 8 }}>
           {chordSegment.notes.map((note, index) => {
             return (
@@ -282,7 +263,7 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
                 nextNote={nextNote(index)}
                 noteCount={chordSegment.notes.length}
                 chord={chord}
-                scale={scale}
+                scale={scaleWithModulation}
                 scrollLeft={scrollLeft}
                 onScroll={onScroll}
               />

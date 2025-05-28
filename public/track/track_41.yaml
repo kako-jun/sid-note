@@ -1,0 +1,42 @@
+title: 踊り子
+artist: Vaundy
+album: replica
+year: 2021
+cover: ""
+key: G
+time_signature: 4/4
+bpm: 157
+remarks:
+  - 初めて聴いたとき、なんてロマンチックなのと思った。ベースに集中した「引き算の美学」？
+  - 2020年代に初心者がベースを始めるとき、（いかにも弾けそうな）この曲があることは勇気を与えてくれる。
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: G
+        remarks:
+        notes: []
+      - chord: G
+        on: A
+        remarks:
+        notes: []
+      - chord: B
+        remarks:
+        notes: []
+      - chord: B
+        on: F＃
+        remarks:
+        notes: []
+      - chord: Em
+        remarks:
+        notes: []
+      - chord: Em
+        on: D
+        remarks:
+        notes: []
+      - chord: C
+        remarks:
+        notes: []
+      - chord: C
+        on: B
+        remarks:
+        notes: []
