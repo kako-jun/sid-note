@@ -6,9 +6,9 @@ import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
 import { notFound } from "next/navigation";
 
 // サーバーコンポーネントとしてasync化
-export default async function TrackPage({ params }: { params: { id: string } }) {
+export default async function TrackPage({ params }: { params: Promise<{ id: string }> }) {
   // idはstring型で受け取る
-  const id = params.id;
+  const id = (await params).id;
   // public配下のyamlをサーバーで読み込む
   const track = await loadTrackFromYamlUrl(`/track/track_${id}.yaml`);
   if (!track) return notFound();
