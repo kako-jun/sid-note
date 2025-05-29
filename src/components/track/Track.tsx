@@ -1,13 +1,15 @@
 import CornerBox from "@/components/common/CornerBox";
 import { RemarkList } from "@/components/common/RemarkList";
 import CircleOfFifths from "@/components/track/CircleOfFifths";
-import TrackPopupTable from "@/components/track/TrackPopupTable";
+import NoteNameTable from "@/components/track/NoteNameTable";
 import TrackSectionItem from "@/components/track/TrackSectionItem";
 import TrackSections from "@/components/track/TrackSections";
 import { TrackType } from "@/schemas/trackSchema";
 import { scaleText } from "@/utils/scaleUtil";
 import Image from "next/image";
 import React from "react";
+import DiatonicChord7thTable from "./DiatonicChord7thTable";
+import DiatonicChordTable from "./DiatonicChordTable";
 
 // TrackPropsをtrack: TrackTypeに変更
 export type TrackProps = {
@@ -98,12 +100,13 @@ const Track: React.FC<TrackProps> = ({ track }) => {
       </div>
       {track.key && (
         <div>
-          <div style={{ width: 100, marginLeft: "auto", marginRight: "auto" }}>
+          <div style={{ marginLeft: "auto", marginRight: "auto" }}>
             <CircleOfFifths scale={track.key} />
           </div>
           <p style={{ marginTop: 2, marginBottom: 2 }}>{scaleText(track.key)}</p>
-          {/* PopupOnClickを含むテーブル部分をクライアントコンポーネントに分離 */}
-          <TrackPopupTable scaleKey={track.key} />
+          <NoteNameTable scaleKey={track.key} />
+          <DiatonicChordTable scaleKey={track.key} />
+          <DiatonicChord7thTable scaleKey={track.key} />
         </div>
       )}
       <div

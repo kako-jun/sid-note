@@ -1,5 +1,5 @@
-"use client";
 import { SetlistTrackType } from "@/schemas/setlistSchema";
+import Link from "next/link";
 import React from "react";
 
 type SetlistItemProps = {
@@ -14,15 +14,16 @@ const SetlistItem: React.FC<SetlistItemProps> = ({ track, prevTrackId }) => {
   return (
     <>
       {showDot && <li>・</li>}
-      <li
-        style={{ cursor: "pointer", textDecoration: "none", paddingTop: 8, paddingBottom: 8 }}
-        onClick={() => (window.location.href = `/tracks/${track.id}`)}
-        onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-        onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-      >
-        <span style={{ fontStyle: "italic" }}>{track.title}</span>
-        {" / "}
-        <span>{track.artist}</span>
+      <li style={{ paddingTop: 8, paddingBottom: 8 }}>
+        <Link
+          className="link-hover-underline"
+          href={`/tracks/${track.id}`}
+          style={{ display: "block", width: "100%", height: "100%" }}
+        >
+          <span style={{ fontStyle: "italic" }}>{track.title}</span>
+          {" / "}
+          <span>{track.artist}</span>
+        </Link>
       </li>
     </>
   );

@@ -12,7 +12,7 @@ const TitleHeader: React.FC = () => (
     }}
   >
     <Link href="/">
-      <Image src="/title.png" alt="Sid Note" width={100} height={25} style={{ cursor: "pointer" }} />
+      <Image src="/title.png" alt="Sid Note" width={100} height={25} />
     </Link>
   </h1>
 );

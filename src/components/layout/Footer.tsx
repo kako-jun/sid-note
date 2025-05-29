@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 const Footer: React.FC = () => (
-  <p
+  <section
     style={{
       position: "fixed",
       bottom: 0,
@@ -37,7 +37,7 @@ const Footer: React.FC = () => (
       </svg>
     </Link>
     whose bass playing could clear a room.
-  </p>
+  </section>
 );
 
 export default Footer;
