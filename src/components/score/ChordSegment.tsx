@@ -145,7 +145,7 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
         style={{
           objectFit: "cover",
           pointerEvents: "none",
-          opacity: 0.1,
+          opacity: 0.05,
           zIndex: 0,
           transform: `scale(${flipX}, ${flipY}) rotate(${rotate180}deg)`,
         }}
@@ -213,9 +213,9 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
                   <span>
                     {chordPitches.map((pitch, i) => (
                       <React.Fragment key={pitch}>
-                        <span style={{ cursor: "pointer" }} onClick={() => playNoteSound(pitch + "3", 1.5)}>
+                        <button style={{ cursor: "pointer" }} onClick={() => playNoteSound(pitch + "3", 1.5)}>
                           {pitch}
-                        </span>
+                        </button>
                         {i < chordPitches.length - 1 && ", "}
                       </React.Fragment>
                     ))}

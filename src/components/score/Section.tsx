@@ -32,14 +32,14 @@ const Section: React.FC<SectionProps> = (props) => {
         textAlign: "left",
         boxShadow: "inset 0 0 40px 1px #333333",
         paddingTop: 8,
-        position: "relative",
-        overflow: "hidden",
         border: "1px solid #333333",
         borderTop: "1px solid #333333",
         borderBottom: "1px solid #333333",
         borderLeft: "none",
         borderRight: "none",
         borderImage: "linear-gradient(to right, #333 0%, rgba(255,255,255,0.15) 50%, #333 100%) 1",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <Image
@@ -49,7 +49,7 @@ const Section: React.FC<SectionProps> = (props) => {
         style={{
           objectFit: "cover",
           pointerEvents: "none",
-          opacity: 0.3,
+          opacity: 0.2,
           zIndex: 0,
           transform: `scale(${flipX}, ${flipY}) rotate(${rotate180}deg)`,
         }}

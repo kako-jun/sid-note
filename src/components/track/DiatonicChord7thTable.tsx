@@ -92,9 +92,9 @@ const DiatonicChord7thTable: React.FC<DiatonicChord7thTableProps> = ({ scaleKey 
                     <span>
                       {chordPitches.map((pitch, i) => (
                         <React.Fragment key={pitch}>
-                          <span style={{ cursor: "pointer" }} onClick={() => playNoteSound(pitch + "3", 1.5)}>
+                          <button style={{ cursor: "pointer" }} onClick={() => playNoteSound(pitch + "3", 1.5)}>
                             {pitch}
-                          </span>
+                          </button>
                           {i < chordPitches.length - 1 && ", "}
                         </React.Fragment>
                       ))}
