@@ -7,8 +7,14 @@ import Note from "@/components/score/Note";
 import { ChordSegmentType, LeftType, NoteType } from "@/schemas/trackSchema";
 import { getChordPositions } from "@/utils/chordUtil";
 import { getFunctionalHarmonyFilter } from "@/utils/functionalHarmonyFilter";
-import { cadenceText, functionalHarmonyIcon, functionalHarmonyText, getFunctionalHarmony } from "@/utils/harmonyUtil";
-import { playChord } from "@/utils/noteSoundPlayer";
+import {
+  cadenceText,
+  functionalHarmonyText,
+  getFunctionalHarmony,
+  romanNumeral7thHarmonyInfo,
+  romanNumeralHarmonyInfo,
+} from "@/utils/harmonyUtil";
+import { playChord, playNoteSound } from "@/utils/noteSoundPlayer";
 import { comparePitch } from "@/utils/noteUtil";
 import { getScaleDiatonicChords, scaleText } from "@/utils/scaleUtil";
 import Image from "next/image";
@@ -101,6 +107,11 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
     return Math.max(1000, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
+  // ランダムで左右反転・上下反転・180度回転（初回のみ）
+  const flipX = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
+  const flipY = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
+  const rotate180 = React.useMemo(() => (Math.random() < 0.5 ? 180 : 0), []);
+
   const functionalHarmony = React.useMemo(() => {
     return getFunctionalHarmony(scaleWithModulation, chord);
   }, [scaleWithModulation, chord]);
@@ -123,8 +134,23 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
         textAlign: "left",
         clipPath: "polygon(0% 0%, 50% 1%, 100% 0%, 100% 100%, 50% 99%, 0% 100%)", // 上下の中央を引っ込める形状
         boxShadow: "inset 0 0 40px 1px #333333",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      <Image
+        src="/grunge_1.webp"
+        alt="grunge texture background"
+        fill
+        style={{
+          objectFit: "cover",
+          pointerEvents: "none",
+          opacity: 0.1,
+          zIndex: 0,
+          transform: `scale(${flipX}, ${flipY}) rotate(${rotate180}deg)`,
+        }}
+        priority
+      />
       <div
         style={{
           display: "flex",
@@ -170,7 +196,7 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
             fontSize: "0.75rem",
           }}
         >
-          <p style={{ flex: 2, lineHeight: 1, textAlign: "left" }}>
+          <div style={{ flex: 1, lineHeight: 1, textAlign: "left", marginTop: -4 }}>
             {/* コード名ボタンをPopupOnClickでラップし、構成音をポップアップ表示 */}
             <PopupOnClick
               trigger={
@@ -183,7 +209,18 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
                 const chordPitches = Array.from(
                   new Set(getChordPositions(chord).map((pos) => pos.pitch.replace(/\d+$/, "")))
                 );
-                return <span>{chordPitches.join(", ")}</span>;
+                return (
+                  <span>
+                    {chordPitches.map((pitch, i) => (
+                      <React.Fragment key={pitch}>
+                        <span style={{ cursor: "pointer" }} onClick={() => playNoteSound(pitch + "3", 1.5)}>
+                          {pitch}
+                        </span>
+                        {i < chordPitches.length - 1 && ", "}
+                      </React.Fragment>
+                    ))}
+                  </span>
+                );
               })()}
               popupStyle={{
                 left: 0,
@@ -213,14 +250,20 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
                     />
                   </span>
                 }
-                popup={<span>{functionalHarmonyIcon(functionalHarmony).desc}</span>}
+                popup={
+                  <span>
+                    {chord.match(/7|M7|m7|dim7|aug7|sus7|add7/)
+                      ? romanNumeral7thHarmonyInfo(functionalHarmony).desc
+                      : romanNumeralHarmonyInfo(functionalHarmony).desc}
+                  </span>
+                }
                 popupStyle={{
                   left: 0,
                   transform: "none",
                 }}
               />
             )}
-          </p>
+          </div>
           <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>
             {isScaleChord ? <span style={{ color: "#888888" }}>Diatonic Chord</span> : "Non-Diatonic Chord"}
           </p>

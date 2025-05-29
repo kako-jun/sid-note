@@ -90,7 +90,7 @@ const CircleOfFifths: React.FC<CircleOfFifthsProps> = ({ scale }) => {
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ position: "relative", width: CANVAS_WIDTH, height: CANVAS_HEIGHT, background: "red" }}>
+      <div style={{ position: "relative", width: CANVAS_WIDTH, height: CANVAS_HEIGHT }}>
         <canvas
           ref={bgCanvasRef}
           width={CANVAS_WIDTH}

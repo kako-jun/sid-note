@@ -226,7 +226,7 @@ export const getChordPositions = (chord: string) => {
     // 7th
     const has7th = /7/.test(chord);
     const maj7 = /(maj7|M7|△7)/.test(chord);
-    const aug7 = /(aug|\+|＃).*7/.test(chord);
+    const aug7 = /(aug7|\+7|＃7)$/.test(chord);
     const m7 = has7th && !maj7 && !aug7;
     if (aug7) {
       baseFrets.push({ interval: "＃5", fret: 8 });

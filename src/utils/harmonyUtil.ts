@@ -32,24 +32,66 @@ export const functionalHarmonyText = (degree: number) => {
   }
 };
 
-export const functionalHarmonyIcon = (degree: number) => {
+export const functionalHarmonyInfo = (degree: number) => {
   switch (degree) {
     case 1:
-      return { icon: "😊", desc: "Tonic (主音): 安心・落ち着き" };
+      return { roman: "Ⅰ", desc: "Tonic (主音): 安心・落ち着き" };
     case 2:
-      return { icon: "🤔", desc: "Supertonic (上主音): 期待・問い" };
+      return { roman: "Ⅱ", desc: "Supertonic (上主音): 期待・問い" };
     case 3:
-      return { icon: "😌", desc: "Mediant (中音): 穏やか・中間" };
+      return { roman: "Ⅲ", desc: "Mediant (中音): 穏やか・中間" };
     case 4:
-      return { icon: "🌱", desc: "Subdominant (下属音): 広がり・始まり" };
+      return { roman: "Ⅳ", desc: "Subdominant (下属音): 広がり・始まり" };
     case 5:
-      return { icon: "⚡", desc: "Dominant (属音): 緊張・推進" };
+      return { roman: "Ⅴ", desc: "Dominant (属音): 緊張・推進" };
     case 6:
-      return { icon: "🥲", desc: "Submediant (下中音): 儚さ・哀愁" };
+      return { roman: "Ⅵ", desc: "Submediant (下中音): 儚さ・哀愁" };
     case 7:
-      return { icon: "😳", desc: "Leading Tone (導音): 不安・未解決" };
+      return { roman: "Ⅶ", desc: "Leading Tone (導音): 不安・未解決" };
     default:
-      return { icon: "", desc: "" };
+      return { roman: "", desc: "" };
+  }
+};
+
+export const romanNumeralHarmonyInfo = (degree: number) => {
+  switch (degree) {
+    case 1:
+      return { roman: "Ⅰ", desc: "Tonic (主和音・長三和音): 安心・落ち着き" };
+    case 2:
+      return { roman: "Ⅱm", desc: "Supertonic (上主和音・短三和音): 期待・問い" };
+    case 3:
+      return { roman: "Ⅲm", desc: "Mediant (中和音・短三和音): 穏やか・中間" };
+    case 4:
+      return { roman: "Ⅳ", desc: "Subdominant (下属和音・長三和音): 広がり・始まり" };
+    case 5:
+      return { roman: "Ⅴ", desc: "Dominant (属和音・長三和音): 緊張・推進" };
+    case 6:
+      return { roman: "Ⅵm", desc: "Submediant (下中和音・短三和音): 儚さ・哀愁" };
+    case 7:
+      return { roman: "Ⅶdim", desc: "Leading Tone (導和音・減三和音): 不安・未解決" };
+    default:
+      return { roman: "", desc: "" };
+  }
+};
+
+export const romanNumeral7thHarmonyInfo = (degree: number) => {
+  switch (degree) {
+    case 1:
+      return { roman: "ⅠM7", desc: "Tonic Seventh (主和音・長七の和音): 安心・落ち着き" };
+    case 2:
+      return { roman: "Ⅱm7", desc: "Supertonic Seventh (上主和音・短七の和音): 期待・問い" };
+    case 3:
+      return { roman: "Ⅲm7", desc: "Mediant Seventh (中和音・短七の和音): 穏やか・中間" };
+    case 4:
+      return { roman: "ⅣM7", desc: "Subdominant Seventh (下属和音・長七の和音): 広がり・始まり" };
+    case 5:
+      return { roman: "Ⅴ7", desc: "Dominant Seventh (属和音・属七の和音): 緊張・推進" };
+    case 6:
+      return { roman: "Ⅵm7", desc: "Submediant Seventh (下中和音・短七の和音): 儚さ・哀愁" };
+    case 7:
+      return { roman: "Ⅶm7♭5", desc: "Leading Tone Seventh (導和音・半減七の和音): 不安・未解決" };
+    default:
+      return { roman: "", desc: "" };
   }
 };
 

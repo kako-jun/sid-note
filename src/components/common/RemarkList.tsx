@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { ReactNode } from "react";
 
 /**
@@ -37,9 +38,9 @@ export const RemarkList: React.FC<{
             parts.push(remark.slice(lastIndex, match.index));
           }
           parts.push(
-            <a key={"link-" + key++} href={match[2]} style={{ color: "#66ccff", cursor: "pointer" }}>
+            <Link key={"link-" + key++} href={match[2]} style={{ color: "#66ccff" }} passHref>
               {match[1]}
-            </a>
+            </Link>
           );
           lastIndex = match.index + match[0].length;
         }

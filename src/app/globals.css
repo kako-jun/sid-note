@@ -21,19 +21,34 @@
 
 body {
   background: black;
-  /* background-image: url('/sand-texture.png'); */
-  /* background-size: cover;
-  background-repeat: no-repeat; */
+  /* position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  background-image: url('/grunge_1.webp');
+  background-repeat: repeat;
+  background-size: auto; */
 
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                    radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 4px 4px, 4px 4px;
-  background-position: 0 0, 2px 2px;
-
-  /* background: var(--background); */
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 140px;
+  background: url('/grunge_2.webp') no-repeat top right;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+} */
 
 hidden-scrollbar {
   scrollbar-width: thin;
@@ -58,4 +73,11 @@ hidden-scrollbar {
 .hidden-scrollbar:active::-webkit-scrollbar,
 .hidden-scrollbar:focus-within::-webkit-scrollbar {
   background: #222;
+}
+
+.link-hover-underline {
+  text-decoration: none;
+}
+.link-hover-underline:hover {
+  text-decoration: underline;
 }

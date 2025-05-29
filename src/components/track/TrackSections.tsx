@@ -23,7 +23,7 @@ const TrackSections: React.FC<TrackSectionsProps> = ({ sections, scale }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        gap: 8,
+        gap: 64,
       }}
     >
       {sections?.map((section, index) => (

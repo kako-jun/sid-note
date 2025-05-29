@@ -1,4 +1,4 @@
-"use client";
+import Link from "next/link";
 import React from "react";
 
 export type TrackSectionItemProps = {
@@ -7,14 +7,9 @@ export type TrackSectionItemProps = {
 
 const TrackSectionItem: React.FC<TrackSectionItemProps> = ({ section }) => (
   <li style={{ paddingTop: 8, paddingBottom: 8 }}>
-    <a
-      href={`#${section.name}`}
-      style={{}}
-      onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-      onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-    >
+    <Link className="link-hover-underline" href={`#${section.name}`}>
       {section.name}
-    </a>
+    </Link>
   </li>
 );
 

@@ -3,6 +3,7 @@
 import ChordSegment from "@/components/score/ChordSegment";
 import { SectionType } from "@/schemas/trackSchema";
 import { scaleText } from "@/utils/scaleUtil";
+import Image from "next/image";
 import React from "react";
 
 type SectionProps = {
@@ -19,6 +20,11 @@ const Section: React.FC<SectionProps> = (props) => {
     return section.key ? section.key : scale;
   }, [scale, section.key]);
 
+  // ランダムで左右反転・上下反転・180度回転（初回のみ）
+  const flipX = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
+  const flipY = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
+  const rotate180 = React.useMemo(() => (Math.random() < 0.5 ? 180 : 0), []);
+
   return (
     <section
       style={{
@@ -26,8 +32,45 @@ const Section: React.FC<SectionProps> = (props) => {
         textAlign: "left",
         boxShadow: "inset 0 0 40px 1px #333333",
         paddingTop: 8,
+        position: "relative",
+        overflow: "hidden",
+        border: "1px solid #333333",
+        borderTop: "1px solid #333333",
+        borderBottom: "1px solid #333333",
+        borderLeft: "none",
+        borderRight: "none",
+        borderImage: "linear-gradient(to right, #333 0%, rgba(255,255,255,0.15) 50%, #333 100%) 1",
       }}
     >
+      <Image
+        src="/grunge_1.webp"
+        alt="grunge texture background"
+        fill
+        style={{
+          objectFit: "cover",
+          pointerEvents: "none",
+          opacity: 0.3,
+          zIndex: 0,
+          transform: `scale(${flipX}, ${flipY}) rotate(${rotate180}deg)`,
+        }}
+        priority
+      />
+      {/* <Image
+        src="/grunge_2.webp"
+        alt="grunge texture"
+        width={200}
+        height={140}
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          objectFit: "cover",
+          pointerEvents: "none",
+          opacity: 0.05,
+          zIndex: 0,
+        }}
+        priority
+      /> */}
       <p
         // className={Jacquard_24_400.className}
         style={{
@@ -50,7 +93,7 @@ const Section: React.FC<SectionProps> = (props) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 8,
+          gap: 32,
         }}
       >
         {section.chordSegments.map((chordSegment, index) => {

@@ -55,6 +55,11 @@ const Note: React.FC<NoteProps> = (props) => {
     return Math.max(820, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
+  // ランダムで左右反転・上下反転・180度回転（初回のみ）
+  const flipX = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
+  const flipY = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
+  const rotate180 = React.useMemo(() => (Math.random() < 0.5 ? 180 : 0), []);
+
   return (
     <section
       style={{
@@ -63,15 +68,30 @@ const Note: React.FC<NoteProps> = (props) => {
         textAlign: "left",
         clipPath: "polygon(0% 0%, 50% 2%, 100% 0%, 100% 100%, 50% 98%, 0% 100%)", // 上下の中央を引っ込める形状
         boxShadow: "inset 0 0 40px 1px #333333",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      <Image
+        src="/grunge_1.webp"
+        alt="grunge texture background"
+        fill
+        style={{
+          objectFit: "cover",
+          pointerEvents: "none",
+          opacity: 0.05,
+          zIndex: 0,
+          transform: `scale(${flipX}, ${flipY}) rotate(${rotate180}deg)`,
+        }}
+        priority
+      />
       <div
         style={{
           marginBottom: 4,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "start",
           gap: 8,
         }}
       >
@@ -80,7 +100,7 @@ const Note: React.FC<NoteProps> = (props) => {
           {noteId}
           <span style={{ color: "#888888" }}> of {noteCount}</span>
         </p>
-        <div>
+        <div style={{ marginTop: -2 }}>
           {note.tags?.map((tag, index) => {
             const color = tag === "easy" ? "rgba(0, 200, 255, 0.2)" : tag === "hard" ? "#882222" : "black";
             return (
@@ -88,7 +108,6 @@ const Note: React.FC<NoteProps> = (props) => {
                 key={index}
                 style={{
                   color: "#888888",
-                  // padding: 2,
                   fontSize: "0.75rem",
                   textTransform: "uppercase",
                   borderBottom: `2px solid ${color}`,
@@ -125,6 +144,7 @@ const Note: React.FC<NoteProps> = (props) => {
           </p>
           <p
             style={{
+              marginTop: -2,
               flex: 2,
               lineHeight: 1,
               textAlign: "center",
