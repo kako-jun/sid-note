@@ -79,6 +79,7 @@ const Track: React.FC<TrackProps> = ({ track }) => {
         <p style={{ flex: 1, lineHeight: 1, textAlign: "center" }}>{track.album}</p>
         <p style={{ flex: 1, lineHeight: 1, textAlign: "right" }}>{track.year || ""}</p>
       </div>
+
       <div
         style={{
           marginTop: 16,
@@ -98,17 +99,21 @@ const Track: React.FC<TrackProps> = ({ track }) => {
           {track.bpm} <span style={{ color: "#888888" }}>BPM</span>
         </p>
       </div>
+
       {track.key && (
-        <div>
+        <>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <CircleOfFifths scale={track.key} />
           </div>
           <p style={{ marginTop: 2, marginBottom: 2 }}>{scaleText(track.key)}</p>
-          <NoteNameTable scaleKey={track.key} />
-          <DiatonicChordTable scaleKey={track.key} />
-          <DiatonicChord7thTable scaleKey={track.key} />
-        </div>
+          <div>
+            <NoteNameTable scaleKey={track.key} />
+            <DiatonicChordTable scaleKey={track.key} />
+            <DiatonicChord7thTable scaleKey={track.key} />
+          </div>
+        </>
       )}
+
       <div
         style={{
           marginLeft: "10%",

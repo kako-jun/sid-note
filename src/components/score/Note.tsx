@@ -55,9 +55,9 @@ const Note: React.FC<NoteProps> = (props) => {
     // ウィンドウ幅の最小（スマホでのウィンドウ幅）は500
     // 最小でも、5フレットまでは表示したい。それはスクロール内が1300の時
     // ウィンドウ幅が1000の時に、スクロール内の高さが最大になり、以降は変わらない
-    const a = (2000 - 1300) / (1000 - 500);
-    const b = 1300;
-    return Math.max(1300, Math.min(2000, b + (windowWidth - 500) * a));
+    const a = (2000 - 1200) / (1000 - 500);
+    const b = 1200;
+    return Math.max(1200, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
   // SSRとクライアントの不一致を防ぐため、初期値は固定し、マウント後にランダム値をセット
@@ -209,7 +209,7 @@ const Note: React.FC<NoteProps> = (props) => {
             className="hidden-scrollbar"
             style={{
               overflowX: "auto",
-              width: "100%",
+              // width: "100%",
               whiteSpace: "nowrap",
               flex: 2.5,
               maxWidth: 2000,
