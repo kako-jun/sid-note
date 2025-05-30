@@ -20,10 +20,16 @@ const Section: React.FC<SectionProps> = (props) => {
     return section.key ? section.key : scale;
   }, [scale, section.key]);
 
-  // ランダムで左右反転・上下反転・180度回転（初回のみ）
-  const flipX = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
-  const flipY = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
-  const rotate180 = React.useMemo(() => (Math.random() < 0.5 ? 180 : 0), []);
+  // SSRとクライアントの不一致を防ぐため、初期値は固定し、マウント後にランダム値をセット
+  const [flipX, setFlipX] = React.useState(1);
+  const [flipY, setFlipY] = React.useState(1);
+  const [rotate180, setRotate180] = React.useState(0);
+
+  React.useEffect(() => {
+    setFlipX(Math.random() < 0.5 ? -1 : 1);
+    setFlipY(Math.random() < 0.5 ? -1 : 1);
+    setRotate180(Math.random() < 0.5 ? 180 : 0);
+  }, []);
 
   return (
     <section

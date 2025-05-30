@@ -213,7 +213,8 @@ type LeftProps = {
 
 const Left: React.FC<LeftProps> = (props) => {
   const { note, nextNote = null, scrollLeft, onScroll } = props;
-  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const bgCanvasRef = React.useRef<HTMLCanvasElement>(null);
+  const fgCanvasRef = React.useRef<HTMLCanvasElement>(null);
   const parentRef = React.useRef<HTMLDivElement>(null);
   const isDragging = React.useRef(false);
   const lastX = React.useRef(0);
@@ -257,42 +258,34 @@ const Left: React.FC<LeftProps> = (props) => {
     [addNoteHitArea]
   );
 
+  // 背景（弦やフレット）は初回のみ描画
   React.useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas = canvasRef.current;
-    // setupCanvas(canvas);
+    if (!bgCanvasRef.current) return;
+    const canvas = bgCanvasRef.current;
     const context = canvas.getContext("2d");
     if (!context) return;
     context.clearRect(0, 0, canvas.width, canvas.height);
     drawLines(context);
   }, []);
 
+  // 前景（ノートやライン）はnote/nextNote変更時のみ描画
   React.useEffect(() => {
-    if (!canvasRef.current) {
-      return;
-    }
-    const canvas = canvasRef.current;
+    if (!fgCanvasRef.current) return;
+    const canvas = fgCanvasRef.current;
     const context = canvas.getContext("2d");
-    if (!context) {
-      console.error("2D context not available");
-      return;
-    }
+    if (!context) return;
     resetNoteHitAreas();
-
+    context.clearRect(0, 0, canvas.width, canvas.height);
     drawLine(context, note);
-
     if (nextNote) {
       drawNoteWithHitArea(context, nextNote, true);
     }
-
     drawNoteWithHitArea(context, note);
   }, [note, nextNote, drawNoteWithHitArea, resetNoteHitAreas]);
 
   // canvasクリック時の処理
   const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
+    const canvas = fgCanvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
     // devicePixelRatio考慮
@@ -322,7 +315,7 @@ const Left: React.FC<LeftProps> = (props) => {
   };
 
   React.useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = fgCanvasRef.current;
     if (!canvas) return;
 
     const handleMouseDown = (e: MouseEvent) => {
@@ -361,7 +354,7 @@ const Left: React.FC<LeftProps> = (props) => {
 
   // canvas上でヒットエリアにマウスが乗ったらカーソルをpointerに
   React.useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = fgCanvasRef.current;
     if (!canvas) return;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -395,12 +388,28 @@ const Left: React.FC<LeftProps> = (props) => {
   }, [noteHitAreas]);
 
   return (
-    <div ref={parentRef} style={{ width: "100%" }}>
+    <div
+      ref={parentRef}
+      style={{
+        position: "relative",
+        width: 2420,
+        aspectRatio: "2420 / 115",
+        maxWidth: "100%",
+      }}
+    >
       <canvas
-        ref={canvasRef}
+        ref={bgCanvasRef}
         width={2420}
         height={115}
-        style={{ width: "100%" }}
+        style={{ position: "absolute", left: 0, top: 0, zIndex: 1, width: "100%", height: "100%" }}
+        tabIndex={-1}
+        aria-hidden="true"
+      />
+      <canvas
+        ref={fgCanvasRef}
+        width={2420}
+        height={115}
+        style={{ position: "absolute", left: 0, top: 0, zIndex: 2, width: "100%", height: "100%" }}
         onClick={handleCanvasClick}
         // onTouchEnd={handleCanvasClick}
       />

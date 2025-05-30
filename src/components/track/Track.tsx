@@ -100,7 +100,7 @@ const Track: React.FC<TrackProps> = ({ track }) => {
       </div>
       {track.key && (
         <div>
-          <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <CircleOfFifths scale={track.key} />
           </div>
           <p style={{ marginTop: 2, marginBottom: 2 }}>{scaleText(track.key)}</p>

@@ -201,39 +201,40 @@ export const getChordPositions = (chord: string) => {
       { interval: "5", fret: 7 },
     ];
 
-    // 差分適用
-    // 3rd
-    if (/sus4/.test(chord)) {
-      baseFrets = baseFrets.map((f) => (f.interval === "3" ? { ...f, interval: "4", fret: 5 } : f));
-    } else if (
-      /^(?:[A-G](?:♭|＃)?)(m|min)/.test(chord) &&
-      !/(aug|\+|＃).*7/.test(chord) &&
-      !/(aug(?![0-9])|\+5|＃5)/.test(chord)
-    ) {
-      baseFrets = baseFrets.map((f) => (f.interval === "3" ? { ...f, interval: "♭3", fret: 3 } : f));
-    }
+    // 7thの種類を先に判定
+    const has7th = /7/.test(chord);
+    const isMaj7 = /(maj7|M7|△7)/.test(chord);
+    const isAug7 = /(aug7|\+7|＃7)$/.test(chord);
+    const isM7 = has7th && !isMaj7 && !isAug7;
 
-    // 5th
-    if (/(aug(?![0-9])|\+5|＃5)/.test(chord) && !/(aug|\+|＃).*7/.test(chord)) {
-      baseFrets = baseFrets.map((f) => (f.interval === "5" ? { ...f, interval: "＃5", fret: 8 } : f));
-    } else if (
-      /(♭5|-5|b5)/.test(chord) ||
-      (/dim/.test(chord) && !/(aug|\+|＃).*7/.test(chord) && !/(aug(?![0-9])|\+5|＃5)/.test(chord))
-    ) {
-      baseFrets = baseFrets.map((f) => (f.interval === "5" ? { ...f, interval: "♭5", fret: 6 } : f));
-    }
+    // 3rd/5thの判定フラグ
+    const isSus4 = /sus4/.test(chord);
+    const isMinor = /^(?:[A-G](?:♭|＃)?)(m|min)(?!aj)/.test(chord);
+    const isAug = /(aug(?![0-9])|\+5|＃5)/.test(chord);
+    const isDim = /(♭5|-5|b5)/.test(chord) || /dim/.test(chord);
+
+    // baseFretsを一括で編集
+    baseFrets = baseFrets.map((f) => {
+      if (f.interval === "3") {
+        if (isSus4) return { ...f, interval: "4", fret: 5 };
+        if (isMinor) return { ...f, interval: "♭3", fret: 3 };
+        return f;
+      }
+      if (f.interval === "5") {
+        if (isAug) return { ...f, interval: "＃5", fret: 8 };
+        if (isDim) return { ...f, interval: "♭5", fret: 6 };
+        return f;
+      }
+      return f;
+    });
 
     // 7th
-    const has7th = /7/.test(chord);
-    const maj7 = /(maj7|M7|△7)/.test(chord);
-    const aug7 = /(aug7|\+7|＃7)$/.test(chord);
-    const m7 = has7th && !maj7 && !aug7;
-    if (aug7) {
+    if (isAug7) {
       baseFrets.push({ interval: "＃5", fret: 8 });
       baseFrets.push({ interval: "♭7", fret: 10 });
-    } else if (maj7) {
+    } else if (isMaj7) {
       baseFrets.push({ interval: "7", fret: 11 });
-    } else if (m7) {
+    } else if (isM7) {
       baseFrets.push({ interval: "♭7", fret: 10 });
     }
 
