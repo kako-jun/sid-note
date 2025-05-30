@@ -108,52 +108,72 @@ type RightProps = {
 
 const Right: React.FC<RightProps> = (props) => {
   const { note, nextNote = null } = props;
-  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const bgCanvasRef = React.useRef<HTMLCanvasElement>(null);
+  const fgCanvasRef = React.useRef<HTMLCanvasElement>(null);
 
+  // 背景（弦の線など）は初回のみ描画
   React.useEffect(() => {
-    if (!canvasRef.current) {
+    if (!bgCanvasRef.current) {
       return;
     }
-
-    const canvas = canvasRef.current;
+    const canvas = bgCanvasRef.current;
     const context = canvas.getContext("2d");
-
     if (!context) {
       console.error("2D context not available");
       return;
     }
-
     context.clearRect(0, 0, canvas.width, canvas.height);
-
     drawLines(context);
   }, []);
 
+  // 前景（ノートや矢印など）はnote/nextNote変更時に描画
   React.useEffect(() => {
-    if (!canvasRef.current) {
+    if (!fgCanvasRef.current) {
       return;
     }
-
-    const canvas = canvasRef.current;
+    const canvas = fgCanvasRef.current;
     const context = canvas.getContext("2d");
-
     if (!context) {
       console.error("2D context not available");
       return;
     }
-
+    context.clearRect(0, 0, canvas.width, canvas.height);
     drawLine(context, note);
-
-    // next
     if (nextNote) {
       drawNote(context, nextNote, true);
     }
-
     drawNote(context, note);
   }, [note, nextNote]);
 
   return (
-    <div>
-      <canvas ref={canvasRef} width={220} height={115} style={{ width: "100%" }} />
+    <div
+      style={{
+        position: "relative",
+        width: 220,
+        aspectRatio: "220 / 115",
+        maxWidth: "100%",
+      }}
+    >
+      <canvas
+        ref={bgCanvasRef}
+        width={220}
+        height={115}
+        style={{ position: "absolute", left: 0, top: 0, zIndex: 1, width: "100%", height: "100%" }}
+      />
+      <canvas
+        ref={fgCanvasRef}
+        width={220}
+        height={115}
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          zIndex: 2,
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+        }}
+      />
     </div>
   );
 };

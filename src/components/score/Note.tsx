@@ -47,18 +47,29 @@ const Note: React.FC<NoteProps> = (props) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // useMemoでscoreWidthを計算
-  const scoreWidth = React.useMemo(() => {
+  // スクロールバーの中の幅を計算
+  // スクロールバーが消えるほど横幅が充分な場合でも、等倍表示にする必要はないので圧縮する（2420→2000）
+  // ウィンドウ幅が1920程度で、スクロールバーが消える程度の圧縮にする
+  const leftWidth = React.useMemo(() => {
     if (windowWidth === 0) return 1000;
-    const a = 2.5;
-    const b = 1000;
-    return Math.max(820, Math.min(2000, b + (windowWidth - 500) * a));
+    // ウィンドウ幅の最小（スマホでのウィンドウ幅）は500
+    // 最小でも、5フレットまでは表示したい。それはスクロール内が1300の時
+    // ウィンドウ幅が1000の時に、スクロール内の高さが最大になり、以降は変わらない
+    const a = (2000 - 1300) / (1000 - 500);
+    const b = 1300;
+    return Math.max(1300, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
-  // ランダムで左右反転・上下反転・180度回転（初回のみ）
-  const flipX = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
-  const flipY = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
-  const rotate180 = React.useMemo(() => (Math.random() < 0.5 ? 180 : 0), []);
+  // SSRとクライアントの不一致を防ぐため、初期値は固定し、マウント後にランダム値をセット
+  const [flipX, setFlipX] = React.useState(1);
+  const [flipY, setFlipY] = React.useState(1);
+  const [rotate180, setRotate180] = React.useState(0);
+
+  React.useEffect(() => {
+    setFlipX(Math.random() < 0.5 ? -1 : 1);
+    setFlipY(Math.random() < 0.5 ? -1 : 1);
+    setRotate180(Math.random() < 0.5 ? 180 : 0);
+  }, []);
 
   return (
     <section
@@ -199,20 +210,28 @@ const Note: React.FC<NoteProps> = (props) => {
             style={{
               overflowX: "auto",
               width: "100%",
-              // maxWidth: 320,
               whiteSpace: "nowrap",
-              flex: 3.5,
+              flex: 2.5,
+              maxWidth: 2000,
+              height: "100%",
             }}
             onScroll={(e) => onScroll((e.target as HTMLDivElement).scrollLeft)}
             ref={(el) => {
               if (el && el.scrollLeft !== scrollLeft) el.scrollLeft = scrollLeft;
             }}
           >
-            <div style={{ width: scoreWidth, display: "inline-block" }}>
+            <div style={{ width: leftWidth, display: "inline-block" }}>
               <Left note={note} nextNote={nextNote} scrollLeft={scrollLeft} onScroll={onScroll} />
             </div>
           </div>
-          <div style={{ flex: 1, maxWidth: 181 }}>
+          <div
+            style={{
+              // flex: 1,
+              width: `calc(${(leftWidth / 2420) * 220}px)`,
+              // minWidth: 0,
+              // maxWidth: 181,
+            }}
+          >
             <Right note={note} nextNote={nextNote} />
           </div>
         </div>
@@ -221,7 +240,6 @@ const Note: React.FC<NoteProps> = (props) => {
             marginTop: 0,
             display: "flex",
             flexDirection: "row",
-            // justifyContent: "space-between",
             gap: 8,
             flexWrap: "wrap-reverse",
           }}

@@ -100,17 +100,23 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const scoreWidth = React.useMemo(() => {
+  const leftWidth = React.useMemo(() => {
     if (windowWidth === 0) return 1000;
-    const a = 2.5;
-    const b = 1000;
-    return Math.max(1000, Math.min(2000, b + (windowWidth - 500) * a));
+    const a = (2000 - 1400) / (1000 - 500);
+    const b = 1400;
+    return Math.max(1400, Math.min(2000, b + (windowWidth - 500) * a));
   }, [windowWidth]);
 
-  // ランダムで左右反転・上下反転・180度回転（初回のみ）
-  const flipX = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
-  const flipY = React.useMemo(() => (Math.random() < 0.5 ? -1 : 1), []);
-  const rotate180 = React.useMemo(() => (Math.random() < 0.5 ? 180 : 0), []);
+  // SSRとクライアントの不一致を防ぐため、初期値は固定し、マウント後にランダム値をセット
+  const [flipX, setFlipX] = React.useState(1);
+  const [flipY, setFlipY] = React.useState(1);
+  const [rotate180, setRotate180] = React.useState(0);
+
+  React.useEffect(() => {
+    setFlipX(Math.random() < 0.5 ? -1 : 1);
+    setFlipY(Math.random() < 0.5 ? -1 : 1);
+    setRotate180(Math.random() < 0.5 ? 180 : 0);
+  }, []);
 
   const functionalHarmony = React.useMemo(() => {
     return getFunctionalHarmony(scaleWithModulation, chord);
@@ -282,7 +288,6 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
             style={{
               overflowX: "auto",
               width: "100%",
-              // maxWidth: 320,
               whiteSpace: "nowrap",
             }}
             onScroll={(e) => onScroll((e.target as HTMLDivElement).scrollLeft)}
@@ -290,7 +295,7 @@ const ChordSegment: React.FC<ChordSegmentProps> = (props) => {
               if (el && el.scrollLeft !== scrollLeft) el.scrollLeft = scrollLeft;
             }}
           >
-            <div style={{ width: scoreWidth, display: "inline-block" }}>
+            <div style={{ width: leftWidth, display: "inline-block" }}>
               <Left note={getChordNote(chord)} scrollLeft={scrollLeft} onScroll={onScroll} />
             </div>
           </div>
