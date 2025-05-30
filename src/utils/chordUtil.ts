@@ -209,7 +209,7 @@ export const getChordPositions = (chord: string) => {
 
     // 3rd/5thの判定フラグ
     const isSus4 = /sus4/.test(chord);
-    const isMinor = /^(?:[A-G](?:♭|＃)?)(m|min)(?!aj)/.test(chord);
+    const isMinor = /^(?:[A-G](?:♭|＃)?)(m|min)(?!aj|dim)/.test(chord);
     const isAug = /(aug(?![0-9])|\+5|＃5)/.test(chord);
     const isDim = /(♭5|-5|b5)/.test(chord) || /dim/.test(chord);
 
@@ -217,14 +217,16 @@ export const getChordPositions = (chord: string) => {
     baseFrets = baseFrets.map((f) => {
       if (f.interval === "3") {
         if (isSus4) return { ...f, interval: "4", fret: 5 };
-        if (isMinor) return { ...f, interval: "♭3", fret: 3 };
+        if (isMinor || isDim) return { ...f, interval: "♭3", fret: 3 };
         return f;
       }
+
       if (f.interval === "5") {
         if (isAug) return { ...f, interval: "＃5", fret: 8 };
         if (isDim) return { ...f, interval: "♭5", fret: 6 };
         return f;
       }
+
       return f;
     });
 
