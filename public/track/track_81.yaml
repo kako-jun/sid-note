@@ -1,0 +1,20 @@
+title: Funny Bunny
+artist: the pillows
+album: HAPPY BIVOUAC
+year: 1999
+cover: track_81.webp
+key: D
+time_signature: 4/4
+bpm: 118
+remarks:
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: D
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: D
+        remarks:
+        notes: []

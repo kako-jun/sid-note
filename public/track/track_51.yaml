@@ -1,0 +1,45 @@
+title: Island In the Sun
+artist: Weezer
+album: Green Album
+year: 2001
+cover: track_51.webp
+key: Em
+time_signature: 4/4
+bpm: 115
+remarks:
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: Em
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Chorus
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Interlude
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Bridge
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Solo
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Outro
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []

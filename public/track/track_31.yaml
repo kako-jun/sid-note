@@ -1,0 +1,20 @@
+title: 海岸通り
+artist: ASIAN KUNG-FU GENERATION
+album: ソルファ
+year: 2004
+cover: track_31.webp
+key: C
+time_signature: 4/4
+bpm: 85
+remarks:
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []

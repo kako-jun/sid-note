@@ -97,6 +97,12 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
 
       context.fillStyle = "black";
       context.fill();
+
+      context.fillStyle = "#555555";
+      context.font = "20px Verdana";
+      const text = "×";
+      const textWidth = context.measureText(text).width;
+      context.fillText(text, 148 - textWidth, y + 6);
     });
   }
 };

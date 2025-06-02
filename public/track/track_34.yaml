@@ -1,0 +1,21 @@
+title: 転がる岩、君に朝が降る
+artist: ASIAN KUNG-FU GENERATION
+album: ワールド ワールド ワールド
+year: 2008
+cover: track_34.webp
+key: B
+time_signature: 4/4
+bpm: 147
+remarks:
+  - ぼっちバージョンのキーはD。
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []

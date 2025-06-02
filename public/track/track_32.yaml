@@ -1,0 +1,21 @@
+title: N.G.S
+artist: ASIAN KUNG-FU GENERATION
+album: 君繋ファイブエム
+year: 2003
+cover: track_32.webp
+key: G
+time_signature: 4/4
+bpm: 155
+remarks:
+  - キーの情報が錯綜している。G、E、Amなど。
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
