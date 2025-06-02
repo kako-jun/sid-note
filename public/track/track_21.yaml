@@ -1,0 +1,20 @@
+title: IGGY POP FAN CLUB
+artist: NUMBER GIRL
+album: SCHOOL GIRL BYE BYE
+year: 1997
+cover: track_21.webp
+key: E
+time_signature: 4/4
+bpm: 127
+remarks:
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: E
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: E
+        remarks:
+        notes: []

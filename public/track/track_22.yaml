@@ -1,0 +1,21 @@
+title: 鉄風 鋭くなって
+artist: NUMBER GIRL
+album: OMOIDE IN MY HEAD 1
+year: 2000
+cover: track_22.webp
+key: C＃m
+time_signature: 4/4
+bpm: 186
+remarks:
+  - 原曲はC＃mらしい。ギターを簡略化するためにAmで記述され、演奏されることが多い。
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []

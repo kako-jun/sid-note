@@ -1,0 +1,20 @@
+title: ルキンフォー
+artist: Spitz
+album: さざなみCD
+year: 2007
+cover: track_71.webp
+key: G
+time_signature: 4/4
+bpm: 88
+remarks:
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: G
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []

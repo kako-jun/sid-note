@@ -1,0 +1,21 @@
+title: "Re:Re:"
+artist: ASIAN KUNG-FU GENERATION
+album: ソルファ
+year: 2004
+cover: track_33.webp
+key: E
+time_signature: 4/4
+bpm: 153
+remarks:
+  - シングルバージョンはF♯/G♭？
+sections:
+  - name: Intro
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
+  - name: Verse
+    chord_segments:
+      - chord: C
+        remarks:
+        notes: []
