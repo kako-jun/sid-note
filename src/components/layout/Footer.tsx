@@ -15,6 +15,28 @@ const Footer: React.FC = () => (
       fontSize: "0.875rem",
     }}
   >
+    <Link
+      href="http://llll-ll.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ 
+        display: "inline-block", 
+        verticalAlign: "middle", 
+        marginRight: 4,
+        textDecoration: "none" 
+      }}
+      aria-label="Home"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="20"
+        height="20"
+        style={{ verticalAlign: "middle", fill: "#888888" }}
+      >
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+    </Link>
     kako-jun
     <Link
       href="https://github.com/kako-jun/sid-note"
