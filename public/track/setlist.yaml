@@ -23,39 +23,51 @@ tracks:
   - id: 12
     title: Maybe I'm a Lion
     artist: Final Fantasy 8
+    draft: true
   - id: 21
     title: IGGY POP FAN CLUB
     artist: NUMBER GIRL
+    draft: true
   - id: 22
     title: 鉄風 鋭くなって
     artist: NUMBER GIRL
+    draft: true
   - id: 23
     title: The Girl In The Kimono Dress
     artist: Kimonos
+    draft: true
   - id: 31
     title: 海岸通り
     artist: ASIAN KUNG-FU GENERATION
+    draft: true
   - id: 32
     title: N.G.S
     artist: ASIAN KUNG-FU GENERATION
+    draft: true
   - id: 33
     title: "Re:Re:"
     artist: ASIAN KUNG-FU GENERATION
+    draft: true
   - id: 34
     title: 転がる岩、君に朝が降る
     artist: ASIAN KUNG-FU GENERATION
+    draft: true
   - id: 41
     title: 踊り子
     artist: Vaundy
+    draft: false
   - id: 51
     title: Island In the Sun
     artist: Weezer
+    draft: true
   - id: 61
     title: Stand By Me
     artist: Ben E. King
   - id: 71
     title: ルキンフォー
     artist: Spitz
+    draft: true
   - id: 81
     title: Funny Bunny
     artist: the pillows
+    draft: true

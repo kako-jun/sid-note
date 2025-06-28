@@ -4,6 +4,7 @@ export const SetlistTrackSchema = z.object({
   id: z.number(),
   title: z.string(),
   artist: z.string(),
+  draft: z.boolean().nullable().optional(),
 });
 export type SetlistTrackType = z.infer<typeof SetlistTrackSchema>;
 
