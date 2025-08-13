@@ -1,6 +1,6 @@
 services:
   sid-note:
-    build: .
+    image: ghcr.io/kako-jun/sid-note:latest
     expose:
       - "3001"
     restart: unless-stopped
