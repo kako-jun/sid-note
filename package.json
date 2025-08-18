@@ -1,13 +1,33 @@
 {
   "name": "sid-note",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
+  "description": "Web application for viewing and presenting bass fingering with more specific notation than TAB",
+  "author": "kako-jun",
+  "license": "MIT",
+  "homepage": "https://sid-note.llll-ll.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kako-jun/sid-note.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kako-jun/sid-note/issues"
+  },
+  "keywords": [
+    "note-taking",
+    "notes",
+    "markdown",
+    "nextjs",
+    "typescript",
+    "productivity"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
