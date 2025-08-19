@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sid-note.llll-ll.com/sitemap.xml
