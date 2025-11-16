@@ -1,0 +1,27 @@
+[package]
+name = "sid-note-music"
+version = "0.1.0"
+edition = "2021"
+authors = ["kako-jun"]
+description = "Music theory library in Rust for sid-note application"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# WASM bindings
+wasm-bindgen = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde-wasm-bindgen = "0.6"
+
+# 既存の音楽理論ライブラリ（基礎として使用）
+# rust-music-theory = "0.2"  # まずは使わずに実装し、後で統合を検討
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[profile.release]
+opt-level = "s"  # サイズ最適化
+lto = true       # Link Time Optimization
