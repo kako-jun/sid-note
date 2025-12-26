@@ -5,7 +5,24 @@ import Track from "@/components/track/Track";
 import { LeftType } from "@/schemas/trackSchema";
 import { getInterval } from "@/utils/chordUtil";
 import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
+import fs from "fs/promises";
 import { notFound } from "next/navigation";
+import path from "path";
+
+// 静的生成: ビルド時に全トラックページを生成
+export async function generateStaticParams() {
+  const trackDir = path.join(process.cwd(), "public", "track");
+  const files = await fs.readdir(trackDir);
+  const trackFiles = files.filter(
+    (f) => f.startsWith("track_") && f.endsWith(".yaml")
+  );
+
+  return trackFiles.map((file) => {
+    // track_11.yaml -> 11
+    const id = file.replace("track_", "").replace(".yaml", "");
+    return { id };
+  });
+}
 
 // サーバーコンポーネントとしてasync化
 export default async function TrackPage({ params }: { params: Promise<{ id: string }> }) {
