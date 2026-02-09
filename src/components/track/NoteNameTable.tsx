@@ -2,9 +2,8 @@
 
 import PopupOnClick from "@/components/common/PopupOnClick";
 import { getFunctionalHarmonyFilter } from "@/utils/functionalHarmonyFilter";
-import { functionalHarmonyInfo } from "@/utils/harmonyUtil";
 import { playNoteSound } from "@/utils/noteSoundPlayer";
-import { getScaleNoteNames } from "@/utils/scaleUtil";
+import { functionalHarmonyInfo, getScaleNoteNames } from "@/utils/wasmLoader";
 import Image from "next/image";
 import React from "react";
 

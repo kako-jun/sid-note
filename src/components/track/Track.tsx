@@ -1,11 +1,14 @@
+"use client";
+
 import CornerBox from "@/components/common/CornerBox";
 import { RemarkList } from "@/components/common/RemarkList";
+import { useWasmReady } from "@/components/providers/WasmProvider";
 import CircleOfFifths from "@/components/track/CircleOfFifths";
 import NoteNameTable from "@/components/track/NoteNameTable";
 import TrackSectionItem from "@/components/track/TrackSectionItem";
 import TrackSections from "@/components/track/TrackSections";
 import { TrackType } from "@/schemas/trackSchema";
-import { scaleText } from "@/utils/scaleUtil";
+import { scaleText } from "@/utils/wasmLoader";
 import Image from "next/image";
 import React from "react";
 import DiatonicChord7thTable from "./DiatonicChord7thTable";
@@ -17,7 +20,9 @@ export type TrackProps = {
 };
 
 const Track: React.FC<TrackProps> = ({ track }) => {
-  if (!track || track.title === "") {
+  const ready = useWasmReady();
+
+  if (!ready || !track || track.title === "") {
     return <section>Loading ...</section>;
   }
 

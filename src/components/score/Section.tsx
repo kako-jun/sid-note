@@ -2,7 +2,7 @@
 
 import ChordSegment from "@/components/score/ChordSegment";
 import { SectionType } from "@/schemas/trackSchema";
-import { scaleText } from "@/utils/scaleUtil";
+import { scaleText } from "@/utils/wasmLoader";
 import Image from "next/image";
 import React from "react";
 

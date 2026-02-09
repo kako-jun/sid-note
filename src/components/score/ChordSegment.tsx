@@ -5,18 +5,19 @@ import { RemarkList } from "@/components/common/RemarkList";
 import Left from "@/components/performance/Left";
 import Note from "@/components/score/Note";
 import { ChordSegmentType, LeftType, NoteType } from "@/schemas/trackSchema";
-import { getChordPositions } from "@/utils/chordUtil";
 import { getFunctionalHarmonyFilter } from "@/utils/functionalHarmonyFilter";
+import { playChord, playNoteSound } from "@/utils/noteSoundPlayer";
 import {
   cadenceText,
+  comparePitch,
   functionalHarmonyText,
+  getChordPositions,
   getFunctionalHarmony,
+  getScaleDiatonicChords,
   romanNumeral7thHarmonyInfo,
   romanNumeralHarmonyInfo,
-} from "@/utils/harmonyUtil";
-import { playChord, playNoteSound } from "@/utils/noteSoundPlayer";
-import { comparePitch } from "@/utils/noteUtil";
-import { getScaleDiatonicChords, scaleText } from "@/utils/scaleUtil";
+  scaleText,
+} from "@/utils/wasmLoader";
 import Image from "next/image";
 import React from "react";
 

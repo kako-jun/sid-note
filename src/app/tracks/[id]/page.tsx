@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import TitleHeader from "@/components/layout/TitleHeader";
 import Track from "@/components/track/Track";
 import { LeftType } from "@/schemas/trackSchema";
-import { getInterval } from "@/utils/chordUtil";
+import { getInterval } from "@/utils/serverUtil";
 import { loadTrackFromYamlUrl } from "@/utils/trackLoader";
 import fs from "fs/promises";
 import { notFound } from "next/navigation";

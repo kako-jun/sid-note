@@ -1,6 +1,6 @@
 "use client";
 
-import { getKeyPosition } from "@/utils/noteUtil";
+import { getKeyPosition } from "@/utils/wasmLoader";
 import React from "react";
 
 const CANVAS_WIDTH = 220; // 2倍解像度

@@ -1,7 +1,7 @@
 "use client";
 
 import { NoteType } from "@/schemas/trackSchema";
-import { getLine } from "@/utils/noteUtil";
+import { getLine } from "@/utils/wasmLoader";
 import React from "react";
 
 const drawLines = (context: CanvasRenderingContext2D) => {
@@ -81,7 +81,7 @@ const drawNote = (context: CanvasRenderingContext2D, note: NoteType, next: boole
   }
 
   let line = getLine(note.pitch);
-  if (line === null) {
+  if (line == null) {
     // 不正なpitchの場合は描画しない
     return;
   }

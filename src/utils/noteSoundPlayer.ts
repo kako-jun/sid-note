@@ -1,4 +1,4 @@
-import { getChordPositions } from "@/utils/chordUtil";
+import { getChordPositions, isSidFretReady } from "@/utils/wasmLoader";
 
 /**
  * Utility to play notes using the Web Audio API.
@@ -161,6 +161,7 @@ export function playNoteSound(note: string, duration: number = 1): void {
 }
 
 export const playChord = (chord: string) => {
+  if (!isSidFretReady()) return;
   const positions = getChordPositions(chord);
 
   // pitchの重複を除外し、3で終わるものだけ再生

@@ -1,11 +1,9 @@
 "use client";
 
 import PopupOnClick from "@/components/common/PopupOnClick";
-import { getChordPositions } from "@/utils/chordUtil";
 import { getFunctionalHarmonyFilter } from "@/utils/functionalHarmonyFilter";
-import { romanNumeral7thHarmonyInfo } from "@/utils/harmonyUtil";
 import { playChord, playNoteSound } from "@/utils/noteSoundPlayer";
-import { getScaleDiatonicChordsWith7th } from "@/utils/scaleUtil";
+import { getChordPositions, getScaleDiatonicChordsWith7th, romanNumeral7thHarmonyInfo } from "@/utils/wasmLoader";
 import Image from "next/image";
 import React from "react";
 

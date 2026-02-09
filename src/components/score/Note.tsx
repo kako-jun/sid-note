@@ -6,11 +6,8 @@ import Left from "@/components/performance/Left";
 import Right from "@/components/performance/Right";
 import Staff from "@/components/performance/Staff";
 import { NoteType } from "@/schemas/trackSchema";
-import { getChordPositions, getInterval } from "@/utils/chordUtil";
-import { isChromaticNote } from "@/utils/chromaticUtil";
-import { getChordToneLabel } from "@/utils/harmonyUtil";
 import { playNoteSound } from "@/utils/noteSoundPlayer";
-import { comparePitch, valueText } from "@/utils/noteUtil";
+import { comparePitch, getChordPositions, getChordToneLabel, getInterval, isChromaticNote, valueText } from "@/utils/wasmLoader";
 import Image from "next/image";
 import React from "react";
 
@@ -191,7 +188,7 @@ const Note: React.FC<NoteProps> = (props) => {
                   );
                 })()
               : (() => {
-                  const chromaticNote = nextNote && isChromaticNote(note, nextNote);
+                  const chromaticNote = nextNote && isChromaticNote(note.pitch, nextNote.pitch);
                   return chromaticNote ? <span>Nonchord Tone (Chromatic Note)</span> : <span>Nonchord Tone</span>;
                 })()}
           </p>
