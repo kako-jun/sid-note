@@ -59,9 +59,9 @@
 
 ### ドキュメント整備
 - [x] MUSIC_THEORY_FUNCTIONS.md（機能チェックリスト）
-- [x] .claude/music-theory-wasm-rust-progress.md（進捗記録）
+- [x] docs/wasm-progress.md（進捗記録）
 - [x] .claude/CLAUDE.md（設計ドキュメント）
-- [x] .claude/TODO.md（このファイル）
+- [x] docs/todo.md（このファイル）
 - [x] rust-music/README.md
 
 ### Git管理
