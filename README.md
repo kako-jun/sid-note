@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# sid-note
+
+A bass guitar fingering viewer that bridges the gap between TAB notation and music theory.
+
+![screenshot](docs/screenshot-placeholder.png)
+
+## Features
+
+- **Fretboard visualization** -- see exactly which string and fret to press for each note
+- **Music theory integration** -- displays intervals (root, 3rd, 5th, 7th), diatonic functions, and cadences alongside fingering
+- **Picking direction** -- shows right-hand string and stroke direction per note
+- **Multiple position candidates** -- automatically calculates alternative fingerings
+- **Circle of fifths** -- interactive key relationship display
+- **Diatonic chord table** -- functional harmony at a glance
+- **Keyboard & staff views** -- pitch displayed on piano keys and standard notation
+
+## How it differs from TAB
+
+| | TAB | sid-note |
+|---|---|---|
+| Fret position | Yes | Yes |
+| Music theory context | No | Yes (chords, scales, harmony) |
+| Pitch display | No (inferred from fret) | Yes |
+| Picking info | No | Yes |
+| Position candidates | Manual | Auto-calculated |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/kako-jun/sid-note.git
+cd sid-note
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# TypeScript tests
+npm test
 
-## Learn More
+# Rust music theory engine tests
+cd rust-music && cargo test
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Technology | Role |
+|---|---|
+| Next.js 15 | Framework |
+| React 19 + TypeScript 5 | UI |
+| Tailwind CSS 4 | Styling |
+| Rust + WebAssembly | Music theory engine (migration in progress) |
+| Zod | YAML schema validation |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+The app is split into three layers:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **UI Layer** -- React components (Keyboard, Staff, CircleOfFifths, DiatonicChordTable)
+2. **Music Theory Layer** -- Note, Chord, Scale, Harmony analysis (TypeScript, being ported to Rust/WASM)
+3. **Instrument Layer** -- Bass fretboard position calculation and fingering pattern generation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Track data is stored as YAML files validated with Zod schemas.
+
+## Status
+
+- TypeScript implementation: fully functional and deployed
+- Rust/WASM port: all 26 music theory functions ported with 80% test coverage
+- WASM integration into Next.js: planned (Phase 4)
+
+## License
+
+MIT
