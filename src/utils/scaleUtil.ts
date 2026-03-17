@@ -189,5 +189,5 @@ export const scaleText = (scale: string) => {
     "B♭": "B♭ Major",
     "B♭m": "B♭ Minor",
   };
-  return `${scaleMap[scale]} Scale` || scale;
+  return scaleMap[scale] ? `${scaleMap[scale]} Scale` : scale;
 };

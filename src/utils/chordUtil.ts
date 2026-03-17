@@ -222,6 +222,7 @@ export const getChordPositions = (chord: string) => {
       }
 
       if (f.interval === "5") {
+        if (isAug7) return { ...f, interval: "＃5", fret: 8 };
         if (isAug) return { ...f, interval: "＃5", fret: 8 };
         if (isDim) return { ...f, interval: "♭5", fret: 6 };
         return f;
@@ -232,7 +233,6 @@ export const getChordPositions = (chord: string) => {
 
     // 7th
     if (isAug7) {
-      baseFrets.push({ interval: "＃5", fret: 8 });
       baseFrets.push({ interval: "♭7", fret: 10 });
     } else if (isMaj7) {
       baseFrets.push({ interval: "7", fret: 11 });
@@ -288,10 +288,13 @@ export const getInterval = (chord: string, targetPitch: string) => {
   const targetName = targetPitch.replace(/\d+$/, "");
   const root = getRootNote(chord);
   const pitches = pitchMap[root];
+  // ルート音がpitchMapにない場合はフォールバック
+  if (!pitches) return "";
   const index = pitches.findIndex((pitch) => {
     const names = pitch.split("/").map((p) => p.replace(/\d+$/, ""));
     return names.includes(targetName);
   });
+  if (index === -1) return "";
   const intervalMap: { [key: number]: string } = {
     0: "1",
     1: "♭2",
@@ -306,6 +309,5 @@ export const getInterval = (chord: string, targetPitch: string) => {
     10: "♭7",
     11: "7",
   };
-  const interval = intervalMap[index] || "";
-  return interval;
+  return intervalMap[index] ?? "";
 };

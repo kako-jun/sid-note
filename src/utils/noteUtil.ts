@@ -171,27 +171,24 @@ export const getKeyPosition = (scale: string) => {
   };
 };
 
+// 絶対的な半音インデックスを取得（異名同音を同一視するため）
+const getAbsolutePitchIndex = (pitch: string): number | null => {
+  const match = pitch.match(/^([A-G][＃♭]?)(\d+)$/);
+  if (!match) return null;
+  const name = match[1];
+  const octave = parseInt(match[2], 10);
+  const chromatic = ["C", "C＃/D♭", "D", "D＃/E♭", "E", "F", "F＃/G♭", "G", "G＃/A♭", "A", "A＃/B♭", "B"];
+  const idx = chromatic.findIndex((x) => x.split("/").includes(name));
+  if (idx === -1) return null;
+  return octave * 12 + idx;
+};
+
 export const comparePitch = (pitch1: string, pitch2: string): boolean => {
-  // ピッチを音名部分とオクターブ部分に分割
-  const parse = (p: string) => {
-    const match = p.match(/^([A-G][♭＃]?)(?:\/(.+?))?(\d)$/);
-    if (!match) return null;
-    const main = match[1];
-    const alt = match[2] || null;
-    const octave = match[3];
-    // スラッシュ区切りなら両方返す
-    if (alt) {
-      return { names: [main, alt], octave };
-    } else {
-      return { names: [main], octave };
-    }
-  };
-  const p1 = parse(pitch1);
-  const p2 = parse(pitch2);
-  if (!p1 || !p2) return false;
-  if (p1.octave !== p2.octave) return false;
-  // どちらかの音名が一致すればOK
-  return p1.names.some((n1) => p2.names.includes(n1));
+  // 半音インデックスで比較することで異名同音（C＃2 = D♭2）を正しく同一視する
+  const i1 = getAbsolutePitchIndex(pitch1);
+  const i2 = getAbsolutePitchIndex(pitch2);
+  if (i1 === null || i2 === null) return false;
+  return i1 === i2;
 };
 
 export const valueText = (value: string) => {
