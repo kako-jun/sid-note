@@ -1,7 +1,7 @@
 {
   "name": "sid-note",
   "version": "1.0.0",
-  "private": false,
+  "private": true,
   "description": "Web application for viewing and presenting bass fingering with more specific notation than TAB",
   "author": "kako-jun",
   "license": "MIT",
@@ -14,12 +14,12 @@
     "url": "https://github.com/kako-jun/sid-note/issues"
   },
   "keywords": [
-    "note-taking",
-    "notes",
-    "markdown",
+    "bass",
+    "music-theory",
+    "fingering",
+    "fretboard",
     "nextjs",
-    "typescript",
-    "productivity"
+    "typescript"
   ],
   "scripts": {
     "dev": "next dev",
