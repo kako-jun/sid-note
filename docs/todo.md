@@ -60,7 +60,7 @@
 ### ドキュメント整備
 - [x] MUSIC_THEORY_FUNCTIONS.md（機能チェックリスト）
 - [x] docs/wasm-progress.md（進捗記録）
-- [x] .claude/CLAUDE.md（設計ドキュメント）
+- [x] CLAUDE.md（設計ドキュメント）
 - [x] docs/todo.md（このファイル）
 - [x] rust-music/README.md
 
