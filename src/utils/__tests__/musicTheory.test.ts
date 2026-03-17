@@ -201,12 +201,12 @@ describe('harmonyUtil - TypeScript実装', () => {
 
 describe('chromaticUtil - TypeScript実装', () => {
   test('半音進行', () => {
-    expect(isChromaticNote({ pitch: 'C2' }, { pitch: 'C＃2' })).toBe(true);
-    expect(isChromaticNote({ pitch: 'C2' }, { pitch: 'D2' })).toBe(false);
+    expect(isChromaticNote({ pitch: 'C2', value: 'quarter', lefts: [] }, { pitch: 'C＃2', value: 'quarter', lefts: [] })).toBe(true);
+    expect(isChromaticNote({ pitch: 'C2', value: 'quarter', lefts: [] }, { pitch: 'D2', value: 'quarter', lefts: [] })).toBe(false);
   });
 
   test('nextNoteがnull', () => {
-    expect(isChromaticNote({ pitch: 'C2' }, null)).toBe(false);
+    expect(isChromaticNote({ pitch: 'C2', value: 'quarter', lefts: [] }, null)).toBe(false);
   });
 });
 
