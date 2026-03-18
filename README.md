@@ -2,8 +2,6 @@
 
 A bass guitar fingering viewer that bridges the gap between TAB notation and music theory.
 
-![screenshot](docs/screenshot-placeholder.png)
-
 ## Features
 
 - **Fretboard visualization** -- see exactly which string and fret to press for each note
