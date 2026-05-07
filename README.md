@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# sid-note
 
-## Getting Started
+sid-note is a bass fingering viewer that shows lines more concretely than TAB.
 
-First, run the development server:
+## Local development
+
+`sid-note` depends on the prebuilt WASM package from sibling repo `sid-fret`.
 
 ```bash
+git clone git@github.com:kako-jun/sid-note.git
+git clone git@github.com:kako-jun/sid-fret.git
+
+cd sid-note
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Cloudflare Pages build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+During the WASM migration, keep two URLs alive:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `sid-note.llll-ll.com` = stable
+- `beta.sid-note.llll-ll.com` or `sid-note-next.llll-ll.com` = WASM / reboot preview
 
-## Learn More
+For GitHub-linked Cloudflare Pages, use this build command:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+./scripts/cloudflare-build.sh
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The script follows the same idea as `orber`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- install Rust toolchain if missing
+- install `wasm-pack` if missing
+- clone `sid-fret` when the sibling repo does not exist
+- build the WASM package on the fly
+- run `npm ci` and `npm run build`
 
-## Deploy on Vercel
+### Suggested Pages setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Stable project:
+  - Production branch: `main`
+  - Custom domain: `sid-note.llll-ll.com`
+- Beta project:
+  - Production branch: `develop` or `beta`
+  - Custom domain: `beta.sid-note.llll-ll.com`
+- Build command: `./scripts/cloudflare-build.sh`
+- Build output directory: `out`
+- Framework preset: none (custom)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you want to pin another sid-fret revision, change `sid-fret.ref` or set
+`SID_FRET_REF` in Cloudflare Pages environment variables.

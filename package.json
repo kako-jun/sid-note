@@ -22,8 +22,11 @@
     "productivity"
   ],
   "scripts": {
+    "wasm:ensure-rust": "which rustup || (unset RUSTUP_VERSION && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable && . $HOME/.cargo/env && rustup target add wasm32-unknown-unknown)",
+    "wasm:install": ". $HOME/.cargo/env 2>/dev/null; which wasm-pack || cargo install wasm-pack --locked",
     "dev": "next dev",
     "build": "next build",
+    "build:cloudflare": "./scripts/cloudflare-build.sh",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
