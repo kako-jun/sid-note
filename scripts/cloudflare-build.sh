@@ -34,9 +34,7 @@ if [ -d "${SID_FRET_DIR}/.git" ]; then
 else
   echo "[sid-note] cloning sid-fret into sibling directory"
   rm -rf "${SID_FRET_DIR}"
-  git clone --depth 1 "${SID_FRET_REPO}" "${SID_FRET_DIR}"
-  git -C "${SID_FRET_DIR}" fetch --depth 1 origin "${SID_FRET_REF}"
-  git -C "${SID_FRET_DIR}" -c advice.detachedHead=false checkout "${SID_FRET_REF}"
+  git clone --depth 1 --branch "${SID_FRET_REF}" "${SID_FRET_REPO}" "${SID_FRET_DIR}"
 fi
 
 ensure_rust
