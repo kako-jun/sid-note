@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  output: "export",
   images: {
-    unoptimized: true, // 静的エクスポートではImage Optimizationを無効化
+    unoptimized: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
